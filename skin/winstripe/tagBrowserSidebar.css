@@ -1,0 +1,11 @@
+#bmtree treechildren::-moz-tree-cell,
+#bmtree treechildren::-moz-tree-image
+{
+    cursor:          pointer;
+}
+
+#bmtree treechildren::-moz-tree-cell-text(hover)
+{
+    cursor:          pointer;
+    text-decoration: underline;
+}

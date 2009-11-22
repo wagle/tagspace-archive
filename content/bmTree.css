@@ -1,0 +1,4 @@
+tree[type="bookmarktags:bookmarktree"]
+{
+    -moz-binding: url("chrome://bookmarktags/content/bmTree.xml#bmtree");
+}

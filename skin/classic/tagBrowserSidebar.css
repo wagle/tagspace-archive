@@ -1,0 +1,40 @@
+@import url("chrome://global/skin/");
+@import url("chrome://bookmarktags-platform/skin/tagBrowserSidebar.css");
+
+splitter
+{
+    border: 0;
+}
+
+#queryCloud
+{
+    margin-top: 0.5em;
+}
+
+#queryCloud[nonempty]
+{
+    margin-bottom: 0.5em;
+}
+
+#queryCloud label.text-link:hover,
+#queryCloud label.text-link:focus,
+#queryCloud label.text-link:hover:active
+{
+    text-decoration: underline;
+    color:           green;
+}
+
+#toolbar
+{
+    padding-top: 0.5em;
+}
+
+#tagDisplayButton
+{
+    list-style-image: url('chrome://bookmarktags-platform/skin/tag.png');
+}
+
+#bmSortButton
+{
+    list-style-image: url('chrome://bookmarktags-platform/skin/star.png');
+}

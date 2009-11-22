@@ -1,0 +1,613 @@
+<?xml version="1.0"?>
+
+<!-- ***** BEGIN LICENSE BLOCK *****
+   - Version: MPL 1.1
+   -
+   - The contents of this file are subject to the Mozilla Public License Version
+   - 1.1 (the "License"); you may not use this file except in compliance with
+   - the License. You may obtain a copy of the License at
+   - http://www.mozilla.org/MPL/
+   -
+   - Software distributed under the License is distributed on an "AS IS" basis,
+   - WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+   - for the specific language governing rights and limitations under the
+   - License.
+   -
+   - The Original Code is the Bookmark Tags Firefox Extension.
+   -
+   - The Initial Developer of the Original Code is
+   - Drew Willcoxon <drew.willcoxon@gmail.com>.
+   - Portions created by the Initial Developer are Copyright (C) 2005, 2006,
+   - 2007, 2008 the Initial Developer. All Rights Reserved.
+   -
+   - Contributor(s):
+   -
+   - ***** END LICENSE BLOCK ***** -->
+
+<!DOCTYPE bindings [
+  <!ENTITY % commands SYSTEM "chrome://bookmarktags/locale/commands.dtd">
+  %commands;
+]>
+
+<bindings xmlns="http://www.mozilla.org/xbl"
+          xmlns:xbl="http://www.mozilla.org/xbl">
+
+  <binding id="tagCloud">
+
+    <handlers>
+      <handler event="click" phase="capturing"><![CDATA[
+        if (event.originalTarget === this) this.ensureSelectedTagExists();
+      ]]></handler>
+    </handlers>
+
+    <implementation>
+
+      <property name="hasFocus" readonly="true">
+        <getter><![CDATA[
+          try
+          {
+              return (document.commandDispatcher.focusedElement.parentNode ===
+                      this);
+          }
+          catch (e) {}
+          return false;
+        ]]></getter>
+      </property>
+
+      <property name="query">
+        <getter><![CDATA[
+          return this.query_;
+        ]]></getter>
+        <setter><![CDATA[
+          this.setQuery_(val);
+        ]]></setter>
+      </property>
+
+      <property name="selectedTag" readonly="true">
+        <getter><![CDATA[
+          return this.selectedTags[0];
+        ]]></getter>
+      </property>
+
+      <property name="selectedTags" readonly="true">
+        <getter><![CDATA[
+          var elts;
+
+          elts= [document.commandDispatcher.focusedElement, document.popupNode];
+          for (let i= 0; i < elts.length; i++)
+          {
+              let maybeTagLabel= elts[i];
+              if (maybeTagLabel && maybeTagLabel.parentNode === this)
+              {
+                  return [{
+                      id:    parseInt(maybeTagLabel.getAttribute("bmt-tagid")),
+                      title: maybeTagLabel.getAttribute("bmt-tagname")
+                  }];
+              }
+          }
+          return [];
+        ]]></getter>
+      </property>
+
+      <constructor><![CDATA[
+        var reflectTagSizes;
+        var ontagselectFunc;
+
+        const that= this;
+
+        // Used to rebuild the cloud when the cloud-reflects-tag-size
+        // preference is toggled.
+        const prefsObserver=
+        {
+            observe: function (subject, topic, data)
+            {
+                reflectTagSizes=
+                    BookmarkTags.Util.prefs.
+                    getBoolPref("cloudsReflectTagSizes");
+                rebuild();
+            }
+        };
+
+        this.ensureSelectedTagExists= function ()
+        {
+            if (this.hasFocus) return true;
+            if (!this.firstChild) return false;
+            this.firstChild.focus();
+            return true;
+        };
+
+        // Query callback to rebuild the cloud.
+        this.onQueryRelTagChanged= function (query)
+        {
+            rebuild();
+        };
+
+        // Query callback to rebuild the cloud.
+        this.onQueryTagChanged= function (query)
+        {
+            rebuild();
+        };
+
+        this.destruct_= function ()
+        {
+            if (this.query_)
+            {
+                if (showRelated()) this.query_.removeRelTagObserver(this);
+                else this.query_.removeTagObserver(this);
+                this.query_= null;
+            }
+
+            BookmarkTags.Util.prefs.
+                QueryInterface(Components.interfaces.nsIPrefBranch2).
+                removeObserver("cloudsReflectTagSizes", prefsObserver, false);
+
+            if (ontagselectFunc)
+            {
+                this.removeEventListener("tagselect", ontagselectFunc, true);
+            }
+        };
+
+        // Labels in the box call this when they're clicked.  Fires tagselect
+        // events.
+        this.onTagClick_= function (tagLabel, event)
+        {
+            if (event.button === 0 || event.button === 1)
+            {
+                BookmarkTags.Util.fireTagSelect(
+                    this,
+                    parseInt(tagLabel.getAttribute("bmt-tagid")),
+                    tagLabel.getAttribute("bmt-tagname"),
+                    event);
+            }
+        };
+
+        this.setQuery_= function (query)
+        {
+            if (this.query_)
+            {
+                if (showRelated()) this.query_.removeRelTagObserver(this);
+                else this.query_.removeTagObserver(this);
+            }
+
+            this.query_= query;
+
+            if (showRelated()) this.query_.addRelTagObserver(this);
+            else this.query_.addTagObserver(this);
+
+            rebuild();
+        };
+
+        function init()
+        {
+            var ontagselect;
+
+            reflectTagSizes=
+                BookmarkTags.Util.prefs.getBoolPref("cloudsReflectTagSizes");
+            BookmarkTags.Util.prefs.
+                QueryInterface(Components.interfaces.nsIPrefBranch2).
+                addObserver("cloudsReflectTagSizes", prefsObserver, false);
+
+            ontagselect= that.getAttribute("ontagselect");
+            if (ontagselect)
+            {
+                ontagselectFunc= function (event) { eval(ontagselect); };
+                that.addEventListener("tagselect", ontagselectFunc, true);
+            }
+
+            BookmarkTags.TagCmds.loadStyle();
+        }
+
+        function rebuild()
+        {
+            var tagArr;
+            var showSize;
+            var selTag;
+
+            tagArr= (showRelated() ?
+                     that.query_.relTagArr :
+                     that.query_.tagArr);
+
+            showSize= (reflectTagSizes &&
+                       that.getAttribute("notagsizes") !== "true" &&
+                       // currently the SQL for non-showrelated tag displays
+                       // doesn't compute tag sizes
+                       showRelated() &&
+                       that.query_.relTagMaxRelatedSize);
+
+            // remember selected (i.e., focused) tag so we can restore it later
+            selTag= document.commandDispatcher.focusedElement;
+            if (selTag && selTag.parentNode !== that) selTag= null;
+
+            // remove all children
+            while (that.firstChild)
+            {
+                that.removeChild(that.firstChild);
+            }
+
+            // add labels
+            for (let i= 0; i < tagArr.length; i++)
+            {
+                let tagObj= tagArr[i];
+                let label= document.createElement("label");
+                label.setAttribute("value", tagObj.title);
+                label.setAttribute("bmt-tagname", tagObj.title);
+                label.setAttribute("bmt-tagid", tagObj.id);
+                label.setAttribute("class", "text-link");
+                label.setAttribute("onclick",
+                                   "this.parentNode.onTagClick_(this, event);");
+                if (showSize)
+                {
+                    let size= Math.floor(10.0 * tagObj.relatedSize /
+                                         that.query_.relTagMaxRelatedSize);
+                    label.setAttribute("bmt-tagsize", size);
+                }
+                that.appendChild(label);
+
+                // check if tagObj shoud be selected
+                if (selTag &&
+                    parseInt(selTag.getAttribute("bmt-tagid")) === tagObj.id)
+                {
+                    selTag= label;
+                }
+            }
+
+            // restore selected tag
+            if (selTag) selTag.focus();
+
+            // Set nonempty attribute.  This should also be set for trees too,
+            // but right now only the tag browser sidebar uses this to style the
+            // query cloud.
+            if (that.query_.isEmpty()) that.removeAttribute("nonempty");
+            else that.setAttribute("nonempty", "true");
+        }
+
+        function showRelated()
+        {
+            return that.getAttribute("showrelated") === "true";
+        }
+
+        init();
+      ]]></constructor>
+
+      <destructor><![CDATA[
+        this.destruct_();
+      ]]></destructor>
+
+    </implementation>
+  </binding>
+
+
+
+  <binding id="tagTree"
+           extends="chrome://global/content/bindings/tree.xml#tree">
+
+    <handlers>
+      <handler event="click" phase="capturing"><![CDATA[
+        if (event.originalTarget.localName === "treechildren")
+        {
+            this.ensureSelectedTagExists();
+        }
+      ]]></handler>
+    </handlers>
+
+    <implementation>
+
+      <property name="hasFocus" readonly="true">
+        <getter><![CDATA[
+          return document.commandDispatcher.focusedElement === this;
+        ]]></getter>
+      </property>
+
+      <property name="query">
+        <getter><![CDATA[
+          return this.view_.query;
+        ]]></getter>
+        <setter><![CDATA[
+          this.view_.query= val;
+        ]]></setter>
+      </property>
+
+      <property name="selectedTag" readonly="true">
+        <getter><![CDATA[
+          return this.view_.selectedObj;
+        ]]></getter>
+      </property>
+
+      <property name="selectedTags" readonly="true">
+        <getter><![CDATA[
+          return this.view_.selectedObjs;
+        ]]></getter>
+      </property>
+
+      <property name="view" readonly="true">
+        <getter><![CDATA[
+          return this.view_;
+        ]]></getter>
+      </property>
+
+      <constructor><![CDATA[
+        var ontagselectFunc;
+
+        const that= this;
+
+        this.ensureSelectedTagExists= function ()
+        {
+            this.view_.ensureSelectedObjExists();
+        };
+
+        this.destruct_= function ()
+        {
+            this.view_.saveColState();
+            this.view_.cleanup();
+            this.view_= null;
+            this.treeBoxObject.view= null;
+
+            this.removeEventListener("click", onClick, false);
+            this.removeEventListener("keypress", onKeypress, false);
+
+            if (ontagselectFunc)
+            {
+                this.removeEventListener("tagselect", ontagselectFunc, true);
+            }
+        };
+
+        function init()
+        {
+            var ontagselect;
+
+            if (that.getAttribute("showrelated") === "true")
+            {
+                that.view_= new BookmarkTags.TreeView.RelTag(that);
+            }
+            else
+            {
+                throw ["TagSifter: showrelated must be true for tag trees ",
+                       "currently, sorry"].join("");
+            }
+            that.treeBoxObject.view= that.view_;
+            that.view_.loadColState();
+
+            that.addEventListener("click", onClick, false);
+            that.addEventListener("keypress", onKeypress, false);
+
+            ontagselect= that.getAttribute("ontagselect");
+            if (ontagselect)
+            {
+                ontagselectFunc= function (event) { eval(ontagselect); };
+                that.addEventListener("tagselect", ontagselectFunc, true);
+            }
+
+            BookmarkTags.TagCmds.loadStyle();
+        }
+
+        // Fires tagselect events.
+        function onClick(event)
+        {
+            var row;
+
+            if (event.button === 2) return;
+            if (event.originalTarget.localName !== "treechildren") return;
+
+            row= {};
+            that.treeBoxObject.getCellAt(event.clientX, event.clientY, row,
+                                         {}, {});
+            if (row.value >= 0)
+            {
+                let tagObj= that.view_.getObjAtRow(row.value);
+                if (tagObj)
+                {
+                    BookmarkTags.Util.fireTagSelect(that,
+                                                    tagObj.id,
+                                                    tagObj.title,
+                                                    event);
+                }
+            }
+        }
+
+        // Fires tagselect events.
+        function onKeypress(event)
+        {
+            if (event.keyCode === event.DOM_VK_RETURN)
+            {
+                let selTag= that.selectedTag;
+                if (selTag)
+                {
+                    BookmarkTags.Util.fireTagSelect(that,
+                                                    selTag.id,
+                                                    selTag.title,
+                                                    event);
+                }
+            }
+        }
+
+        init();
+      ]]></constructor>
+
+      <destructor><![CDATA[
+        this.destruct_();
+      ]]></destructor>
+
+    </implementation>
+  </binding>
+
+
+
+  <!--
+    This wraps a cloud and tree and shows whichever one is indicated by the
+    tagDisplay preference.  Includes a preferences observer, so changing the
+    preference immediately changes the display.  Has the same properties and
+    methods required of tag displays, so the wrapped display can be used
+    transparently.
+  -->
+  <binding id="tagDisplay">
+
+    <resources>
+      <stylesheet src="chrome://bookmarktags/skin/tagDisplay.css" />
+    </resources>
+
+    <xbl:content xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+      <groupbox anonid="cloudGroupbox" flex="1" hidden="true">
+        <box anonid="cloud"
+             type="bookmarktags:tagcloud"
+             flex="1"
+             xbl:inherits="context,contextmenu,noscroll,notagsizes,ontagselect,showrelated" />
+      </groupbox>
+      <tree anonid="tree"
+            type="bookmarktags:tagtree"
+            hidden="true"
+            flex="1"
+            class="plain"
+            xbl:inherits="context,contextmenu,enableColumnDrag,ontagselect,seltype,showrelated">
+        <treecols>
+          <treecol id="title"
+                   flex="1"
+                   primary="true" />
+          <splitter class="tree-splitter" />
+          <treecol id="relatedSize"
+                   label="&bmt.sortCmd_relatedSize.label;"
+                   hidden="true" />
+          <splitter class="tree-splitter" />
+          <treecol id="lastModified"
+                   label="&bmt.sortCmd_lastModified.label;"
+                   hidden="true" />
+          <splitter class="tree-splitter" />
+          <treecol id="dateAdded"
+                   label="&bmt.sortCmd_dateAdded.label;"
+                   hidden="true" />
+          <splitter class="tree-splitter" />
+          <treecol id="id"
+                   hidden="true"
+                   ignoreincolumnpicker="true" />
+        </treecols>
+        <treechildren flex="1" />
+      </tree>
+    </xbl:content>
+
+    <implementation>
+
+      <!-- Gets the bmt-tagcloud or bmt-tagtree, whichever is visible. -->
+      <field name="display"><![CDATA[
+        null
+      ]]></field>
+
+      <!-- "list" (i.e., tree) or "cloud", whichever display is visible. -->
+      <field name="displayType"><![CDATA[
+        null
+      ]]></field>
+
+      <property name="hasFocus" readonly="true">
+        <getter><![CDATA[
+          return this.display.hasFocus;
+        ]]></getter>
+      </property>
+
+      <property name="query">
+        <getter><![CDATA[
+          return this.display.query;
+        ]]></getter>
+        <setter><![CDATA[
+          this.setQuery_(val);
+        ]]></setter>
+      </property>
+
+      <property name="selectedTag" readonly="true">
+        <getter><![CDATA[
+          return this.display.selectedTag;
+        ]]></getter>
+      </property>
+
+      <property name="selectedTags" readonly="true">
+        <getter><![CDATA[
+          return this.display.selectedTags;
+        ]]></getter>
+      </property>
+
+      <constructor><![CDATA[
+        var cloudGroupbox;
+        var cloud;
+        var tree;
+
+        const that= this;
+
+        // Observes the tag display preference to update the display type.
+        const prefsObserver=
+        {
+            observe: function (subject, topic, data)
+            {
+                setDisplay();
+            }
+        };
+
+        this.ensureSelectedTagExists= function ()
+        {
+            this.display.ensureSelectedTagExists();
+        };
+
+        this.destruct_= function ()
+        {
+            BookmarkTags.Util.prefs.
+                QueryInterface(BookmarkTags.Util.CI.nsIPrefBranch2).
+                removeObserver("tagDisplay", prefsObserver, false);
+        };
+
+        this.setQuery_= function (query)
+        {
+            cloud.query= query;
+            tree.query= query;
+        };
+
+        function init()
+        {
+            cloudGroupbox=
+                document.getAnonymousElementByAttribute(that, "anonid",
+                                                        "cloudGroupbox");
+            cloud= document.
+                   getAnonymousElementByAttribute(that, "anonid", "cloud");
+            tree= document.
+                  getAnonymousElementByAttribute(that, "anonid", "tree");
+
+            setDisplay();
+
+            BookmarkTags.Util.prefs.
+                QueryInterface(BookmarkTags.Util.CI.nsIPrefBranch2).
+                addObserver("tagDisplay", prefsObserver, false);
+        }
+
+        function setDisplay()
+        {
+            var sort;
+
+            switch (BookmarkTags.Util.prefs.getIntPref("tagDisplay"))
+            {
+            case BookmarkTags.TagDisplayCmds.DISPLAY_LIST:
+                cloudGroupbox.hidden= true;
+                tree.hidden= false;
+                that.display= tree;
+                that.displayType= "list";
+                break;
+            case BookmarkTags.TagDisplayCmds.DISPLAY_CLOUD:
+                tree.hidden= true;
+                cloudGroupbox.hidden= false;
+                that.display= cloud;
+                that.displayType= "cloud";
+                break;
+            default:
+                // The prefs observer will call this function again when it sees
+                // we've cleared the pref.
+                BookmarkTags.Util.prefs.clearUserPref("tagDisplay");
+                return;
+                break;
+            }
+        }
+
+        init();
+      ]]></constructor>
+
+      <destructor><![CDATA[
+        this.destruct_();
+      ]]></destructor>
+
+    </implementation>
+  </binding>
+
+</bindings>

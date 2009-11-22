@@ -1,0 +1,387 @@
+<?xml version="1.0"?>
+
+<!-- ***** BEGIN LICENSE BLOCK *****
+   - Version: MPL 1.1
+   -
+   - The contents of this file are subject to the Mozilla Public License Version
+   - 1.1 (the "License"); you may not use this file except in compliance with
+   - the License. You may obtain a copy of the License at
+   - http://www.mozilla.org/MPL/
+   -
+   - Software distributed under the License is distributed on an "AS IS" basis,
+   - WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+   - for the specific language governing rights and limitations under the
+   - License.
+   -
+   - The Original Code is the Bookmark Tags Firefox Extension.
+   -
+   - The Initial Developer of the Original Code is
+   - Drew Willcoxon <drew.willcoxon@gmail.com>.
+   - Portions created by the Initial Developer are Copyright (C) 2005, 2006,
+   - 2007, 2008 the Initial Developer. All Rights Reserved.
+   -
+   - Contributor(s):
+   -
+   - ***** END LICENSE BLOCK ***** -->
+
+<!DOCTYPE bindings SYSTEM "chrome://bookmarktags/locale/tagInput.dtd">
+
+<bindings xmlns="http://www.mozilla.org/xbl"
+          xmlns:xbl="http://www.mozilla.org/xbl">
+
+  <!--
+    A textbox with iTunes-style autocompletion.  Textbox is timed and fires
+    command every x ms (see timeout attribute on textbox) which can be used
+    to implement find-as-you-type.
+  -->
+  <binding id="taginput">
+
+    <resources>
+      <stylesheet src="chrome://bookmarktags/skin/tagInput.css"/>
+      <stylesheet src="chrome://browser/skin/places/organizer.css"/>
+    </resources>
+
+    <xbl:content xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+      <textbox anonid="textbox"
+               flex="1"
+               xbl:inherits="context,contextmenu"
+               type="timed"
+               timeout="300"
+               align="center"
+               emptytext="&textbox.emptytext;"
+               oninput="this.parentNode.onInput_();"
+               onkeypress="this.parentNode.onKeypress_(event);">
+        <button class="textbox-input-closebutton"
+                oncommand="this.parentNode.parentNode.reset_();"
+                onfocus="this.parentNode.focus();" />
+      </textbox>
+    </xbl:content>
+
+    <handlers>
+      <handler event="focus" phase="capturing"><![CDATA[
+        if (!this.hasAttribute("focused") && event.originalTarget === this)
+        {
+            this.inner.focus();
+        }
+      ]]></handler>
+    </handlers>
+
+    <implementation>
+
+      <!--
+        True if:
+          1) user pressed Tab after autocompletion, or
+          2) user pressed Return or Esc
+      -->
+      <field name="actionKeyPressed" readonly="true"><![CDATA[
+        false
+      ]]></field>
+
+      <!--
+        Array of possible completions.  Must be sorted in ascending order.
+        If null, autocompletion is disabled.  Do not escape operators; the
+        input handles all that internally.
+      -->
+      <field name="completions"><![CDATA[
+        null
+      ]]></field>
+
+      <!-- The textbox we're wrapping. -->
+      <property name="inner" readonly="true">
+        <getter><![CDATA[
+          return document.getAnonymousElementByAttribute(this, "anonid",
+                                                         "textbox");
+        ]]></getter>
+      </property>
+
+      <!--
+        True if the textbox autocompleted a word.  This is independent of
+        whether or not user pressed Tab or Return.
+      -->
+      <field name="tagCompleted" readonly="true"><![CDATA[
+        false
+      ]]></field>
+
+      <constructor><![CDATA[
+        var textbox;
+        var dontAutocomplete;
+        var disableAutocomplete;
+
+        const that= this;
+
+        // tag input command controller
+        const controller=
+        {
+            doCommand: function (cmd)
+            {
+                BookmarkTags.TagInputCmds.doCommand(cmd);
+            },
+            isCommandEnabled: function (cmd)
+            {
+                return true;
+            },
+            supportsCommand: function (cmd)
+            {
+                return BookmarkTags.TagInputCmds.supportsCommand(cmd);
+            },
+            onEvent: function (evt) {}
+        };
+
+        // We cache the disable-autocomplete preference as an optimization.
+        const prefsObserver=
+        {
+            observe: function (subject, topic, data)
+            {
+                subject.QueryInterface(Components.interfaces.nsIPrefBranch2);
+                disableAutocomplete=
+                    subject.getBoolPref("disableTagInputAutocomplete");
+                updateContextMenu();
+            }
+        };
+
+        this.parse= function ()
+        {
+            return BookmarkTags.Query.parse(textbox.value);
+        };
+
+        this.setQuery= function (query)
+        {
+            setValue(query.toString());
+        };
+
+        this.destruct_= function ()
+        {
+            this.controllers.removeController(controller);
+            BookmarkTags.Util.prefs.
+                QueryInterface(Components.interfaces.nsIPrefBranch2).
+                removeObserver("disableTagInputAutocomplete",
+                               prefsObserver,
+                               false);
+        };
+
+        // This does the actual autocompletion.
+        this.onInput_= function ()
+        {
+            var value;
+            var valueBeforeCaret;
+            var caretPos;
+            var prefix;
+            var bestTag;
+            var prefixUnesc;
+            var bestTagEsc;
+
+            if (dontAutocomplete)
+            {
+                dontAutocomplete= false;
+                return;
+            }
+            if (disableAutocomplete) return;
+            if (!this.completions) return;
+            if (textbox.selectionStart !== textbox.selectionEnd) return;
+
+            // optimization
+            if (!textbox.value) return;
+
+            value= textbox.value;
+            caretPos= textbox.selectionStart;
+
+            // Bail if text under caret is not a space.
+            if (caretPos < value.length && !/\s/.test(value[caretPos])) return;
+
+            valueBeforeCaret= value.substr(0, caretPos);
+            prefix= BookmarkTags.Query.strTail(valueBeforeCaret);
+            if (prefix) prefix= prefix.lstrip();
+            if (!prefix) return;
+
+            // Unescape the prefix's operators, look it up in completions.
+            prefixUnesc= BookmarkTags.Query.unescapeOperators(prefix);
+            bestTag= this.completions.binbest(prefixUnesc);
+            if (!bestTag) return;
+
+            // Escape the best tag's operators to compare it to prefix.
+            bestTagEsc= BookmarkTags.Query.escapeOperators(bestTag);
+
+            // User typed in full tag name => not an autocomplete.
+            if (this.completions.comparator(prefix, bestTagEsc) === 0) return;
+
+            // Make sure prefix is actually a prefix.
+            if (this.completions.comparator(
+                    prefix, bestTagEsc.substr(0, prefix.length)) !== 0)
+            {
+                return;
+            }
+
+            this.tagCompleted= true;
+            commaDelimComplete(valueBeforeCaret,
+                               bestTagEsc.substr(prefix.length),
+                               value.substr(valueBeforeCaret.length),
+                               caretPos);
+        };
+
+        this.onKeypress_= function (event)
+        {
+            if (event.bogus) return;
+            this.actionKeyPressed= false;
+            switch (event.keyCode)
+            {
+            case event.DOM_VK_ESCAPE:
+                event.preventDefault();
+                this.actionKeyPressed= true;
+                if (event.shiftKey) reset();
+                else pop();
+                fireCommand();
+                break;
+            case event.DOM_VK_BACK_SPACE:
+                if (textbox.selectionStart > 0) dontAutocomplete= true;
+                break;
+            case event.DOM_VK_RETURN:
+                dontAutocomplete= true;
+                this.actionKeyPressed= true;
+                // fall through, give Return functionality similar to Tab
+            case event.DOM_VK_TAB:
+                if (this.tagCompleted)
+                {
+                    this.actionKeyPressed= true;
+
+                    // tab appends a nice ", ", enter does not
+                    let pos= textbox.selectionEnd;
+                    if (event.keyCode === event.DOM_VK_TAB)
+                    {
+                        setValue([textbox.value.substr(0, pos),
+                                  ", ",
+                                  textbox.value.substr(pos)].join(""));
+                        textbox.setSelectionRange(pos + 2, pos + 2);
+                        event.preventDefault();
+                        fireCommand();
+                    }
+                    else textbox.setSelectionRange(pos, pos);
+                }
+                else if (textbox.selectionStart !== textbox.value.length)
+                {
+                    if (event.keyCode === event.DOM_VK_TAB)
+                    {
+                        event.preventDefault();
+                    }
+                    textbox.setSelectionRange(textbox.value.length,
+                                              textbox.value.length);
+                }
+                break;
+            }
+            this.tagCompleted= false;
+        };
+
+        this.reset_= function ()
+        {
+            this.actionKeyPressed= true;
+            reset();
+        };
+
+        function commaDelimComplete(valueBeforeCaret, compSuffix,
+                                    valueAfterCaret, caretPos)
+        {
+            setValue([valueBeforeCaret, compSuffix, valueAfterCaret].join(""));
+            textbox.setSelectionRange(caretPos, caretPos + compSuffix.length);
+        }
+
+        function fireCommand()
+        {
+            var e;
+
+            e= document.createEvent("Events");
+            e.initEvent("command", true, false);
+            that.dispatchEvent(e);
+        }
+
+        function init()
+        {
+            textbox= that.inner;
+
+            disableAutocomplete=
+                BookmarkTags.Util.prefs.
+                getBoolPref("disableTagInputAutocomplete");
+
+            reset();
+            updateContextMenu();
+
+            that.controllers.appendController(controller);
+            BookmarkTags.Util.prefs.
+                QueryInterface(Components.interfaces.nsIPrefBranch2).
+                addObserver("disableTagInputAutocomplete",
+                            prefsObserver,
+                            false);
+        }
+
+        function pop()
+        {
+            var val;
+
+            val= BookmarkTags.Query.popStr(textbox.value);
+            setValue(val);
+        }
+
+        function reset()
+        {
+            setValue("");
+        }
+
+        function setValue(val)
+        {
+            var e;
+
+            // Emptying the value when it's already empty causes the emptytext
+            // to momentarily disappear.
+            if (!val && !textbox.value) return;
+
+            textbox.value= val;
+
+            // optimization
+            if (!val) return;
+
+            // Hack: The textbox won't automatically scroll to the caret if the
+            // caret's past the visible area.  Moving around in the textbox will
+            // though, so generate a fake keypress.
+            // FOR THIS TO WORK, TAG INPUT MUST HAVE FOCUS BEFOREHAND.
+            e= document.createEvent("KeyEvents");
+            //e.initKeyEvent("keypress", true, false, null,
+            e.initKeyEvent("keypress", false, false, null,
+                           false, false, false, false,
+                           Components.interfaces.nsIDOMKeyEvent.DOM_VK_RIGHT, 0);
+            e.bogus= true;
+            textbox.inputField.dispatchEvent(e);
+        }
+
+        // Checks the autocomplete menuitem as appropriate, if there's an
+        // attached contextmenu.
+        function updateContextMenu()
+        {
+            var id;
+
+            id= that.getAttribute("context");
+            if (!id) id= that.getAttribute("contextmenu");
+            if (id)
+            {
+                let menu= document.getElementById(id);
+                for (let i= 0; i < menu.childNodes.length; i++)
+                {
+                    let item= menu.childNodes.item(i);
+                    if (item.getAttribute("command") ===
+                        "bookmarktags:tagInputCmds:toggleAutocomplete")
+                    {
+                        if (disableAutocomplete) item.removeAttribute("checked");
+                        else item.setAttribute("checked", "true");
+                    }
+                }
+            }
+        }
+
+        init();
+      ]]></constructor>
+
+      <destructor><![CDATA[
+        this.destruct_();
+      ]]></destructor>
+
+    </implementation>
+
+  </binding>
+</bindings>

@@ -1,0 +1,332 @@
+<?xml version="1.0"?>
+
+<!-- ***** BEGIN LICENSE BLOCK *****
+   - Version: MPL 1.1
+   -
+   - The contents of this file are subject to the Mozilla Public License Version
+   - 1.1 (the "License"); you may not use this file except in compliance with
+   - the License. You may obtain a copy of the License at
+   - http://www.mozilla.org/MPL/
+   -
+   - Software distributed under the License is distributed on an "AS IS" basis,
+   - WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+   - for the specific language governing rights and limitations under the
+   - License.
+   -
+   - The Original Code is the Bookmark Tags Firefox Extension.
+   -
+   - The Initial Developer of the Original Code is
+   - Drew Willcoxon <drew.willcoxon@gmail.com>.
+   - Portions created by the Initial Developer are Copyright (C) 2005, 2006,
+   - 2007, 2008 the Initial Developer. All Rights Reserved.
+   -
+   - Contributor(s):
+   -
+   - ***** END LICENSE BLOCK ***** -->
+
+<!DOCTYPE overlay [
+  <!ENTITY % commands SYSTEM "chrome://bookmarktags/locale/commands.dtd">
+  %commands;
+]>
+
+<overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+         id="bookmarktags:commandOverlay">
+
+  <!-- BOOKMARK COMMANDS -->
+  <commandset id="bookmarktags:bmCmds">
+    <command id="bookmarktags:bmCmds:copy"
+             label="&bmt.bmCmd_copy.label;"
+             accesskey="&bmt.bmCmd_copy.accesskey;"
+             oncommand="BookmarkTags.Util.goDoCommand('bookmarktags:bmCmds:copy');" />
+    <command id="bookmarktags:bmCmds:cutDelete"
+             label="&bmt.bmCmd_cutDelete.label;"
+             accesskey="&bmt.bmCmd_cutDelete.accesskey;"
+             oncommand="BookmarkTags.Util.goDoCommand('bookmarktags:bmCmds:cutDelete');" />
+    <command id="bookmarktags:bmCmds:cutUntagAll"
+             label="&bmt.bmCmd_cutUntagAll.label;"
+             accesskey="&bmt.bmCmd_cutUntagAll.accesskey;"
+             oncommand="BookmarkTags.Util.goDoCommand('bookmarktags:bmCmds:cutUntagAll');" />
+    <command id="bookmarktags:bmCmds:cutUntagTags"
+             label="&bmt.bmCmd_cutUntagTags.label;"
+             accesskey="&bmt.bmCmd_cutUntagTags.accesskey;"
+             oncommand="BookmarkTags.Util.goDoCommand('bookmarktags:bmCmds:cutUntagTags');" />
+    <command id="bookmarktags:bmCmds:delete"
+             label="&bmt.bmCmd_delete.label;"
+             accesskey="&bmt.bmCmd_delete.accesskey;"
+             oncommand="BookmarkTags.Util.goDoCommand('bookmarktags:bmCmds:delete');" />
+    <command id="bookmarktags:bmCmds:open"
+             label="&bmt.bmCmd_open.label;"
+             accesskey="&bmt.bmCmd_open.accesskey;"
+             oncommand="BookmarkTags.Util.goDoCommand('bookmarktags:bmCmds:open');" />
+    <command id="bookmarktags:bmCmds:openInNewWindow"
+             label="&bmt.bmCmd_openInNewWindow.label;"
+             accesskey="&bmt.bmCmd_openInNewWindow.accesskey;"
+             oncommand="BookmarkTags.Util.goDoCommand('bookmarktags:bmCmds:openInNewWindow');" />
+    <command id="bookmarktags:bmCmds:openInNewTab"
+             label="&bmt.bmCmd_openInNewTab.label;"
+             accesskey="&bmt.bmCmd_openInNewTab.accesskey;"
+             oncommand="BookmarkTags.Util.goDoCommand('bookmarktags:bmCmds:openInNewTab');" />
+    <command id="bookmarktags:bmCmds:openInTabs"
+             label="&bmt.bmCmd_openInTabs.label;"
+             accesskey="&bmt.bmCmd_openInTabs.accesskey;"
+             oncommand="BookmarkTags.Util.goDoCommand('bookmarktags:bmCmds:openInTabs');" />
+    <command id="bookmarktags:bmCmds:paste"
+             label="&bmt.bmCmd_paste.label;"
+             accesskey="&bmt.bmCmd_paste.accesskey;"
+             key="key_paste"
+             oncommand="BookmarkTags.Util.goDoCommand('bookmarktags:bmCmds:paste');" />
+    <command id="bookmarktags:bmCmds:properties"
+             label="&bmt.bmCmd_properties.label;"
+             accesskey="&bmt.bmCmd_properties.accesskey;"
+             oncommand="BookmarkTags.Util.goDoCommand('bookmarktags:bmCmds:properties');" />
+    <command id="bookmarktags:bmCmds:showInOrganizer"
+             label="&bmt.bmCmd_showInOrganizer.label;"
+             accesskey="&bmt.bmCmd_showInOrganizer.accesskey;"
+             oncommand="BookmarkTags.Util.goDoCommand('bookmarktags:bmCmds:showInOrganizer');" />
+    <command id="bookmarktags:bmCmds:untagAll"
+             label="&bmt.bmCmd_untagAll.label;"
+             accesskey="&bmt.bmCmd_untagAll.accesskey;"
+             oncommand="BookmarkTags.Util.goDoCommand('bookmarktags:bmCmds:untagAll');" />
+    <command id="bookmarktags:bmCmds:untagTags"
+             label="&bmt.bmCmd_untagTags.label;"
+             accesskey="&bmt.bmCmd_untagTags.accesskey;"
+             oncommand="BookmarkTags.Util.goDoCommand('bookmarktags:bmCmds:untagTags');" />
+    <command id="bookmarktags:bmCmds:sort:dateAdded"
+             label="&bmt.sortCmd_dateAdded.label;"
+             oncommand="BookmarkTags.Util.goDoCommand('bookmarktags:bmCmds:sort:dateAdded');" />
+    <command id="bookmarktags:bmCmds:sort:frecency"
+             label="&bmt.sortCmd_frecency.label;"
+             oncommand="BookmarkTags.Util.goDoCommand('bookmarktags:bmCmds:sort:frecency');" />
+    <command id="bookmarktags:bmCmds:sort:lastModified"
+             label="&bmt.sortCmd_lastModified.label;"
+             oncommand="BookmarkTags.Util.goDoCommand('bookmarktags:bmCmds:sort:lastModified');" />
+    <command id="bookmarktags:bmCmds:sort:title"
+             label="&bmt.sortCmd_title.label;"
+             oncommand="BookmarkTags.Util.goDoCommand('bookmarktags:bmCmds:sort:title');" />
+    <command id="bookmarktags:bmCmds:sort:url"
+             label="&bmt.sortCmd_url.label;"
+             oncommand="BookmarkTags.Util.goDoCommand('bookmarktags:bmCmds:sort:url');" />
+    <command id="bookmarktags:bmCmds:sort:visit_count"
+             label="&bmt.sortCmd_visit_count.label;"
+             oncommand="BookmarkTags.Util.goDoCommand('bookmarktags:bmCmds:sort:visit_count');" />
+    <command id="bookmarktags:bmCmds:sort:visit_date"
+             label="&bmt.sortCmd_visit_date.label;"
+             oncommand="BookmarkTags.Util.goDoCommand('bookmarktags:bmCmds:sort:visit_date');" />
+    <command id="bookmarktags:bmCmds:sortDir:ASC"
+             oncommand="BookmarkTags.Util.goDoCommand('bookmarktags:bmCmds:sortDir:ASC');" />
+    <command id="bookmarktags:bmCmds:sortDir:DESC"
+             oncommand="BookmarkTags.Util.goDoCommand('bookmarktags:bmCmds:sortDir:DESC');" />
+  </commandset>
+
+
+  <!-- QUERY COMMANDS -->
+  <commandset id="bookmarktags:queryCmds">
+    <command id="bookmarktags:queryCmds:removeSucceedingTags"
+             label="&bmt.queryCmd_removeSucceedingTags.label;"
+             accesskey="&bmt.queryCmd_removeSucceedingTags.accesskey;"
+             oncommand="BookmarkTags.Util.goDoCommand('bookmarktags:queryCmds:removeSucceedingTags');" />
+    <command id="bookmarktags:queryCmds:removeTag"
+             label="&bmt.queryCmd_removeTag.label;"
+             accesskey="&bmt.queryCmd_removeTag.accesskey;"
+             oncommand="BookmarkTags.Util.goDoCommand('bookmarktags:queryCmds:removeTag');" />
+    <command id="bookmarktags:queryCmds:removeOtherTags"
+             label="&bmt.queryCmd_removeOtherTags.label;"
+             accesskey="&bmt.queryCmd_removeOtherTags.accesskey;"
+             oncommand="BookmarkTags.Util.goDoCommand('bookmarktags:queryCmds:removeOtherTags');" />
+    <command id="bookmarktags:queryCmds:removeAllTags"
+             label="&bmt.queryCmd_removeAllTags.label;"
+             accesskey="&bmt.queryCmd_removeAllTags.accesskey;"
+             oncommand="BookmarkTags.Util.goDoCommand('bookmarktags:queryCmds:removeAllTags');" />
+    <command id="bookmarktags:queryCmds:customize"
+             label="&bmt.queryCmd_customize.label;"
+             accesskey="&bmt.queryCmd_customize.accesskey;"
+             oncommand="BookmarkTags.Util.goDoCommand('bookmarktags:queryCmds:customize');" />
+    <command id="bookmarktags:queryCmds:toggleFindAsYouType"
+             label="&bmt.queryCmd_toggleFindAsYouType.label;"
+             accesskey="&bmt.queryCmd_toggleFindAsYouType.accesskey;"
+             oncommand="BookmarkTags.Util.goDoCommand('bookmarktags:queryCmds:toggleFindAsYouType');" />
+    <command id="bookmarktags:queryCmds:help"
+             label="&bmt.queryCmd_help.label;"
+             accesskey="&bmt.queryCmd_help.accesskey;"
+             oncommand="BookmarkTags.Util.goDoCommand('bookmarktags:queryCmds:help');" />
+  </commandset>
+
+
+  <!-- TAG COMMANDS -->
+  <commandset id="bookmarktags:tagCmds">
+    <command id="bookmarktags:tagCmds:copy"
+             label="&bmt.tagCmd_copy.label;"
+             accesskey="&bmt.tagCmd_copy.accesskey;"
+             oncommand="BookmarkTags.Util.goDoCommand('bookmarktags:tagCmds:copy');" />
+    <command id="bookmarktags:tagCmds:cut"
+             label="&bmt.tagCmd_cut.label;"
+             accesskey="&bmt.tagCmd_cut.accesskey;"
+             oncommand="BookmarkTags.Util.goDoCommand('bookmarktags:tagCmds:cut');" />
+    <command id="bookmarktags:tagCmds:delete"
+             label="&bmt.tagCmd_delete.label;"
+             accesskey="&bmt.tagCmd_delete.accesskey;"
+             oncommand="BookmarkTags.Util.goDoCommand('bookmarktags:tagCmds:delete');" />
+    <command id="bookmarktags:tagCmds:paste"
+             label="&bmt.tagCmd_paste.label;"
+             accesskey="&bmt.tagCmd_paste.accesskey;"
+             oncommand="BookmarkTags.Util.goDoCommand('bookmarktags:tagCmds:paste');" />
+    <command id="bookmarktags:tagCmds:properties"
+             label="&bmt.tagCmd_properties.label;"
+             accesskey="&bmt.tagCmd_properties.accesskey;"
+             oncommand="BookmarkTags.Util.goDoCommand('bookmarktags:tagCmds:properties');" />
+    <command id="bookmarktags:tagCmds:openInTabs"
+             label="&bmt.tagCmd_openInTabs.label;"
+             accesskey="&bmt.tagCmd_openInTabs.accesskey;"
+             oncommand="BookmarkTags.Util.goDoCommand('bookmarktags:tagCmds:openInTabs');" />
+    <command id="bookmarktags:tagCmds:select"
+             label="&bmt.tagCmd_select.label;"
+             accesskey="&bmt.tagCmd_select.accesskey;"
+             oncommand="BookmarkTags.Util.goDoCommand('bookmarktags:tagCmds:select');" />
+  </commandset>
+
+
+  <!-- TAG DISPLAY COMMANDS -->
+  <commandset id="bookmarktags:tagDisplayCmds">
+    <command id="bookmarktags:tagDisplayCmds:list"
+             label="&bmt.tagDisplayCmd_list.label;"
+             accesskey="&bmt.tagDisplayCmd_list.accesskey;"
+             oncommand="BookmarkTags.Util.goDoCommand('bookmarktags:tagDisplayCmds:list');" />
+    <command id="bookmarktags:tagDisplayCmds:cloud"
+             label="&bmt.tagDisplayCmd_cloud.label;"
+             accesskey="&bmt.tagDisplayCmd_cloud.accesskey;"
+             oncommand="BookmarkTags.Util.goDoCommand('bookmarktags:tagDisplayCmds:cloud');" />
+    <command id="bookmarktags:tagDisplayCmds:customize"
+             label="&bmt.tagDisplayCmd_customize.label;"
+             accesskey="&bmt.tagDisplayCmd_customize.accesskey;"
+             oncommand="BookmarkTags.Util.goDoCommand('bookmarktags:tagDisplayCmds:customize');" />
+    <command id="bookmarktags:tagDisplayCmds:help"
+             label="&bmt.tagDisplayCmd_help.label;"
+             accesskey="&bmt.tagDisplayCmd_help.accesskey;"
+             oncommand="BookmarkTags.Util.goDoCommand('bookmarktags:tagDisplayCmds:help');" />
+    <command id="bookmarktags:tagDisplayCmds:sort:dateAdded"
+             label="&bmt.sortCmd_dateAdded.label;"
+             oncommand="BookmarkTags.Util.goDoCommand('bookmarktags:tagDisplayCmds:sort:dateAdded');" />
+    <command id="bookmarktags:tagDisplayCmds:sort:lastModified"
+             label="&bmt.sortCmd_lastModified.label;"
+             oncommand="BookmarkTags.Util.goDoCommand('bookmarktags:tagDisplayCmds:sort:lastModified');" />
+    <command id="bookmarktags:tagDisplayCmds:sort:relatedSize"
+             label="&bmt.sortCmd_relatedSize.label;"
+             oncommand="BookmarkTags.Util.goDoCommand('bookmarktags:tagDisplayCmds:sort:relatedSize');" />
+    <command id="bookmarktags:tagDisplayCmds:sort:title"
+             label="&bmt.sortCmd_title.label;"
+             oncommand="BookmarkTags.Util.goDoCommand('bookmarktags:tagDisplayCmds:sort:title');" />
+    <command id="bookmarktags:tagDisplayCmds:sortDir:ASC"
+             oncommand="BookmarkTags.Util.goDoCommand('bookmarktags:tagDisplayCmds:sortDir:ASC');" />
+    <command id="bookmarktags:tagDisplayCmds:sortDir:DESC"
+             oncommand="BookmarkTags.Util.goDoCommand('bookmarktags:tagDisplayCmds:sortDir:DESC');" />
+  </commandset>
+
+
+  <!-- TAG INPUT COMMANDS -->
+  <commandset id="bookmarktags:tagInputCmds">
+    <command id="bookmarktags:tagInputCmds:toggleAutocomplete"
+             label="&bmt.tagInputCmd_toggleAutocomplete.label;"
+             accesskey="&bmt.tagInputCmd_toggleAutocomplete.accesskey;"
+             oncommand="BookmarkTags.Util.goDoCommand('bookmarktags:tagInputCmds:toggleAutocomplete');" />
+    <command id="bookmarktags:tagInputCmds:help"
+             label="&bmt.tagInputCmd_help.label;"
+             accesskey="&bmt.tagInputCmd_help.accesskey;"
+             oncommand="BookmarkTags.Util.goDoCommand('bookmarktags:tagInputCmds:help');" />
+  </commandset>
+
+
+
+
+  <!-- QUERY CONTEXT MENU -->
+  <menupopup id="bookmarktags:queryContextMenu"
+             onpopupshowing="BookmarkTags.QueryCmds.update();">
+    <menuitem command="bookmarktags:queryCmds:removeSucceedingTags"
+              default="true" />
+    <menuitem command="bookmarktags:queryCmds:removeTag" />
+    <menuitem command="bookmarktags:queryCmds:removeOtherTags" />
+    <menuseparator />
+    <menuitem command="bookmarktags:queryCmds:removeAllTags" />
+    <menuseparator />
+    <menuitem command="bookmarktags:queryCmds:customize" />
+    <menuitem command="bookmarktags:queryCmds:help" />
+  </menupopup>
+
+
+  <!-- QUERY INPUT CONTEXT MENU -->
+  <menupopup id="bookmarktags:queryInputContextMenu"
+             onpopupshowing="try { document.commandDispatcher.focusedElement.parentNode._doPopupItemEnabling(this); } catch(e) { return false; } BookmarkTags.TagInputCmds.update(); BookmarkTags.QueryCmds.update();">
+    <menuitem label="&undoCmd.label;"
+              accesskey="&undoCmd.accesskey;"
+              oncommand="goDoCommand('cmd_undo');"
+              cmd="cmd_undo" />
+    <menuseparator />
+    <menuitem label="&cutCmd.label;"
+              accesskey="&cutCmd.accesskey;"
+              oncommand="goDoCommand('cmd_cut');"
+              cmd="cmd_cut" />
+    <menuitem label="&copyCmd.label;"
+              accesskey="&copyCmd.accesskey;"
+              oncommand="goDoCommand('cmd_copy');"
+              cmd="cmd_copy" />
+    <menuitem label="&pasteCmd.label;"
+              accesskey="&pasteCmd.accesskey;"
+              oncommand="goDoCommand('cmd_paste');"
+              cmd="cmd_paste" />
+    <menuitem label="&deleteCmd.label;"
+              accesskey="&deleteCmd.accesskey;"
+              oncommand="goDoCommand('cmd_delete');"
+              cmd="cmd_delete" />
+    <menuseparator />
+    <menuitem label="&selectAllCmd.label;"
+              accesskey="&selectAllCmd.accesskey;"
+              oncommand="goDoCommand('cmd_selectAll');"
+              cmd="cmd_selectAll" />
+    <menuseparator />
+    <menuitem command="bookmarktags:tagInputCmds:toggleAutocomplete"
+              type="checkbox"
+              autocheck="false" />
+    <menuitem command="bookmarktags:queryCmds:toggleFindAsYouType"
+              type="checkbox"
+              autocheck="false" />
+    <menuseparator />
+    <menuitem command="bookmarktags:tagInputCmds:help" />
+  </menupopup>
+
+
+  <!-- TAG INPUT CONTEXT MENU -->
+  <menupopup id="bookmarktags:tagInputContextMenu"
+             onpopupshowing="try { document.commandDispatcher.focusedElement.parentNode._doPopupItemEnabling(this); } catch(e) { return false; } BookmarkTags.TagInputCmds.update();">
+    <menuitem label="&undoCmd.label;"
+              accesskey="&undoCmd.accesskey;"
+              oncommand="goDoCommand('cmd_undo');"
+              cmd="cmd_undo" />
+    <menuseparator />
+    <menuitem label="&cutCmd.label;"
+              accesskey="&cutCmd.accesskey;"
+              oncommand="goDoCommand('cmd_cut');"
+              cmd="cmd_cut" />
+    <menuitem label="&copyCmd.label;"
+              accesskey="&copyCmd.accesskey;"
+              oncommand="goDoCommand('cmd_copy');"
+              cmd="cmd_copy" />
+    <menuitem label="&pasteCmd.label;"
+              accesskey="&pasteCmd.accesskey;"
+              oncommand="goDoCommand('cmd_paste');"
+              cmd="cmd_paste" />
+    <menuitem label="&deleteCmd.label;"
+              accesskey="&deleteCmd.accesskey;"
+              oncommand="goDoCommand('cmd_delete');"
+              cmd="cmd_delete" />
+    <menuseparator />
+    <menuitem label="&selectAllCmd.label;"
+              accesskey="&selectAllCmd.accesskey;"
+              oncommand="goDoCommand('cmd_selectAll');"
+              cmd="cmd_selectAll" />
+    <menuseparator />
+    <menuitem command="bookmarktags:tagInputCmds:toggleAutocomplete"
+              type="checkbox"
+              autocheck="false" />
+    <menuitem command="bookmarktags:tagInputCmds:help" />
+  </menupopup>
+
+</overlay>

@@ -1,0 +1,75 @@
+@import url("chrome://global/skin/");
+
+/* sidebar 24x24 icon unselected */
+#BookmarkTags-sidebarButton
+{
+    list-style-image: url("chrome://bookmarktags/skin/icon24.png");
+    -moz-image-region: rect(0px 24px 24px 0px);
+}
+
+/* sidebar 24x24 icon hover */
+#BookmarkTags-sidebarButton:not([disabled="true"]):hover,
+#BookmarkTags-sidebarButton:not([disabled="true"]):hover:active
+{
+    -moz-image-region: rect(0px 48px 24px 24px);
+}
+
+/* sidebar 24x24 icon selected */
+#BookmarkTags-sidebarButton[checked="true"]
+{
+    -moz-image-region: rect(0px 72px 24px 48px);
+}
+
+
+
+/* sidebar 16x16 icon unselected */
+toolbar[iconsize="small"] #BookmarkTags-sidebarButton
+{
+    list-style-image: url("chrome://bookmarktags/skin/icon16.png");
+    -moz-image-region: rect(0px 16px 16px 0px);
+}
+
+/* sidebar 16x16 icon hover */
+toolbar[iconsize="small"] #BookmarkTags-sidebarButton:not([disabled="true"]):hover,
+toolbar[iconsize="small"] #BookmarkTags-sidebarButton:not([disabled="true"]):hover:active
+{
+    -moz-image-region: rect(0px 32px 16px 16px);
+}
+
+/* sidebar 16x16 icon selected */
+toolbar[iconsize="small"] #BookmarkTags-sidebarButton[checked="true"]
+{
+    -moz-image-region: rect(0px 48px 16px 32px);
+}
+
+
+
+/* tag/bookmark menu 24x24 icon */
+#BookmarkTags-bmMenuToolbarbutton
+{
+    list-style-image: url("chrome://bookmarktags/skin/icon24.png");
+    -moz-image-region: rect(24px 24px 48px 0px);
+}
+
+/* tag/bookmark menu 24x24 icon hover */
+#BookmarkTags-bmMenuToolbarbutton:not([disabled="true"]):hover,
+#BookmarkTags-bmMenuToolbarbutton:not([disabled="true"]):hover:active
+{
+    -moz-image-region: rect(24px 48px 48px 24px);
+}
+
+
+
+/* tag/bookmark menu 16x16 icon */
+toolbar[iconsize="small"] #BookmarkTags-bmMenuToolbarbutton
+{
+    list-style-image: url("chrome://bookmarktags/skin/icon16.png");
+    -moz-image-region: rect(16px 16px 32px 0px);
+}
+
+/* tag/bookmark 16x16 icon hover */
+toolbar[iconsize="small"] #BookmarkTags-bmMenuToolbarbutton:not([disabled="true"]):hover,
+toolbar[iconsize="small"] #BookmarkTags-bmMenuToolbarbutton:not([disabled="true"]):hover:active
+{
+    -moz-image-region: rect(16px 32px 32px 16px);
+}

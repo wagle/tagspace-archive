@@ -1,0 +1,12 @@
+@import url("chrome://global/skin/");
+@import url("chrome://bookmarktags/content/tagInput.css");
+
+bmt-taginput .textbox-input-closebutton
+{
+    cursor:  pointer;
+}
+
+bmt-taginput > textbox[empty="true"] > .textbox-input-closebutton
+{
+    cursor: auto;
+}

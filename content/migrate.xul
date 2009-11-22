@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+
+<!-- ***** BEGIN LICENSE BLOCK *****
+   - Version: MPL 1.1
+   -
+   - The contents of this file are subject to the Mozilla Public License Version
+   - 1.1 (the "License"); you may not use this file except in compliance with
+   - the License. You may obtain a copy of the License at
+   - http://www.mozilla.org/MPL/
+   -
+   - Software distributed under the License is distributed on an "AS IS" basis,
+   - WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+   - for the specific language governing rights and limitations under the
+   - License.
+   -
+   - The Original Code is the Bookmark Tags Firefox Extension.
+   -
+   - The Initial Developer of the Original Code is
+   - Drew Willcoxon <drew.willcoxon@gmail.com>.
+   - Portions created by the Initial Developer are Copyright (C) 2005, 2006,
+   - 2007, 2008 the Initial Developer. All Rights Reserved.
+   -
+   - Contributor(s):
+   -
+   - ***** END LICENSE BLOCK ***** -->
+
+<!DOCTYPE wizard SYSTEM "chrome://bookmarktags/locale/migrate.dtd">
+<?xml-stylesheet href="chrome://global/skin/" type="text/css" ?>
+<?xml-stylesheet href="chrome://browser/content/places/places.css"?>
+<?xml-stylesheet href="chrome://browser/skin/places/places.css"?>
+
+<wizard xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+        id="BookmarkTags-migrateWizard"
+        title="&wizard.title;"
+        onwizardcancel="return BookmarkTags.onCancel();"
+        width="&wizard.width;"
+        height="&wizard.height;"
+        iconsrc="chrome://bookmarktags/skin/icon32.png">
+
+  <script type="application/x-javascript"
+          src="chrome://global/content/globalOverlay.js"/>
+  <script type="application/x-javascript" 
+          src="chrome://browser/content/places/utils.js"/>
+  <script type="application/x-javascript" 
+          src="chrome://browser/content/places/controller.js"/>
+  <script type="application/x-javascript" 
+          src="chrome://browser/content/places/treeView.js"/>
+
+  <script type="application/x-javascript" 
+          src="chrome://bookmarktags/content/migrate.js"/>
+
+  <wizardpage pageid="introPage"
+              label="&introPage.label;"
+              description="&introPage.description;"
+              onpageadvanced="return BookmarkTags.IntroPage.onAdvanced();"
+              iconsrc="chrome://bookmarktags/skin/icon32.png">
+    <description>&introPage.text1;</description>
+    <description>&introPage.text2;</description>
+    <description>&introPage.text3;</description>
+  </wizardpage>
+
+  <wizardpage pageid="rootFolderPage"
+              label="&rootFolderPage.label;"
+              description="&rootFolderPage.description;"
+              onpageshow="BookmarkTags.RootFolderPage.onShow();"
+              onpagerewound="return BookmarkTags.RootFolderPage.onRewound();"
+              onpageadvanced="return BookmarkTags.RootFolderPage.onAdvanced();">
+    <description>&rootFolderPage.text1;</description>
+    <description>&rootFolderPage.text2;</description>
+    <separator class="thin" />
+    <tree id="rootFolderPage-bmTree"
+          type="places"
+          seltype="single"
+          hidecolumnpicker="true"
+          flex="1"
+          onselect="BookmarkTags.RootFolderPage.selectRootFolder();">
+      <treecols>
+        <treecol id="title" flex="1" primary="true" hideheader="true"/>
+      </treecols>
+      <treechildren flex="1"/>
+    </tree>
+    <separator class="thin" />
+    <checkbox id="rootFolderPage-includeRoot"
+              label="&rootFolderPage.includeRoot.label;"
+              accesskey="&rootFolderPage.includeRoot.accesskey;" />
+  </wizardpage>
+
+  <wizardpage pageid="warningPage"
+              label="&warningPage.label;"
+              description="&warningPage.description;">
+    <description>&warningPage.text1;</description>
+    <description>&warningPage.text2;</description>
+    <spacer flex="1" />
+    <description>&warningPage.text3;</description>
+  </wizardpage>
+
+  <wizardpage pageid="conversionPage"
+              label="&conversionPage.label;"
+              description="&conversionPage.description;"
+              onpageshow="BookmarkTags.ConversionPage.onShow();"
+              onpagerewound="return BookmarkTags.ConversionPage.onRewound();">
+    <vbox id="conversionPage-workingBox">
+      <description>&conversionPage.working;</description>
+      <separator class="thin" />
+      <progressmeter id="conversionPage-p1ProgMeter" mode="undetermined" />
+      <progressmeter id="conversionPage-p2ProgMeter" value="0" />
+    </vbox>
+    <description id="conversionPage-completeNotif">
+      &conversionPage.completeNotif;
+    </description>
+  </wizardpage>
+
+</wizard>

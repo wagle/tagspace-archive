@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+
+<!-- ***** BEGIN LICENSE BLOCK *****
+   - Version: MPL 1.1
+   -
+   - The contents of this file are subject to the Mozilla Public License Version
+   - 1.1 (the "License"); you may not use this file except in compliance with
+   - the License. You may obtain a copy of the License at
+   - http://www.mozilla.org/MPL/
+   -
+   - Software distributed under the License is distributed on an "AS IS" basis,
+   - WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+   - for the specific language governing rights and limitations under the
+   - License.
+   -
+   - The Original Code is the Bookmark Tags Firefox Extension.
+   -
+   - The Initial Developer of the Original Code is
+   - Drew Willcoxon <drew.willcoxon@gmail.com>.
+   - Portions created by the Initial Developer are Copyright (C) 2005, 2006,
+   - 2007, 2008 the Initial Developer. All Rights Reserved.
+   -
+   - Contributor(s):
+   -
+   - ***** END LICENSE BLOCK ***** -->
+
+<bindings xmlns="http://www.mozilla.org/xbl"
+          xmlns:xbl="http://www.mozilla.org/xbl">
+
+  <binding id="bmtree" extends="chrome://global/content/bindings/tree.xml#tree">
+
+    <handlers>
+      <handler event="click" phase="capturing"><![CDATA[
+        if (event.originalTarget.localName === "treechildren")
+        {
+            this.view_.ensureSelectedObjExists();
+        }
+      ]]></handler>
+    </handlers>
+
+    <implementation>
+
+      <property name="hasFocus" readonly="true">
+        <getter><![CDATA[
+          return document.commandDispatcher.focusedElement === this;
+        ]]></getter>
+      </property>
+
+      <property name="query">
+        <getter><![CDATA[
+          return this.view_.query;
+        ]]></getter>
+        <setter><![CDATA[
+          this.view_.query= val;
+        ]]></setter>
+      </property>
+
+      <property name="view" readonly="true">
+        <getter><![CDATA[
+          return this.view_;
+        ]]></getter>
+      </property>
+
+      <constructor><![CDATA[
+        const that= this;
+
+        this.destruct_= function ()
+        {
+            this.view_.saveColState();
+            this.view_.cleanup();
+            this.view_= null;
+            this.treeBoxObject.view= null;
+        };
+
+        function init()
+        {
+            that.view_= new BookmarkTags.TreeView.Bookmark(that);
+            that.treeBoxObject.view= that.view_;
+            that.view_.loadColState();
+        }
+
+        init();
+      ]]></constructor>
+
+      <destructor><![CDATA[
+        this.destruct_();
+      ]]></destructor>
+
+    </implementation>
+  </binding>
+
+</bindings>

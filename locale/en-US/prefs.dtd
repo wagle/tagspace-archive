@@ -1,0 +1,62 @@
+<!ENTITY window.title                          "TagSifter">
+<!ENTITY window.width                          "40em">
+
+<!ENTITY applyButton.label                     "Apply">
+<!ENTITY defaultsButton.label                  "Defaults">
+
+<!ENTITY sidebarPrefpane.label                 "Sidebar">
+<!ENTITY sidebarPrefpane.accesskey             "S">
+
+<!ENTITY tagInputGroupbox.caption              "Tag Input">
+<!ENTITY disableTagInputAutocomplete.label     "Disable autocomplete">
+<!ENTITY disableTagInputAutocomplete.accesskey "a">
+<!ENTITY disableFindAsYouType.label            "Disable find-as-you-type">
+<!ENTITY disableFindAsYouType.accesskey        "f">
+<!ENTITY restrictQueryInputCompletions.label   "Restrict autocompletions to related tags">
+<!ENTITY restrictQueryInputCompletions.accesskey "e">
+
+<!ENTITY queryCloudGroupbox.caption            "Query Cloud">
+<!ENTITY queryCloudTagClickAction.label        "When I click a tag in the query cloud:">
+<!ENTITY queryCloudTagClickAction.accesskey    "q">
+<!ENTITY queryCloudTagClickAction.pop          "Remove succeeding tags from query (default)">
+<!ENTITY queryCloudTagClickAction.remove       "Remove only that tag from query">
+<!ENTITY queryCloudTagClickAction.removeOthers "Remove all other tags from query">
+<!ENTITY hideQueryCloud.label                  "Hide query cloud">
+<!ENTITY hideQueryCloud.accesskey              "i">
+
+<!ENTITY tagDisplayGroupbox.caption            "Tag Selector">
+<!ENTITY tagDisplay.label                      "Display tags as a:">
+<!ENTITY tagDisplay.accesskey                  "d">
+<!ENTITY tagDisplay.cloud                      "Cloud">
+<!ENTITY tagDisplay.list                       "List (default)">
+<!ENTITY cloudsReflectTagSizes.label           "Cloud reflects tag sizes">
+<!ENTITY cloudsReflectTagSizes.accesskey       "r">
+
+<!ENTITY sidebarKeyGroupbox.caption            "Keyboard Shortcut">
+<!ENTITY sidebarKey.textbox.emptytext          "No shortcut assigned">
+<!ENTITY sidebarKey.clear.label                "Clear">
+<!ENTITY sidebarKey.clear.accesskey            "C">
+
+<!ENTITY tagMenuPrefpane.label                 "Tag Menu">
+<!ENTITY tagMenuPrefpane.accesskey             "T">
+
+<!ENTITY tagMenuDescription                    "You can access the tag menu from its toolbar icon and, on non-Mac systems, from the Bookmarks menu.  You'll have to add that icon yourself by customizing your toolbar (from toolbar menus View &gt; Toolbars &gt; Customize...).  TagSifter is a courteous extension and does not by default clutter your toolbar.">
+
+<!ENTITY tagMenu.tagSort.label                 "Sort Tags:">
+<!ENTITY tagMenu.bookmarkSort.label            "Sort Bookmarks:">
+
+<!ENTITY migratorPrefpane.label                "Migrate Folders">
+<!ENTITY migratorPrefpane.accesskey            "M">
+
+<!ENTITY migratorDescription                   "Use the migration wizard to translate your bookmark folders to tags and automatically tag the bookmarks therein with the resulting tags.  Tags tags tags.  Click the button to start.  Do it.">
+<!ENTITY migratorButton.label                  "Start Migration Wizard">
+<!ENTITY migratorButton.accesskey              "W">
+
+<!ENTITY helpPrefpane.label                    "Help">
+<!ENTITY helpPrefpane.accesskey                "H">
+
+<!ENTITY helpDescription                       "Click the button below to open TagSifter's help.  Other, up-to-date information may be found at TagSifter's homepage.">
+<!ENTITY helpButton.label                      "Open Help">
+<!ENTITY helpButton.accesskey                  "O">
+<!ENTITY homeButton.label                      "Open TagSifter's Homepage">
+<!ENTITY homeButton.accesskey                  "p">

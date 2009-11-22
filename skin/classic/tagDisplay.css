@@ -1,0 +1,75 @@
+@import url("chrome://global/skin/");
+@import url("chrome://bookmarktags/content/tagDisplay.css");
+@import url("chrome://browser/skin/places/places.css");
+
+box[type="bookmarktags:tagcloud"]
+{
+    display: block;
+}
+box[type="bookmarktags:tagcloud"][hidden="true"]
+{
+    display: none;
+}
+
+box[type="bookmarktags:tagcloud"] label.text-link
+{
+    padding: 0.15em;
+    text-decoration: none;
+    color: black;
+}
+
+box[type="bookmarktags:tagcloud"] label.text-link:hover,
+box[type="bookmarktags:tagcloud"] label.text-link:focus,
+box[type="bookmarktags:tagcloud"] label.text-link:hover:active
+{
+    text-decoration: underline;
+    color: blue;
+}
+
+/* These control how tag clouds reflect tag sizes.  There are 11 sizes, 0 to 10.
+ * If the tag size preference is turned off, attribute bmt-tagsize is not
+ * present. */
+box[type="bookmarktags:tagcloud"] label[bmt-tagsize="0"]
+{
+    font-size: 1em;
+}
+box[type="bookmarktags:tagcloud"] label[bmt-tagsize="1"]
+{
+    font-size: 1.055em;
+}
+box[type="bookmarktags:tagcloud"] label[bmt-tagsize="2"]
+{
+    font-size: 1.111em;
+}
+box[type="bookmarktags:tagcloud"] label[bmt-tagsize="3"]
+{
+    font-size: 1.166em;
+}
+box[type="bookmarktags:tagcloud"] label[bmt-tagsize="4"]
+{
+    font-size: 1.222em;
+}
+box[type="bookmarktags:tagcloud"] label[bmt-tagsize="5"]
+{
+    font-size: 1.277em;
+}
+box[type="bookmarktags:tagcloud"] label[bmt-tagsize="6"]
+{
+    font-size: 1.333em;
+}
+box[type="bookmarktags:tagcloud"] label[bmt-tagsize="7"]
+{
+    font-size: 1.388em;
+}
+box[type="bookmarktags:tagcloud"] label[bmt-tagsize="8"]
+{
+    font-size: 1.444em;
+}
+box[type="bookmarktags:tagcloud"] label[bmt-tagsize="9"]
+{
+    font-size: 1.5em;
+}
+box[type="bookmarktags:tagcloud"] label[bmt-tagsize="10"]
+{
+    font-size: 1.555em;
+}

@@ -1,0 +1,645 @@
+<?xml version="1.0"?>
+
+<!-- ***** BEGIN LICENSE BLOCK *****
+   - Version: MPL 1.1
+   -
+   - The contents of this file are subject to the Mozilla Public License Version
+   - 1.1 (the "License"); you may not use this file except in compliance with
+   - the License. You may obtain a copy of the License at
+   - http://www.mozilla.org/MPL/
+   -
+   - Software distributed under the License is distributed on an "AS IS" basis,
+   - WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+   - for the specific language governing rights and limitations under the
+   - License.
+   -
+   - The Original Code is the Bookmark Tags Firefox Extension.
+   -
+   - The Initial Developer of the Original Code is
+   - Drew Willcoxon <drew.willcoxon@gmail.com>.
+   - Portions created by the Initial Developer are Copyright (C) 2005, 2006,
+   - 2007, 2008 the Initial Developer. All Rights Reserved.
+   -
+   - Contributor(s):
+   -
+   - ***** END LICENSE BLOCK ***** -->
+
+<bindings xmlns="http://www.mozilla.org/xbl"
+          xmlns:xbl="http://www.mozilla.org/xbl">
+
+  <!--
+    tagMenu is not meant to be used directly.  Instead create a menu
+    with a tagPopup inside.  The tagPopup takes it from there.
+  -->
+  <binding id="tagPopup"
+           extends="chrome://global/content/bindings/popup.xml#popup">
+
+    <implementation>
+
+      <property name="tags">
+        <getter><![CDATA[
+          if (this.hasAttribute("tags"))
+          {
+              return this.getAttribute("tags").split(",").
+                     map(function (tid) parseInt(tid));
+          }
+          return [];
+        ]]></getter>
+        <setter><![CDATA[
+          if (val && val.length > 0) this.setAttribute("tags", val.join(","));
+          else this.removeAttribute("tags");
+          this.rebuild_();
+        ]]></setter>
+      </property>
+
+      <constructor><![CDATA[
+        var rebuildNeeded;
+        var isTopPopup;
+
+        // these are defined and used only by the top popup
+        var childRebuildTable;
+        var prefsObserver;
+        var bmObserver;
+        var tagObserver;
+        var topPopupIsEmpty;
+
+        // Note on this.tagQueryElt_: originally kept tagQueryElt_ as variable
+        // defined here.  But ran into problem when trying to use toolbar button
+        // immediately after adding it to toolbar.  After buildTemplate(),
+        // tagQueryElt was undefined in this.rebuild_().  Why?
+
+        const that= this;
+
+        // Child popups of the top popup call this on the top popup to check
+        // whether they need to rebuild themselves.
+        this.childNeedsRebuild= function (childPopupIdentifier)
+        {
+            if (childRebuildTable[childPopupIdentifier]) return false;
+            childRebuildTable[childPopupIdentifier]= true;
+            return true;
+        };
+
+        this.destruct_= function ()
+        {
+            this.removeEventListener("popupshowing", onPopupShowing, true);
+            if (isTopPopup)
+            {
+                this.removeEventListener("command", onCommand, false);
+                tagObserver.callback= null;
+                BookmarkTags.Util.bmServ.removeObserver(tagObserver);
+                bmObserver.callback= null;
+                BookmarkTags.Util.bmServ.removeObserver(bmObserver);
+                BookmarkTags.Util.prefs.
+                    QueryInterface(Components.interfaces.nsIPrefBranch2).
+                    removeObserver("", prefsObserver, false);
+            }
+        };
+
+        // Handles middle-clicks on bookmarks and tag menus -- menuitem may
+        // be a menuitem indeed or a menu.  Left-clicks are handled by
+        // onCommand.  Unlike onCommand, each popup handles middle-clicks on
+        // its children.
+        this.onMenuItemClick_= function (menuitem, event)
+        {
+            if (event.target === menuitem &&
+                BookmarkTags.BookmarkCmds.shouldClickOpenInTabs(event))
+            {
+                event.stopPropagation();
+
+                // closeMenus defined in browser/base/content/utilityOverlay.js
+                // bookmark menuitem
+                if (menuitem.hasAttribute("bmt-bmid"))
+                {
+                    BookmarkTags.BookmarkCmds.openWithEvent(
+                        BookmarkTags.BookmarkCmds.makeBMMenuObj(menuitem),
+                        event);
+                    closeMenus(event.target);
+                }
+
+                // tag menu: open its popup, collect the bookmarks, close the
+                // popup, open all the bookmarks
+                else if (menuitem.hasAttribute("bmt-tagid"))
+                {
+                    let popup= menuitem.firstChild;
+                    popup.showPopup();
+                    let objs=
+                        BookmarkTags.BookmarkCmds.collectBMMenuObjs(popup);
+                    closeMenus(event.target);
+                    BookmarkTags.BookmarkCmds.openInTabsWithEvent(objs, event);
+                }
+            }
+        };
+
+        this.rebuild_= function ()
+        {
+            var strings;
+            var tags;
+
+            // children must be told to rebuild
+            if (isTopPopup) childRebuildTable= {};
+
+            strings= BookmarkTags.Util.getStrings("tagMenu.properties");
+
+            ensureSortPrefsValid();
+
+            tags= this.tags;
+            if (tags.length > 0)
+            {
+                this.tagQueryElt_.textContent= sqlNonempty(tags, strings);
+            }
+            else this.tagQueryElt_.textContent= sqlEmpty();
+
+            if (!isTopPopup)
+            {
+                this.bmQueryElt_.textContent=
+                    wrapBMSQL(BookmarkTags.Query.bmSQL(tagsToQuery(tags)),
+                              strings);
+
+                // remove the popup's menuseparators and open-all-in-tabs item
+
+                let seps= this.getElementsByTagName("menuseparator");
+                // doing this in ascending order leaves one separator...
+                for (let i= seps.length - 1; i >= 0; i--)
+                {
+                    let elt= seps.item(i);
+                    // wow, the /getElementsBy*/ functions get all descendants,
+                    // not just children; good to know
+                    if (elt.parentNode === this) this.removeChild(elt);
+                }
+                // open-all-in-tabs menuitem
+                if (this.lastChild && this.lastChild.localName === "menuitem")
+                {
+                    this.removeChild(this.lastChild);
+                }
+            }
+
+            // If the top popup is empty, it has the single "(Empty)" menuitem.
+            // We need to remove it first; otherwise it hangs around.
+            if (topPopupIsEmpty && isTopPopup) this.removeChild(that.lastChild);
+
+            if (this.builder) this.builder.rebuild();
+
+            buildExtras(strings);
+        };
+
+        // Adds menu separators and open-all-in-tabs menuitem where appropriate.
+        function buildExtras(strings)
+        {
+            var empty;
+
+            // If menu is empty, popup will be really tiny and ugly.  So,
+            // add a disabled "empty" item.
+            empty= true;
+            for (let i= 0; empty && i < that.childNodes.length; i++)
+            {
+                let elt= that.childNodes.item(i);
+                if (elt.localName === "menuitem" || elt.localName === "menu")
+                {
+                    empty= false;
+                }
+            }
+
+            if (empty)
+            {
+                if (isTopPopup) topPopupIsEmpty= true;
+                menuitem= document.createElement("menuitem");
+                menuitem.setAttribute("label",
+                                   strings.GetStringFromName("emptyMenuLabel"));
+                menuitem.setAttribute("disabled", "true");
+                that.appendChild(menuitem);
+            }
+            else if (isTopPopup) topPopupIsEmpty= false;
+
+            // No bookmarks in top popup => no separators, etc. in top popup.
+            else if (!isTopPopup)
+            {
+                // Determine:
+                //   1. Whether popup contains bookmarks.
+                //   2. The child before which to insert separator between
+                //      tags and bookmarks.
+                // We'll do this by iterating over the children.  We can be
+                // a little faster if we iterate over only tags and not
+                // bookmarks, since it's likely that the number of tags in
+                // a popup will always be small or small compared to the number
+                // of bookmarks.
+
+                let beforeElt= null;
+                let bmsExist= false;
+                let tagsExist= false;
+
+                for (let i= 0; i < that.childNodes.length; i++)
+                {
+                    let elt= that.childNodes.item(i);
+                    if (elt.localName === "menuitem")
+                    {
+                        bmsExist= true;
+                        if (tagsExist) beforeElt= elt;
+                        break;
+                    }
+                    else if (elt.localName === "menu") tagsExist= true;
+                }
+
+                // Add menu separator between tags and bookmarks.
+                if (beforeElt)
+                {
+                    that.insertBefore(document.createElement("menuseparator"),
+                                      beforeElt);
+                }
+
+                // Add open-all-in-tabs menuitem if popup contains bookmarks.
+                if (bmsExist)
+                {
+                    that.appendChild(document.createElement("menuseparator"));
+
+                    menuitem= document.createElement("menuitem");
+                    menuitem.setAttribute("label",
+                                  strings.GetStringFromName("openInTabsLabel"));
+                    menuitem.setAttribute("accesskey",
+                              strings.GetStringFromName("openInTabsAccesskey"));
+                    menuitem.setAttribute("openintabs", "true");
+                    menuitem.setAttribute("statustext",
+                                          that.getAttribute("statustext"));
+                    that.appendChild(menuitem);
+                }
+            }
+        }
+
+        function buildTemplate()
+        {
+            var template;
+            var queryset;
+            var action;
+            var menu;
+            var menuitem;
+
+            if (that.childNodes.length > 0) return;
+
+            template= document.createElement("template");
+            that.appendChild(template);
+
+            queryset= document.createElement("queryset");
+            template.appendChild(queryset);
+
+            that.tagQueryElt_= document.createElement("query");
+            queryset.appendChild(that.tagQueryElt_);
+
+            action= document.createElement("action");
+            queryset.appendChild(action);
+
+            menu= document.createElement("menu");
+            menu.setAttribute("uri", "?");
+            menu.setAttribute("label", "?title");
+            menu.setAttribute("bmt-tagname", "?title");
+            menu.setAttribute("bmt-tagid", "?id");
+            menu.setAttribute("type", "?type");
+            menu.setAttribute("tags", "?tags");
+            menu.setAttribute("statustext", "?statusText");
+            menu.setAttribute("onclick",
+                              "this.parentNode.onMenuItemClick_(this, event);");
+            // These are needed to show a bookmark-related icon on the menu.
+            menu.setAttribute("class", "bookmark-item menu-iconic");
+            menu.setAttribute("container", "true");
+            // These are needed to show a tag icon on the menu.  For bookmark
+            // folders, "query" makes a special query bookmark folder show up.
+            menu.setAttribute("tagContainer", "?tagContainer");
+            menu.setAttribute("query", "dummy");
+            action.appendChild(menu);
+
+            // add bookmarks, but not to the top popup
+            if (!isTopPopup)
+            {
+                queryset= document.createElement("queryset");
+                template.appendChild(queryset);
+
+                that.bmQueryElt_= document.createElement("query");
+                queryset.appendChild(that.bmQueryElt_);
+
+                action= document.createElement("action");
+                queryset.appendChild(action);
+
+                menuitem= document.createElement("menuitem");
+                menuitem.setAttribute("uri", "?");
+                menuitem.setAttribute("label", "?title");
+                menuitem.setAttribute("bmt-bmid", "?id");
+                menuitem.setAttribute("bmt-bmname", "?title");
+                menuitem.setAttribute("bmt-bmurl", "?url");
+                menuitem.setAttribute("class", "menuitem-iconic bookmark-item");
+                menuitem.setAttribute("image", "?favicon");
+                menuitem.setAttribute("statustext", "?statusText");
+                menuitem.setAttribute("contextmenu",
+                                      that.getAttribute("bmcontextmenu"));
+                menuitem.setAttribute("onclick",
+                    "this.parentNode.onMenuItemClick_(this, event);");
+                action.appendChild(menuitem);
+            }
+        }
+
+        function ensureSortPrefsValid()
+        {
+            [
+                ["tagMenu.bookmarkSort",
+                    ["dateAdded", "frecency", "lastModified", "relatedSize",
+                     "title", "url", "visit_count", "visit_date"]],
+                ["tagMenu.bookmarkSortDirection",
+                    ["ASC", "DESC"]],
+                ["tagMenu.tagSort",
+                    ["title", "dateAdded", "lastModified", "relatedSize"]],
+                ["tagMenu.tagSortDirection",
+                    ["ASC", "DESC"]]
+            ].forEach(function (pref)
+            {
+                let val= BookmarkTags.Util.prefs.getCharPref(pref[0]);
+                if (pref[1].indexOf(val) < 0)
+                {
+                    BookmarkTags.Util.prefs.clearUserPref(pref[0]);
+                }
+            });
+        }
+
+        // which must be either "tag" or "bookmark".
+        // Returns [sort, direction].
+        function getSort(which)
+        {
+            return [
+                BookmarkTags.Util.prefs.
+                    getCharPref(["tagMenu.", which, "Sort"].join("")),
+                BookmarkTags.Util.prefs.
+                    getCharPref(["tagMenu.", which, "SortDirection"].join(""))
+            ];
+        }
+
+        function init()
+        {
+            var tags;
+
+            // Dragging the tag menu toolbar button off the toolbar and into
+            // the toolbar palette causes the top popup to be reconstructed.
+            // No good.  BookmarkTags will be undefined in that case.  If we
+            // don't check, an exception will be thrown in initTopPopup about
+            // BookmarkTags being undefined.
+            if (typeof(BookmarkTags) === "undefined") return;
+
+            that.addEventListener("popupshowing", onPopupShowing, true);
+
+            tags= that.tags;
+            if (tags.length === 0)
+            {
+                isTopPopup= true;
+                initTopPopup();
+            }
+            else isTopPopup= false;
+
+            rebuildNeeded= true;
+        }
+
+        function initTopPopup()
+        {
+            prefsObserver= makePrefsObserver();
+
+            // Checks for bookmarks added, removed, or moved from tags.
+            bmObserver= BookmarkTags.Util.makeBMObserver(function (changes)
+            {
+                var props;
+
+                // child menus definitely need to be rebuilt
+                childRebuildTable= {};
+
+                // see if top popup also needs to be rebuilt
+                if ((changes.propHash.hasOwnProperty("added") ||
+                     changes.propHash.hasOwnProperty("removed") ||
+                     changes.propHash.hasOwnProperty("moved")) &&
+                    ["lastModified", "relatedSize"].
+                        indexOf(getSort("tag")[0]) >= 0)
+                {
+                    rebuildNeeded= true;
+                }
+            });
+
+            // Checks for tags added, removed, moved, or changed.  The top
+            // popup will definitely need to be rebuilt in any case.
+            tagObserver= BookmarkTags.Util.makeTagObserver(function (changes)
+            {
+                rebuildNeeded= true;
+            });
+
+            that.addEventListener("command", onCommand, false);
+            BookmarkTags.Util.bmServ.addObserver(tagObserver, false);
+            BookmarkTags.Util.bmServ.addObserver(bmObserver, false);
+            BookmarkTags.Util.prefs.
+                QueryInterface(Components.interfaces.nsIPrefBranch2).
+                addObserver("", prefsObserver, false);
+        }
+
+        function isRebuildNeeded()
+        {
+            var tags;
+
+            tags= that.tags;
+            return ((rebuildNeeded && tags.length !== 1) ||
+                    (tags.length === 1 &&
+                     that.parentNode.parentNode.childNeedsRebuild(tags[0])));
+        }
+
+        function makePrefsObserver()
+        {
+            return {
+                observe: function (subject, topic, data)
+                {
+                    switch (data)
+                    {
+                    case "tagMenu.bookmarkSort":
+                    case "tagMenu.bookmarkSortDirection":
+                        // child menus definitely need to be rebuilt
+                        childRebuildTable= {};
+                        break;
+                    case "tagMenu.tagSort":
+                    case "tagMenu.tagSortDirection":
+                        // top menu needs rebuild
+                        rebuildNeeded= true;
+                        break;
+                    }
+                }
+            };
+        }
+
+        // Handles bookmark and open-all-in-tabs menuitem clicks for all
+        // popups underneath the top popup.  Called only on the top popup.
+        function onCommand(event)
+        {
+            var elt;
+
+            elt= event.originalTarget;
+            if (elt.hasAttribute("bmt-bmid"))
+            {
+                BookmarkTags.BookmarkCmds.openWithEvent(
+                    BookmarkTags.BookmarkCmds.makeBMMenuObj(elt), event);
+            }
+            else if (elt.hasAttribute("openintabs"))
+            {
+                BookmarkTags.BookmarkCmds.openInTabsWithEvent(
+                    BookmarkTags.BookmarkCmds.collectBMMenuObjs(elt.parentNode),
+                    event);
+            }
+        }
+
+        // Called on every popup.  Builds the popup's template XUL on first
+        // call, rebuilds the template contents if needed.
+        function onPopupShowing(event)
+        {
+            if (event.target === that)
+            {
+                buildTemplate();
+                if (isRebuildNeeded())
+                {
+                    rebuildNeeded= false;
+                    that.rebuild_();
+                }
+            }
+        }
+
+        function sqlEmpty()
+        {
+            var sort;
+            var prefix;
+
+            // ensureSortPrefsValid has been called, so no worries
+            sort= getSort("tag");
+            prefix= (sort[1] === "DESC" ? "'1'" : "'0'");
+
+            return [
+                "SELECT t.id AS id, ",
+                       "t.title AS title, ",
+                       "t.dateAdded / 1000000.0 AS dateAdded, ",
+                       "t.lastModified / 1000000.0 AS lastModified, ",
+                       "count(*) AS relatedSize, ",
+                       "t.id AS tags, ",
+                       "t.title AS statusText, ",
+                       "'bookmarktags:tagmenu' AS type, ",
+                       "'true' AS tagContainer ",
+                "FROM moz_bookmarks AS t, moz_bookmarks AS bms ",
+                "WHERE t.parent = ",
+                           BookmarkTags.Util.bmServ.tagsFolder, " AND ",
+                      "t.id = bms.parent ",
+                "GROUP BY t.id ",
+                "ORDER BY ", prefix, ", ", sort[0], " COLLATE NOCASE ", sort[1]
+            ].join("");
+        }
+
+        function sqlNonempty(tags, strings)
+        {
+            var idStr;
+            var statusText;
+            var sort;
+            var prefix;
+
+            idStr= tags.join(",");
+
+            statusText= strings.GetStringFromName("statusTextTagConstruction").
+                        replace("**STATUSTEXT**",
+                                that.getAttribute("statustext")).
+                        replace(/'/g, "''");
+
+            // ensureSortPrefsValid has been called, so no worries
+            sort= getSort("tag");
+            prefix= (sort[1] === "DESC" ? "'1'" : "'0'");
+
+            return [
+                "SELECT t.id AS id, ",
+                       "t.title AS title, ",
+                       "t.dateAdded / 1000000.0 AS dateAdded, ",
+                       "t.lastModified / 1000000.0 AS lastModified, ",
+                       "count(*) AS relatedSize, ",
+                       "'", idStr, ",' || t.id AS tags, ",
+                       "replace('", statusText,
+                           "', '**TAG**', t.title) AS statusText, ",
+                       "'bookmarktags:tagmenu' AS type, ",
+                       "'true' AS tagContainer ",
+                "FROM moz_bookmarks AS t, moz_bookmarks AS bms ",
+                "WHERE t.id NOT IN (", idStr, ") AND ",
+                      "t.parent = ",
+                          BookmarkTags.Util.bmServ.tagsFolder, " AND ",
+                      "bms.fk IN (SELECT fk FROM moz_bookmarks ",
+                                 "WHERE parent IN (", idStr, ") ",
+                                 "GROUP BY fk ",
+                                 "HAVING count(*) = ", tags.length,
+                                 ") AND ",
+                      "bms.parent = t.id ",
+                "GROUP BY t.id ",
+                "ORDER BY ", prefix, ", ", sort[0], " COLLATE NOCASE ", sort[1]
+            ].join("");
+        }
+
+        function tagsToQuery(tags)
+        {
+            return BookmarkTags.Query.queryWithTags(tags);
+        }
+
+        function wrapBMSQL(sql, strings)
+        {
+            var sort;
+            var prefix;
+            var statusText;
+
+            // ensureSortPrefsValid has been called, so no worries
+            sort= getSort("bookmark");
+            prefix= (sort[1] === "DESC" ? "'0'" : "'1'");
+
+            statusText= strings.
+                        GetStringFromName("statusTextBookmarkConstruction").
+                        replace("**STATUSTEXT**",
+                                that.getAttribute("statustext")).
+                        replace(/'/g, "''");
+
+            return [
+                "SELECT *, ",
+                       "replace('", statusText,
+                           "', '**BOOKMARK**', url) AS statusText ",
+                "FROM (", sql, ") ",
+                "ORDER BY ", prefix, ", ", sort[0], " COLLATE NOCASE ", sort[1]
+            ].join("");
+        }
+
+        init();
+
+      ]]></constructor>
+
+      <destructor><![CDATA[
+        this.destruct_();
+      ]]></destructor>
+
+    </implementation>
+  </binding>
+
+
+
+  <binding id="tagMenu"
+           extends="chrome://global/content/bindings/menu.xml#menu-iconic">
+    <implementation>
+      <constructor><![CDATA[
+        var popup;
+
+        this.contextMenu= this.parentNode.getAttribute("tagcontextmenu");
+
+        popup= document.createElement("menupopup");
+
+        // popups pass on their bmcontextmenu and tagcontextmenu attributes
+        // to their popup descendents, who in turn pass on the appropriate
+        // attribute to their bookmark menuitem and tag menu children
+        popup.setAttribute("bmcontextmenu",
+                           this.parentNode.getAttribute("bmcontextmenu"));
+        popup.setAttribute("tagcontextmenu",
+                           this.parentNode.getAttribute("tagcontextmenu"));
+
+        popup.setAttribute("querytype", "storage");
+        popup.setAttribute("datasources", "profile:places.sqlite");
+        popup.setAttribute("ref", "*");
+        popup.setAttribute("tags", this.getAttribute("tags"));
+        popup.setAttribute("statustext", this.getAttribute("statustext"));
+        popup.setAttribute("type", "bookmarktags:tagpopup");
+
+        this.appendChild(popup);
+      ]]></constructor>
+    </implementation>
+  </binding>
+
+</bindings>

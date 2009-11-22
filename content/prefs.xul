@@ -1,0 +1,280 @@
+<?xml version="1.0"?>
+
+<!-- ***** BEGIN LICENSE BLOCK *****
+   - Version: MPL 1.1
+   -
+   - The contents of this file are subject to the Mozilla Public License Version
+   - 1.1 (the "License"); you may not use this file except in compliance with
+   - the License. You may obtain a copy of the License at
+   - http://www.mozilla.org/MPL/
+   -
+   - Software distributed under the License is distributed on an "AS IS" basis,
+   - WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+   - for the specific language governing rights and limitations under the
+   - License.
+   -
+   - The Original Code is the Bookmark Tags Firefox Extension.
+   -
+   - The Initial Developer of the Original Code is
+   - Drew Willcoxon <drew.willcoxon@gmail.com>.
+   - Portions created by the Initial Developer are Copyright (C) 2005, 2006,
+   - 2007, 2008 the Initial Developer. All Rights Reserved.
+   -
+   - Contributor(s):
+   -
+   - ***** END LICENSE BLOCK ***** -->
+
+<!DOCTYPE dialog [
+  <!ENTITY % commands SYSTEM "chrome://bookmarktags/locale/commands.dtd">
+  %commands;
+  <!ENTITY % prefs SYSTEM "chrome://bookmarktags/locale/prefs.dtd">
+  %prefs;
+]>
+
+<?xml-stylesheet href="chrome://bookmarktags/skin/prefs.css" type="text/css" ?>
+
+<!-- prefwindow sucks -->
+<dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+        id="BookmarkTags-preferencesWindow"
+        title="&window.title;"
+        buttons="accept,cancel,extra1,extra2"
+        buttonlabelextra1="&applyButton.label;"
+        buttonlabelextra2="&defaultsButton.label;"
+        ondialogaccept="return BookmarkTags.onDialogAccept(event);"
+        ondialogextra1="BookmarkTags.applyPrefs();"
+        ondialogextra2="BookmarkTags.resetPrefs();"
+        onload="BookmarkTags.onLoad();"
+        style="width: &window.width;;">
+
+  <!-- openUILinkIn function for help -->
+  <script type="application/x-javascript"
+          src="chrome://browser/content/utilityOverlay.js" />
+
+  <script type="application/x-javascript"
+          src="chrome://bookmarktags/content/prefs.js" />
+  <script type="application/x-javascript"
+          src="chrome://bookmarktags/content/util.js" />
+
+  <tabbox id="tabbox">
+
+    <tabs>
+      <tab id="sidebarTab"
+           label="&sidebarPrefpane.label;"
+           accesskey="&sidebarPrefpane.accesskey;" />
+      <tab id="tagMenuTab"
+           label="&tagMenuPrefpane.label;"
+           accesskey="&tagMenuPrefpane.accesskey;" />
+      <tab id="migratorTab"
+           label="&migratorPrefpane.label;"
+           accesskey="&migratorPrefpane.accesskey;" />
+      <tab id="helpTab"
+           label="&helpPrefpane.label;"
+           accesskey="&helpPrefpane.accesskey;" />
+    </tabs>
+
+    <tabpanels>
+
+      <vbox id="sidebarPanel">
+
+        <groupbox>
+          <caption label="&tagInputGroupbox.caption;" />
+          <checkbox id="disableTagInputAutocomplete"
+                    label="&disableTagInputAutocomplete.label;"
+                    accesskey="&disableTagInputAutocomplete.accesskey;"
+                    flex="1" />
+          <checkbox id="disableFindAsYouType"
+                    label="&disableFindAsYouType.label;"
+                    accesskey="&disableFindAsYouType.accesskey;"
+                    flex="1" />
+          <checkbox id="restrictQueryInputCompletions"
+                    label="&restrictQueryInputCompletions.label;"
+                    accesskey="&restrictQueryInputCompletions.accesskey;"
+                    flex="1" />
+        </groupbox>
+
+        <groupbox>
+          <caption label="&queryCloudGroupbox.caption;" />
+          <label value="&queryCloudTagClickAction.label;"
+                 accesskey="&queryCloudTagClickAction.accesskey;"
+                 flex="1"
+                 control="queryCloudTagClickActionMenu" />
+          <menulist id="queryCloudTagClickAction"
+                    sizetopopup="always"
+                    flex="1"
+                    style="margin-left: 2em;">
+            <menupopup>
+              <menuitem label="&queryCloudTagClickAction.pop;" value="0" />
+              <menuitem label="&queryCloudTagClickAction.remove;" value="1" />
+              <menuitem label="&queryCloudTagClickAction.removeOthers;" value="2" />
+            </menupopup>
+          </menulist>
+          <separator class="thin" />
+          <checkbox id="hideQueryCloud"
+                    label="&hideQueryCloud.label;"
+                    accesskey="&hideQueryCloud.accesskey;"
+                    flex="1" />
+        </groupbox>
+
+        <groupbox>
+          <caption label="&tagDisplayGroupbox.caption;" />
+          <hbox align="center">
+            <label value="&tagDisplay.label;"
+                   accesskey="&tagDisplay.accesskey;"
+                   control="tagDisplayMenu" />
+            <menulist id="tagDisplay"
+                      flex="1"
+                      sizetopopup="always">
+              <menupopup>
+                <menuitem label="&tagDisplay.list;" value="1" />
+                <menuitem label="&tagDisplay.cloud;" value="0" />
+              </menupopup>
+            </menulist>
+          </hbox>
+          <separator class="thin" />
+          <checkbox id="cloudsReflectTagSizes"
+                    flex="1"
+                    label="&cloudsReflectTagSizes.label;"
+                    accesskey="&cloudsReflectTagSizes.accesskey;" />
+        </groupbox>
+
+        <groupbox>
+          <caption label="&sidebarKeyGroupbox.caption;" />
+          <description id="sidebarKeyInfoLabel" control="sidebarKey" />
+          <hbox align="center" style="margin-left: 2em;">
+            <textbox id="sidebarKey"
+                     flex="1"
+                     emptytext="&sidebarKey.textbox.emptytext;"
+                     onkeypress="BookmarkTags.SidebarPanel.onKeyEntry(this, event);" />
+            <button label="&sidebarKey.clear.label;"
+                    accesskey="&sidebarKey.clear.accesskey;"
+                    oncommand="BookmarkTags.SidebarPanel.clearKey();" />
+          </hbox>
+        </groupbox>
+
+      </vbox>
+
+      <vbox id="tagMenuPanel">
+        <description>&tagMenuDescription;</description>        
+        <separator />
+        <grid>
+          <columns>
+            <column />
+            <column flex="1" />
+            <column />
+          </columns>
+          <rows>
+            <row align="center">
+              <label value="&tagMenu.tagSort.label;" />
+              <menulist id="tagMenu.tagSort"
+                        oncommand="BookmarkTags.TagMenuPanel.prepareSortDirMenu('tag');">
+                <menupopup>
+                  <menuitem value="title"
+                            label="&bmt.sortCmd_title.label;" />
+                  <menuitem value="relatedSize"
+                            label="&bmt.sortCmd_relatedSize.label;" />
+                  <menuitem value="lastModified"
+                            label="&bmt.sortCmd_lastModified.label;" />
+                  <menuitem value="dateAdded"
+                            label="&bmt.sortCmd_dateAdded.label;" />
+                </menupopup>
+              </menulist>
+              <menulist id="tagMenu.tagSortDirection">
+                <menupopup>
+                  <menuitem value="ASC"
+                            label="&bmt.sortDirCmd_lexico_ascending.label;"
+                            name="title" />
+                  <menuitem value="DESC"
+                            label="&bmt.sortDirCmd_lexico_descending.label;"
+                            name="title" />
+                  <menuitem value="ASC"
+                            label="&bmt.sortDirCmd_time_ascending.label;"
+                            name="dateAdded lastModified" />
+                  <menuitem value="DESC"
+                            label="&bmt.sortDirCmd_time_descending.label;"
+                            name="dateAdded lastModified" />
+                  <menuitem value="ASC"
+                            label="&bmt.sortDirCmd_quantity_ascending.label;"
+                            name="relatedSize" />
+                  <menuitem value="DESC"
+                            label="&bmt.sortDirCmd_quantity_descending.label;"
+                            name="relatedSize" />
+                </menupopup>
+              </menulist>
+            </row>
+            <row align="center">
+              <label value="&tagMenu.bookmarkSort.label;" />
+              <menulist id="tagMenu.bookmarkSort"
+                        oncommand="BookmarkTags.TagMenuPanel.prepareSortDirMenu('bookmark');">
+                <menupopup>
+                  <menuitem value="title"
+                            label="&bmt.sortCmd_title.label;" />
+                  <menuitem value="visit_date"
+                            label="&bmt.sortCmd_visit_date.label;" />
+                  <menuitem value="lastModified"
+                            label="&bmt.sortCmd_lastModified.label;" />
+                  <menuitem value="dateAdded"
+                            label="&bmt.sortCmd_dateAdded.label;" />
+                  <menuitem value="url"
+                            label="&bmt.sortCmd_url.label;" />
+                  <menuitem value="visit_count"
+                            label="&bmt.sortCmd_visit_count.label;" />
+                  <menuitem value="frecency"
+                            label="&bmt.sortCmd_frecency.label;" />
+                </menupopup>
+              </menulist>
+              <menulist id="tagMenu.bookmarkSortDirection">
+                <menupopup>
+                  <menuitem value="ASC"
+                            label="&bmt.sortDirCmd_lexico_ascending.label;"
+                            name="url title" />
+                  <menuitem value="DESC"
+                            label="&bmt.sortDirCmd_lexico_descending.label;"
+                            name="url title" />
+                  <menuitem value="ASC"
+                            label="&bmt.sortDirCmd_time_ascending.label;"
+                            name="dateAdded lastModified visit_date" />
+                  <menuitem value="DESC"
+                            label="&bmt.sortDirCmd_time_descending.label;"
+                            name="dateAdded lastModified visit_date" />
+                  <menuitem value="ASC"
+                            label="&bmt.sortDirCmd_quantity_ascending.label;"
+                            name="frecency visit_count" />
+                  <menuitem value="DESC"
+                            label="&bmt.sortDirCmd_quantity_descending.label;"
+                            name="frecency visit_count" />
+                </menupopup>
+              </menulist>
+            </row>
+          </rows>
+        </grid>
+      </vbox>
+
+      <vbox id="migratorPanel">
+        <description id="migratorDesc">&migratorDescription;</description>
+        <separator />
+        <vbox align="end">
+          <button label="&migratorButton.label;"
+                  accesskey="&migratorButton.accesskey;"
+                  oncommand="BookmarkTags.launchMigrator();" />
+        </vbox>
+      </vbox>
+
+      <vbox id="helpPanel">
+        <description id="helpDesc">&helpDescription;</description>
+        <separator />
+        <vbox align="end">
+          <hbox>
+            <button label="&helpButton.label;"
+                    accesskey="&helpButton.accesskey;"
+                    oncommand="openUILinkIn(BookmarkTags.Util.HELP_URL, 'tab');" />
+            <button label="&homeButton.label;"
+                    accesskey="&homeButton.accesskey;"
+                    oncommand="openUILinkIn(BookmarkTags.Util.HOME_URL, 'tab');" />
+          </hbox>
+        </vbox>
+      </vbox>
+
+    </tabpanels>
+  </tabbox>
+
+</dialog>

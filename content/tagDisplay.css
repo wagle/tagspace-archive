@@ -1,0 +1,29 @@
+box[type="bookmarktags:tagcloud"]
+{
+    -moz-binding: url("chrome://bookmarktags/content/tagDisplay.xml#tagCloud") !important;
+    overflow:     auto !important;
+}
+box[type="bookmarktags:tagcloud"][noscroll="true"]
+{
+    overflow:     visible !important;
+}
+
+box[type="bookmarktags:tagcloud"]
+{
+    -moz-binding: url("chrome://bookmarktags/content/tagDisplay.xml#tagCloud") !important;
+    overflow:     auto !important;
+}
+box[type="bookmarktags:tagcloud"][noscroll="true"]
+{
+    overflow:     visible !important;
+}
+
+tree[type="bookmarktags:tagtree"]
+{
+    -moz-binding: url("chrome://bookmarktags/content/tagDisplay.xml#tagTree") !important;
+}
+
+bmt-tagdisplay
+{
+    -moz-binding: url("chrome://bookmarktags/content/tagDisplay.xml#tagDisplay") !important;
+}

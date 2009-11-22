@@ -1,0 +1,109 @@
+<?xml version="1.0"?>
+
+<!-- ***** BEGIN LICENSE BLOCK *****
+   - Version: MPL 1.1
+   -
+   - The contents of this file are subject to the Mozilla Public License Version
+   - 1.1 (the "License"); you may not use this file except in compliance with
+   - the License. You may obtain a copy of the License at
+   - http://www.mozilla.org/MPL/
+   -
+   - Software distributed under the License is distributed on an "AS IS" basis,
+   - WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+   - for the specific language governing rights and limitations under the
+   - License.
+   -
+   - The Original Code is the Bookmark Tags Firefox Extension.
+   -
+   - The Initial Developer of the Original Code is
+   - Drew Willcoxon <drew.willcoxon@gmail.com>.
+   - Portions created by the Initial Developer are Copyright (C) 2005, 2006,
+   - 2007, 2008 the Initial Developer. All Rights Reserved.
+   -
+   - Contributor(s):
+   -
+   - ***** END LICENSE BLOCK ***** -->
+
+<?xml-stylesheet href="chrome://global/skin/" type="text/css" ?>
+
+<?xml-stylesheet href="chrome://browser/content/places/places.css"?>
+<?xml-stylesheet href="chrome://browser/skin/places/places.css"?>
+<?xul-overlay href="chrome://browser/content/places/placesOverlay.xul"?>
+
+<page xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+      orient="vertical">
+
+  <script type="application/x-javascript"
+          src="chrome://bookmarktags/content/clean.js" />
+
+  <hbox flex="1">
+
+    <vbox flex="1">
+      <description>
+        Folders and bookmarks with invalid parent folders appear below.  Click
+        one to see details.
+      </description>
+      <tree id="foldertree"
+            datasources="profile:places.sqlite"
+            ref="*"
+            querytype="storage"
+            seltype="single"
+            class="plain"
+            flex="1"
+            onselect="BookmarkTags.onselect(this, event);">
+        <treecols>
+          <treecol id="title" flex="1" primary="true" label="Title" />
+          <treecol id="id" flex="1" label="ID" />
+        </treecols>
+        <template>
+          <query id="query">
+            SELECT cf.id AS id, cf.title AS title
+            FROM moz_bookmarks AS cf
+            LEFT OUTER JOIN moz_bookmarks AS pf ON cf.parent = pf.id
+            WHERE pf.id ISNULL AND cf.id > 1;
+          </query>
+          <action>
+            <treechildren flex="1">
+              <treeitem uri="?">
+                <treerow>
+                  <treecell label="?title" />
+                  <treecell label="?id" />
+                </treerow>
+              </treeitem>
+            </treechildren>
+          </action>
+        </template>
+      </tree>
+
+    </vbox>
+
+    <splitter />
+  
+    <vbox flex="1" id="folderbox" hidden="true">
+      <description>
+        This is a folder with an invalid parent folder. Its contents are:
+      </description>
+      <tree id="childtree"
+            type="places"
+            seltype="single"
+            class="plain"
+            flex="1">
+        <treecols>
+          <treecol id="title" flex="1" primary="true" label="Title" />
+        </treecols>
+        <treechildren flex="1" />
+      </tree>
+    </vbox>
+
+    <vbox flex="1" id="bmbox" hidden="true">
+      <description>
+        This is a bookmark with an invalid parent folder.
+      </description>
+    </vbox>
+
+  </hbox>
+
+  <button label="Delete orphaned folders and bookmarks"
+          oncommand="BookmarkTags.doDelete();" />
+
+</page>

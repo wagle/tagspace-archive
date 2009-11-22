@@ -1,0 +1,14 @@
+content	bookmarktags 			content/        contentaccessible=yes
+locale	bookmarktags	en-US		locale/en-US/
+locale	bookmarktags	de-DE		locale/de-DE/
+skin	bookmarktags 	classic/1.0	skin/classic/
+
+skin bookmarktags-platform winstripe/1.0 skin/winstripe/ os=WINNT
+skin bookmarktags-platform pinstripe/1.0 skin/pinstripe/ os=Darwin
+skin bookmarktags-platform gnomestripe/1.0 skin/gnomestripe/ os=Linux os=SunOS os=FreeBSD os=OpenBSD os=NetBSD os=IRIX64 os=AIX os=HP-UX os=DragonFly
+
+overlay	chrome://browser/content/browser.xul chrome://bookmarktags/content/browserOverlay.xul
+
+style chrome://global/content/customizeToolbar.xul chrome://bookmarktags/skin/toolbarButton.css
+
+resource bookmarktags content/

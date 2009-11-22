@@ -1,0 +1,17 @@
+@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+
+popup[type="bookmarktags:tagpopup"],
+menupopup[type="bookmarktags:tagpopup"]
+{
+    -moz-binding: url("chrome://bookmarktags/content/tagMenu.xml#tagPopup") !important;
+}
+
+menu[type="bookmarktags:tagmenu"]
+{
+    -moz-binding: url("chrome://bookmarktags/content/tagMenu.xml#tagMenu") !important;
+}
+
+menu[type="bookmarktags:bookmarkmenu"]
+{
+    -moz-binding: url("chrome://bookmarktags/content/tagMenu.xml#bmMenu") !important;
+}

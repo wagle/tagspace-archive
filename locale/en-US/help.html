@@ -1,0 +1,570 @@
+<!DOCTYPE html
+          PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <title>TagSifter Help</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <style type="text/css">
+    <!--
+      body {
+        background: #fff;
+        color: #333;
+        font-family: sans-serif;
+        width: 35em;
+        margin-left: 10%;
+        line-height: 1.4;
+        }
+      a:hover {
+        background: #ddf;
+        }
+      h1 {
+        font-size: 2em;
+        font-weight: bold;
+        }
+      h2 {
+        font-size: 1.6em;
+        font-weight: bold;
+        }
+      h3 {
+        font-size: 1.3em;
+        font-weight: bold;
+        margin-top: 1.5em;
+        }
+      div {
+        margin-bottom: 3em;
+        }
+      table {
+        width: 100%;
+        }
+      table tr {
+        vertical-align: top;
+        }
+      table tr > * {
+        padding: 0.5em;
+        }
+      table th {
+        font-weight: bold;
+        text-align: center;
+        }
+      table td {
+        background-color: #eef;
+        }
+      ul > li {
+        list-style-type: square;
+        }
+      ul > li > ul > li {
+        list-style-type: disc;
+        }
+      .key {
+        font-family: monospace;
+        background: #dfc;
+        }
+      .operator {
+        font-family: monospace;
+        font-weight: bold;
+        }
+      .tagname {
+        font-style: italic;
+        }
+      p.expr {
+        text-align: center;
+        background-color: #eef;
+        }
+      .expr {
+        font-family: monospace;
+        }
+    -->
+    </style>
+  </head>
+
+  <body>
+  <div id="outer">
+
+    <div id="title">
+      <h1>TagSifter Help</h1>
+      <h2>Browse your bookmarks with sets of tags</h2>
+      <h3>Version 4.1.4</h3>
+    </div>
+
+    <div id="intro">
+      <p>
+        Firefox 3 lets you tag your bookmarks, but it doesn't give you a great
+        way to browse your bookmarks by their tags.  TagSifter tries to.
+      </p>
+      <p>
+        Click a bunch of tags in the <a href="#use-sidebar-simple">sidebar</a>
+        or <a href="#use-menu">menu</a> to see the bookmarks and other tags that
+        are related.  Use the related tags to quickly filter your search.
+      </p>
+      <p>
+        Or, if you can handle real ultimate power, use a full
+        range of <a href="#use-sidebar-advanced">set operators</a> in arbitrary
+        expressions to search your bookmarks by their tags.
+      </p>
+      <p>
+        TagSifter also comes with a <a href="#use-migrator">tool</a> to help you
+        tag your old bookmarks as you migrate to Firefox 3.
+      </p>
+      <p>
+        <em>Note that this is TagSifter's help, not its
+        <a href="http://cs.stanford.edu/people/adw/tagsifter/">homepage</a>.
+        Visit it for more, up-to-date information and errata.</em>
+      </p>
+    </div>
+
+    <div id="contents">
+      <h2>Contents</h2>
+      <ul>
+        <li>
+          <a href="#use">Use</a>
+          <ul>
+            <li><a href="#use-sidebar-simple">Sidebar, Simple Use</a></li>
+            <li>
+              <a href="#use-sidebar-advanced">Sidebar, Advanced Use</a>
+              <ul>
+                <li><a href="#use-sidebar-advanced-keys">
+                  Advanced Key Shortcuts
+                </a></li>
+              </ul>
+            </li>
+            <li><a href="#use-menu">Menu</a></li>
+            <li><a href="#use-migrator">Tagging Bookmarks in Batch</a></li>
+          </ul>
+        </li>
+        <li><a href="#operating">Caution: Doing Stuff and Things to Tags and Bookmarks</a></li>
+        <li><a href="#options">Options</a></li>
+        <li><a href="#more">More Info</a></li>
+      </ul>
+    </div>
+
+    <div id="use">
+      <a name="use"></a>
+      <h2>Use</h2>
+      <p>
+        Two choices, a sidebar and a menu.  Either way, browsing is simple:
+        select a bunch of tags, and TagSifter shows you all the related
+        bookmarks.  You'll also see other tags that have bookmarks in common
+        and with them you can easily narrow down your search.
+      </p>
+
+      <a name="use-sidebar-simple"></a>
+      <h3>Sidebar, Simple Use</h3>
+      <p>
+        Open the sidebar from the sidebar menu (from the menus View &gt;
+        Sidebar) or its toolbar button.  (Add the toolbar button to your
+        toolbar via the menus View &gt; Toolbars &gt; Customize... TagSifter is
+        a courteous extension and does not by default add to the clutter of
+        your toolbar.)  You can also set a custom
+        <a href="#options">keyboard shortcut</a> to open the sidebar.
+      </p>
+      <p>
+        Click tags in the list to add them to the query.  The sidebar
+        will show only the bookmarks that are related&mdash;that is, those
+        bookmarks that are tagged by all the tags in the query.  The list of
+        tags will be updated with those tags that have bookmarks in common with
+        the tags of the query.
+      </p>
+      <p>
+        Remove tags from the query by clicking their names in the query
+        cloud&mdash;that's the grouping of tags under the textbox.
+        By default, clicking a tag will remove all succeeding tags.  Right-click
+        to open a context menu, which has more options.  To remove all tags,
+        click the reset button at the left side of the textbox.
+      </p>
+
+      <a name="use-sidebar-advanced"></a>
+      <h3>Sidebar, Advanced Use</h3>
+      <p>
+        "Tag" is just a kitty-cat-kisses way to say "a set of bookmarks."
+        TagSifter lets you combine your tags in arbitrary and interesting ways
+        with set operators.  Like,
+      </p>
+      <p class="expr">
+        muffins - (cookies + brownies) ?donuts
+      </p>
+      <p>
+        will show you all bookmarks (and related tags) that are tagged
+        with <span class="tagname">muffins</span> but not with
+        either <span class="tagname">cookies</span> or
+        <span class="tagname">brownies</span> and whose names or URLs contain
+        the word "donuts". 
+      </p>
+      <p>
+        Easy peasy.
+      </p>
+      <p>
+        The following operators are available:
+      </p>
+      <table>
+        <tr>
+          <th>Operator</th>
+          <th>Meaning</th>
+          <th>Example</th>
+          <th>Example Meaning</th>
+        </tr>
+        <tr>
+          <td><span class="operator">,</span></td>
+          <td>intersection ("and")</td>
+          <td><span class="expr">ness,&nbsp;paula</span></td>
+          <td>
+            bookmarks tagged with both <span class="tagname">ness</span> and
+            <span class="tagname">paula</span>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="operator">&amp;</span></td>
+          <td>intersection</td>
+          <td><span class="expr">mario&nbsp;&amp;&nbsp;daisy</span></td>
+        </tr>
+        <tr>
+          <td><span class="operator">+</span></td>
+          <td>union ("or")</td>
+          <td><span class="expr">bub&nbsp;+&nbsp;bob</span></td>
+          <td>
+            bookmarks tagged with either <span class="tagname">bub</span> or
+            <span class="tagname">bob</span>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="operator">|</span></td>
+          <td>union</td>
+          <td><span class="expr">link&nbsp;|&nbsp;zelda</span></td>
+        </tr>
+        <tr>
+          <td><span class="operator">-</span></td>
+          <td>difference ("but not")</td>
+          <td><span class="expr">sonic&nbsp;-&nbsp;tails</span></td>
+          <td>
+            bookmarks tagged with <span class="tagname">sonic</span> but not
+            with <span class="tagname">tails</span>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="operator">!</span></td>
+          <td>complement ("not")</td>
+          <td><span class="expr">!crono</span></td>
+          <td>bookmarks not tagged with <span class="tagname">crono</span></td>
+        </tr>
+        <tr>
+          <td><span class="operator">~</span></td>
+          <td>complement</td>
+          <td><span class="expr">~cloud</span></td>
+        </tr>
+        <tr>
+          <td>
+            <span class="operator">(</span> and <span class="operator">)</span>
+          </td>
+          <td>precedence</td>
+          <td><span class="expr">!(samus&nbsp;&amp;&nbsp;yoshi)</span></td>
+          <td>
+            bookmarks not tagged with both
+            <span class="tagname">samus</span> and
+            <span class="tagname">yoshi</span>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="operator">?</span></td>
+          <td>bookmark search (names and URLs)</td>
+          <td><span class="expr">?chop chop master onion</span></td>
+          <td>
+            bookmarks whose names or URLs contain the case-insensitive string
+            "chop chop master onion"
+          </td>
+        </tr>
+      </table>
+      <p>
+        Note that the sidebar's simple use described above intersects all tags.
+      </p>
+      <p>
+        Some details:
+      </p>
+      <ul>
+        <li>
+          TagSifter shows you only bookmarks that have at least one
+          tag.  <span class="expr">!meatwad</span> does not actually get you
+          all bookmarks not tagged with <span class="tagname">meatwad</span>
+          but rather all <strong>tagged</strong> bookmarks not tagged with
+          <span class="tagname">meatwad</span>.
+        </li>
+        <li>
+          If a tag name or bookmark search contains one of the
+          above operators, prefix the operator with a
+          <span class="operator">\</span> (backslash).  Like, if
+          you've got a tag named <span class="tagname">cock-a-hoop</span>,
+          type it as <span class="expr">cock\-a\-hoop</span>.  Otherwise
+          TagSifter will think you meant the expression
+          <span class="expr">cock - a - hoop</span>.
+        </li>
+        <li>
+          The binary operators (intersection, union, and difference) all have
+          the same precedence, which is lower than the precedence of the unary
+          operators (complement and bookmark search), and are evaluated from
+          left to right.
+        </li>
+        <li>
+          To make it a little easier on you, TagSifter assumes an intersection
+          in certain cases:
+
+          <table id="impliedIntersectionTable">
+            <tr>
+              <td colspan="3">
+                A <span class="operator">)</span> followed by a tag name
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span class="expr">(franks, beans) greens</span>
+              </td>
+              <td>
+                &#8658;
+              </td>
+              <td>
+                <span class="expr">(franks, beans) <strong>&amp;</strong>
+                greens</span>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="3">
+                A <span class="operator">)</span> followed by a
+                <span class="operator">(</span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span class="expr">(peas, biscuits) (corn)</span>
+              </td>
+              <td>
+                &#8658;
+              </td>
+              <td>
+                <span class="expr">(peas, biscuits) <strong>&amp;</strong>
+                (corn)</span>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="3">
+                A <span class="operator">)</span> followed by a unary operator
+                (complement or bookmark search)
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span class="expr">(cornbread + chicken) !bacon</span>
+              </td>
+              <td>
+                &#8658;
+              </td>
+              <td>
+                <span class="expr">(cornbread + chicken) <strong>&amp;</strong>
+                !bacon</span>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="3">
+                A tag name or bookmark search followed by a
+                <span class="operator">(</span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span class="expr">porkchops (gravy | rice)</span>
+              </td>
+              <td>
+                &#8658;
+              </td>
+              <td>
+                <span class="expr">porkchops <strong>&amp;</strong> (gravy |
+                rice)</span>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="3">
+                A tag name or bookmark search followed by a unary operator
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span class="expr">?potatoes !beans</span>
+              </td>
+              <td>
+                &#8658;
+              </td>
+              <td>
+                <span class="expr">
+                  ?potatoes <strong>&amp;</strong> !beans
+                </span>
+              </td>
+            </tr>
+          </table>
+        </li>
+      </ul>
+
+      <a name="use-sidebar-advanced-keys"></a>
+      <h4>Advanced Key Shortcuts</h4>
+      <p>
+        <a href="#options">By default</a> the textbox will autocomplete tags as
+        you type, and if it completes the tag you want, press
+        <span class="key">Tab</span> or <span class="key">Enter</span> to skip
+        to the end, where you can begin typing the next tag.  Also by default,
+        tag completions are drawn from the list of related tags.  If you often
+        use the advanced functionality of the sidebar, you may want completions
+        to be drawn from all tags, and you can make that happen by toggling the
+        relevant <a href="#options">option</a>.
+      </p>
+      <p>
+        Remove the last tag you typed by pressing <span class="key">Esc</span>,
+        and remove all tags with <span class="key">Shift+Esc</span>.
+      </p>
+
+      <a name="use-menu"></a>
+      <h3>Menu</h3>
+      <p>
+        The menu works similarly to the simple use of the sidebar.  As you
+        navigate the menus, you narrow down your bookmarks to those that are
+        tagged by all the tags you've selected.  Each successive menu shows only
+        the tags related to those you've selected.
+      </p>
+      <p>
+        Open the menu from its toolbar button.  (Add the toolbar button
+        to your toolbar via the menus View &gt; Toolbars &gt; Customize...
+        TagSifter is a courteous extension and does not by default add to the
+        clutter of your toolbar.)  On systems other than Mac OS X, the menu can
+        also be opened from Firefox's bookmarks menu.
+      </p>
+
+      <a name="use-migrator"></a>
+      <h3>Tagging Bookmarks in Batch</h3>
+      <p>
+        TagSifter comes with a simple tool that can help you migrate your
+        bookmarks from older versions of Firefox to tagged bookmarks in
+        Firefox 3.  Actually, you can use it to batch-tag any of your bookmarks.
+      </p>
+      <p>
+        It works by tagging bookmarks with tags corresponding to all the folders
+        that contain those bookmarks.  For example, if your Ramen
+        Noodles bookmark is filed in folders Eats/Cooking/Chinese, then
+        that bookmark will be tagged <span class="tagname">Eats</span>,
+        <span class="tagname">Cooking</span>, and
+        <span class="tagname">Chinese</span>.  You can choose the root folder at
+        which to begin tagging.
+      </p>
+      <p>
+        Start the tool by either
+      </p>
+      <ul>
+        <li>
+          selecting "TagSifter Migrator" from the Tools menu
+          (Tools &gt; TagSifter Migrator), or
+        </li>
+        <li>
+          selecting the "Migrate Folders" tab in TagSifter's
+          <a href="#options">options window</a>.
+        </li>
+      </ul>
+    </div>
+
+    <div id="operating">
+      <a name="operating"></a>
+      <h2>Caution: Doing Stuff and Things to Tags and Bookmarks</h2>
+      <p>
+        TagSifter lets you cut, copy, paste, delete, and otherwise act on
+        individual tags and bookmarks.  Right-click on a tag or bookmark in
+        the sidebar or menu to open a context menu.  You can also drag items
+        to the list of bookmarks in the sidebar to tag them and away to copy
+        or move them elsewhere.
+      </p>
+      <p>
+        Sounds good.  But here is an important subtlety:
+      </p>
+      <blockquote>
+        <p>
+          <strong>
+            1. Firefox lets you both tag a bookmark and file it into the
+            folder hierarchy.  In fact all bookmarks in Firefox are
+            kept in the hierarchy, even if it's only the special "Unsorted
+            Bookmarks" folder.
+          </strong>
+        </p>
+      </blockquote>
+      <p>
+        So what does it mean to delete a bookmark?  Do you remove it from the
+        folder hierarchy?  Do you remove its tags?  Or both?  Which tags do you
+        remove?  What happens when you cut or move a bookmark?
+      </p>
+      <p>
+        While you're thinking about that think about this:
+      </p>
+      <blockquote>
+        <p>
+          <strong>
+            2. Some TagSifter commands, such as cutting, copying, pasting, and
+            untagging bookmarks, are sensitive to the tags you've selected in
+            the query.  And don't forget that tags are just sets of bookmarks.
+          </strong>
+        </p>
+      </blockquote>
+      <p>
+        On the first point TagSifter punts.  You have to specify what you want
+        to happen.  When you elect to delete a bookmark, you both remove it
+        from the folder hierarchy and untag it&mdash;get rid of it completely.
+        You can also separately choose to remove all tags from a bookmark or
+        only the ones you've selected in the query.
+      </p>
+      <p>
+        The second point means that, for example, when you copy a tag, you're
+        really copying all the bookmarks that would have appeared in the
+        bookmarks list had you selected the tag and added it to the query.
+        Similarly, when you open all of a tag's bookmarks by selecting that
+        command in the context menu or middle-, shift-, or control-clicking on
+        the tag, the bookmarks that open are those that would have appeared in
+        the bookmarks list had you selected the tag and added it to the query.
+      </p>
+      <p>
+        If you aren't confused yet, the second point does not apply to deleting
+        and cutting tags.  To delete or cut a tag, you must not have selected
+        any tags and the query must be empty.  Deleting a tag does not delete
+        its bookmarks, only the tag itself.
+      </p>
+    </div>
+
+    <div id="options">
+      <a name="options"></a>
+      <h2>Options</h2>
+      <p>TagSifter has a few options you can twiddle, like:</p>
+      <ul>
+        <li>Make the sidebar show tags in a cloud instead of a list</li>
+        <li>Set a custom sidebar keyboard shortcut</li>
+        <li>Disable autocomplete and find-as-you-type in the sidebar</li>
+        <li>
+          Change what happens when you click a tag in the sidebar's query cloud
+        </li>
+        <li>Hide the query cloud</li>
+      </ul>
+      <p>
+        You can open TagSifter's options window in the same way as other
+        extensions (which is to say, from the menus Tools &gt; Add-ons, then
+        find TagSifter under the Add-ons tab and click the relevant button).
+      </p>
+      <p>
+        You can also color individual tags in the sidebar by right-clicking on
+        them to bring up a context menu.
+      </p>
+    </div>
+
+    <div id="more">
+      <a name="more"></a>
+      <h2>More Info</h2>
+      <p>
+        Visit TagSifter's
+        <a href="http://cs.stanford.edu/people/adw/tagsifter/">home on the Web</a>
+        for up-to-date information and errata.
+      </p>
+    </div>
+
+  </div>
+
+  </body>
+</html>

@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<RDF:RDF xmlns:em="http://www.mozilla.org/2004/em-rdf#"
+         xmlns:NC="http://home.netscape.com/NC-rdf#"
+         xmlns:RDF="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <RDF:Description RDF:about="rdf:#$CWq0h"
+                   em:id="{ec8030f7-c20a-464f-9b0e-13a3a9e97384}"
+                   em:minVersion="3.0"
+                   em:maxVersion="3.0.*" />
+  <RDF:Description RDF:about="urn:mozilla:install-manifest"
+                   em:id="{3b71bd20-ee7e-11d9-8cd6-0800200c9a66}"
+                   em:name="TagSifter"
+                   em:version="4.1.4"
+                   em:type="2"
+                   em:description="Browse your bookmarks with sets of tags"
+                   em:creator="chiisaitsu"
+                   em:homepageURL="http://cs.stanford.edu/people/adw/tagsifter/"
+                   em:optionsURL="chrome://bookmarktags/content/prefs.xul"
+                   em:iconURL="chrome://bookmarktags/skin/icon32.png">
+    <em:targetApplication RDF:resource="rdf:#$CWq0h"/>
+    <em:localized>
+      <RDF:Description em:locale="de-DE"
+                       em:name="TagSifter"
+                       em:description="Durchsuchen Sie Ihre Lesezeichen mit Hilfe von Schlagwörtern"
+                       em:creator="chiisaitsu"
+                       em:homepageURL="http://cs.stanford.edu/people/adw/tagsifter/"
+                       em:translator="Martin Kasperek" />
+    </em:localized>
+  </RDF:Description>
+</RDF:RDF>

@@ -1,0 +1,26 @@
+@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+
+/**
+ * This is loaded dynamically if the skin is classic/1.0.  Makes the tag input
+ * all nice and OS-X rounded.  Rules stolen from #search-box at
+ * firefox/source/toolkit/themes/pinstripe/global/textbox.css
+ */
+
+bmt-taginput > textbox
+{
+    -moz-appearance:           none !important;
+    border:                    3px solid !important;
+    -moz-border-top-colors:    #5F5F5F #CFCFCF -moz-Field !important;
+    -moz-border-bottom-colors: #9F9F9F #EEE -moz-Field !important;
+    -moz-border-right-colors:  #7F7F7F #EEE -moz-Field !important;
+    -moz-border-left-colors:   #7F7F7F #EFEFEF -moz-Field !important;
+    -moz-border-radius:        11px !important;
+    padding-right:             8px !important;
+}
+
+bmt-taginput > textbox[focused="true"]
+{
+    outline:             2px solid #4A8BC7 !important;
+    outline-offset:      -2px !important;
+    -moz-outline-radius: 11px !important;
+}

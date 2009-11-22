@@ -1,0 +1,518 @@
+<?xml version="1.0"?>
+
+<!-- ***** BEGIN LICENSE BLOCK *****
+   - Version: MPL 1.1
+   -
+   - The contents of this file are subject to the Mozilla Public License Version
+   - 1.1 (the "License"); you may not use this file except in compliance with
+   - the License. You may obtain a copy of the License at
+   - http://www.mozilla.org/MPL/
+   -
+   - Software distributed under the License is distributed on an "AS IS" basis,
+   - WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+   - for the specific language governing rights and limitations under the
+   - License.
+   -
+   - The Original Code is the Bookmark Tags Firefox Extension.
+   -
+   - The Initial Developer of the Original Code is
+   - Drew Willcoxon <drew.willcoxon@gmail.com>.
+   - Portions created by the Initial Developer are Copyright (C) 2005, 2006,
+   - 2007, 2008 the Initial Developer. All Rights Reserved.
+   -
+   - Contributor(s):
+   -
+   - ***** END LICENSE BLOCK ***** -->
+
+<!DOCTYPE page [
+  <!ENTITY % commands SYSTEM "chrome://bookmarktags/locale/commands.dtd">
+  %commands;
+  <!ENTITY % tbs SYSTEM "chrome://bookmarktags/locale/tagBrowserSidebar.dtd">
+  %tbs;
+]>
+
+<?xml-stylesheet href="chrome://global/skin/" type="text/css" ?>
+<?xml-stylesheet href="chrome://bookmarktags/content/tagInput.css"
+                 type="text/css" ?>
+<?xml-stylesheet href="chrome://bookmarktags/skin/tagDisplay.css"
+                 type="text/css" ?>
+<?xml-stylesheet href="chrome://bookmarktags/content/bmTree.css"
+                 type="text/css" ?>
+<?xml-stylesheet href="chrome://bookmarktags/skin/tagBrowserSidebar.css"
+                 type="text/css" ?>
+
+<?xul-overlay href="chrome://global/content/editMenuOverlay.xul" ?>
+<?xul-overlay href="chrome://bookmarktags/content/commandOverlay.xul" ?>
+
+<page xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+      id="BookmarkTags-tagBrowserSidebar"
+      orient="vertical"
+      onload="BookmarkTags.onload();"
+      onunload="BookmarkTags.onunload();">
+
+  <script type="application/x-javascript"
+          src="chrome://global/content/globalOverlay.js"/>
+  <script type="application/x-javascript"
+          src="chrome://browser/content/utilityOverlay.js" />
+  <script type="application/x-javascript"
+          src="chrome://browser/content/places/utils.js"/>
+  <script type="application/x-javascript"
+          src="chrome://browser/content/places/treeView.js" />
+  <script type="application/x-javascript"
+          src="chrome://global/content/nsDragAndDrop.js" />
+
+  <script type="application/x-javascript"
+          src="chrome://bookmarktags/content/tagBrowserSidebar.js" />
+  <script type="application/x-javascript"
+          src="chrome://bookmarktags/content/remedial.js" />
+  <script type="application/x-javascript"
+          src="chrome://bookmarktags/content/util.js" />
+  <script type="application/x-javascript"
+          src="chrome://bookmarktags/content/commands.js" />
+  <script type="application/x-javascript"
+          src="chrome://bookmarktags/content/query.js" />
+  <script type="application/x-javascript"
+          src="chrome://bookmarktags/content/treeView.js" />
+  <script type="application/x-javascript"
+          src="chrome://bookmarktags/content/queryBuilder.js" />
+  <script type="application/x-javascript"
+          src="chrome://bookmarktags/content/color.js" />
+
+  <commandset id="editMenuCommands" />
+  <commandset id="bookmarktags:tagCmds" />
+  <commandset id="bookmarktags:queryCmds" />
+  <commandset id="bookmarktags:bmCmds" />
+  <commandset id="bookmarktags:tagInputCmds" />
+  <commandset id="bookmarktags:tagDisplayCmds" />
+
+  <keyset id="editMenuKeys" />
+
+  <popupset>
+    <menupopup id="bookmarktags:queryContextMenu" />
+    <menupopup id="bookmarktags:queryInputContextMenu" />
+
+    <!-- tag selector context menu -->
+    <menupopup id="tagSelectorContextMenu"
+               onpopupshowing="BookmarkTags.prepareTagSelectorContextMenu(this); return true;">
+      <menuitem command="bookmarktags:tagCmds:select" default="true" />
+      <menuseparator />
+      <menuitem command="bookmarktags:tagCmds:cut"
+                label="&bmt.tagCmd_cut.label;"
+                accesskey="&bmt.tagCmd_cut.accesskey;"
+                key="key_cut" />
+      <menuitem command="bookmarktags:tagCmds:copy"
+                label="&bmt.tagCmd_copy.label;"
+                accesskey="&bmt.tagCmd_copy.accesskey;"
+                key="key_copy" />
+      <menuitem command="bookmarktags:tagCmds:paste"
+                label="&bmt.tagCmd_paste.label;"
+                accesskey="&bmt.tagCmd_paste.accesskey;"
+                key="key_paste" />
+      <menuseparator />
+      <menuitem command="bookmarktags:tagCmds:delete"
+                label="&bmt.tagCmd_delete.label;"
+                accesskey="&bmt.tagCmd_delete.accesskey;"
+                key="key_delete" />
+      <menuseparator />
+      <menuitem command="bookmarktags:tagCmds:properties" />
+      <menuitem command="bookmarktags:tagCmds:openInTabs" />
+      <menu label="&bmt.tagCmd_setTagColor.label;"
+            accesskey="&bmt.tagCmd_setTagColor.accesskey;">
+        <menupopup>
+          <colorpicker onselect="BookmarkTags.Util.goDoCommand('bookmarktags:tagCmds:setTagColor:' + this.color); this.parentNode.parentNode.parentNode.hidePopup();" />
+          <menuitem label="&bmt.tagCmd_clearTagColor.label;"
+                    accesskey="&bmt.tagCmd_clearTagColor.accesskey;"
+                    oncommand="BookmarkTags.Util.goDoCommand('bookmarktags:tagCmds:setTagColor:');"
+                    style="text-align:center;" />
+        </menupopup>
+      </menu>
+      <menuseparator />
+      <menu label="&bmt.tagSortMenu.label;"
+            accesskey="&bmt.tagSortMenu.accesskey;">
+        <menupopup onpopupshowing="BookmarkTags.prepareTagSortMenu(this);">
+          <menuitem command="bookmarktags:tagDisplayCmds:sort:title"
+                    type="radio"
+                    autocheck="false"
+                    name="tagSort" />
+          <menuitem command="bookmarktags:tagDisplayCmds:sort:relatedSize"
+                    type="radio"
+                    autocheck="false"
+                    name="tagSort" />
+          <menuitem command="bookmarktags:tagDisplayCmds:sort:lastModified"
+                    type="radio"
+                    autocheck="false"
+                    name="tagSort" />
+          <menuitem command="bookmarktags:tagDisplayCmds:sort:dateAdded"
+                    type="radio"
+                    autocheck="false"
+                    name="tagSort" />
+          <menuseparator />
+          <menuitem command="bookmarktags:tagDisplayCmds:sortDir:ASC"
+                    label="&bmt.sortDirCmd_lexico_ascending.label;"
+                    type="radio"
+                    autocheck="false"
+                    name="title" />
+          <menuitem command="bookmarktags:tagDisplayCmds:sortDir:DESC"
+                    label="&bmt.sortDirCmd_lexico_descending.label;"
+                    type="radio"
+                    autocheck="false"
+                    name="title" />
+          <menuitem command="bookmarktags:tagDisplayCmds:sortDir:ASC"
+                    label="&bmt.sortDirCmd_time_ascending.label;"
+                    type="radio"
+                    autocheck="false"
+                    name="dateAdded lastModified" />
+          <menuitem command="bookmarktags:tagDisplayCmds:sortDir:DESC"
+                    label="&bmt.sortDirCmd_time_descending.label;"
+                    type="radio"
+                    autocheck="false"
+                    name="dateAdded lastModified" />
+          <menuitem command="bookmarktags:tagDisplayCmds:sortDir:ASC"
+                    label="&bmt.sortDirCmd_quantity_ascending.label;"
+                    type="radio"
+                    autocheck="false"
+                    name="relatedSize" />
+          <menuitem command="bookmarktags:tagDisplayCmds:sortDir:DESC"
+                    label="&bmt.sortDirCmd_quantity_descending.label;"
+                    type="radio"
+                    autocheck="false"
+                    name="relatedSize" />
+        </menupopup>
+      </menu>
+      <menuseparator />
+      <menuitem command="bookmarktags:tagDisplayCmds:list"
+                name="displayGroup"
+                type="radio"
+                autocheck="false" />
+      <menuitem command="bookmarktags:tagDisplayCmds:cloud"
+                name="displayGroup"
+                type="radio"
+                autocheck="false" />
+      <menuseparator />
+      <menuitem command="bookmarktags:tagDisplayCmds:customize" />
+      <menuitem command="bookmarktags:tagDisplayCmds:help" />
+    </menupopup>
+
+    <!-- bookmark context menu -->
+    <menupopup id="bmContextMenu"
+               onpopupshowing="BookmarkTags.prepareBMContextMenu();">
+      <menuitem command="bookmarktags:bmCmds:open" default="true" />
+      <menuitem command="bookmarktags:bmCmds:openInNewWindow" />
+      <menuitem command="bookmarktags:bmCmds:openInNewTab" />
+      <menuseparator />
+      <menuitem command="bookmarktags:bmCmds:cutDelete" />
+      <menuitem command="bookmarktags:bmCmds:cutUntagAll" />
+      <menuitem command="bookmarktags:bmCmds:cutUntagTags" />
+      <menuseparator />
+      <menuitem command="bookmarktags:bmCmds:copy"
+                label="&bmt.bmCmd_copy.label;"
+                accesskey="&bmt.bmCmd_copy.accesskey;"
+                key="key_copy" />
+      <menuitem command="bookmarktags:bmCmds:paste"
+                label="&bmt.bmCmd_paste.label;"
+                accesskey="&bmt.bmCmd_paste.accesskey;"
+                key="key_paste" />
+      <menuseparator />
+      <menuitem command="bookmarktags:bmCmds:delete"
+                label="&bmt.bmCmd_delete.label;"
+                accesskey="&bmt.bmCmd_delete.accesskey;"
+                key="key_delete" />
+      <menuitem command="bookmarktags:bmCmds:untagAll" />
+      <menuitem command="bookmarktags:bmCmds:untagTags" />
+      <menuseparator />
+      <menuitem command="bookmarktags:bmCmds:showInOrganizer" />
+      <menuitem command="bookmarktags:bmCmds:properties" />
+      <menuseparator />
+      <menuitem command="bookmarktags:bmCmds:openInTabs" />
+      <menu label="&bmt.bmSortMenu.label;" accesskey="bmt.bmSortMenu.accesskey">
+        <menupopup onpopupshowing="BookmarkTags.prepareBMSortMenu(this);">
+          <menuitem command="bookmarktags:bmCmds:sort:title"
+                    type="radio"
+                    autocheck="false"
+                    name="bmSort" />
+          <menuitem command="bookmarktags:bmCmds:sort:visit_date"
+                    type="radio"
+                    autocheck="false"
+                    name="bmSort" />
+          <menuitem command="bookmarktags:bmCmds:sort:lastModified"
+                    type="radio"
+                    autocheck="false"
+                    name="bmSort" />
+          <menuitem command="bookmarktags:bmCmds:sort:dateAdded"
+                    type="radio"
+                    autocheck="false"
+                    name="bmSort" />
+          <menuitem command="bookmarktags:bmCmds:sort:url"
+                    type="radio"
+                    autocheck="false"
+                    name="bmSort" />
+          <menuitem command="bookmarktags:bmCmds:sort:visit_count"
+                    type="radio"
+                    autocheck="false"
+                    name="bmSort" />
+          <menuitem command="bookmarktags:bmCmds:sort:frecency"
+                    type="radio"
+                    autocheck="false"
+                    name="bmSort" />
+          <menuseparator />
+          <menuitem command="bookmarktags:bmCmds:sortDir:ASC"
+                    label="&bmt.sortDirCmd_lexico_ascending.label;"
+                    type="radio"
+                    autocheck="false"
+                    name="url title" />
+          <menuitem command="bookmarktags:bmCmds:sortDir:DESC"
+                    label="&bmt.sortDirCmd_lexico_descending.label;"
+                    type="radio"
+                    autocheck="false"
+                    name="url title" />
+          <menuitem command="bookmarktags:bmCmds:sortDir:ASC"
+                    label="&bmt.sortDirCmd_time_ascending.label;"
+                    type="radio"
+                    autocheck="false"
+                    name="dateAdded lastModified visit_date" />
+          <menuitem command="bookmarktags:bmCmds:sortDir:DESC"
+                    label="&bmt.sortDirCmd_time_descending.label;"
+                    type="radio"
+                    autocheck="false"
+                    name="dateAdded lastModified visit_date" />
+          <menuitem command="bookmarktags:bmCmds:sortDir:ASC"
+                    label="&bmt.sortDirCmd_quantity_ascending.label;"
+                    type="radio"
+                    autocheck="false"
+                    name="frecency visit_count" />
+          <menuitem command="bookmarktags:bmCmds:sortDir:DESC"
+                    label="&bmt.sortDirCmd_quantity_descending.label;"
+                    type="radio"
+                    autocheck="false"
+                    name="frecency visit_count" />
+        </menupopup>
+      </menu>
+    </menupopup>
+  </popupset>
+
+  <vbox id="queryBox">
+    <bmt-taginput id="tagInput"
+                  oncommand="BookmarkTags.getQueryBuilder().onTagInputCommand(this, event);"
+                  context="bookmarktags:queryInputContextMenu" />
+    <box id="queryCloud"
+         type="bookmarktags:tagcloud"
+         notagsizes="true"
+         noscroll="true"
+         contextmenu="bookmarktags:queryContextMenu"
+         persist="hidden"
+         ontagselect="BookmarkTags.getQueryBuilder().onQuerySelect(event);" />
+  </vbox>
+
+  <bmt-tagdisplay id="selector"
+                  persist="height"
+                  flex="1"
+                  showrelated="true"
+                  seltype="single"
+                  enableColumnDrag="true"
+                  contextmenu="tagSelectorContextMenu"
+                  ontagselect="BookmarkTags.onTagSelect(event);"
+                  ondragover="return false;" />
+
+  <splitter id="tagBrowserSidebarSplitter" collapse="before">
+    <grippy />
+  </splitter>
+
+  <tree id="bmtree"
+        type="bookmarktags:bookmarktree"
+        seltype="single"
+        class="plain"
+        flex="1"
+        persist="height"
+        enableColumnDrag="true"
+        contextmenu="bmContextMenu"
+        onclick="BookmarkTags.onBMTreeClick(this, event);"
+        onkeypress="BookmarkTags.onBMTreeKeypress(this, event);"
+        onmousemove="BookmarkTags.onBMTreeMouseMove(this, event);"
+        onmouseout="BookmarkTags.clearStatusBar();"
+        ondragover="return BookmarkTags.onBMTreeDragOver();"
+        ondragdrop="BookmarkTags.onBMTreeDragDrop();"
+        ondraggesture="BookmarkTags.onBMTreeDragGesture(event);">
+    <treecols>
+      <treecol id="title" flex="1" primary="true" />
+      <splitter class="tree-splitter" />
+      <treecol id="visit_date"
+               label="&bmt.sortCmd_visit_date.label;"
+               hidden="true" />
+      <splitter class="tree-splitter" />
+      <treecol id="lastModified"
+               label="&bmt.sortCmd_lastModified.label;"
+               hidden="true" />
+      <splitter class="tree-splitter" />
+      <treecol id="dateAdded"
+               label="&bmt.sortCmd_dateAdded.label;"
+               hidden="true" />
+      <splitter class="tree-splitter" />
+      <treecol id="url"
+               label="&bmt.sortCmd_url.label;"
+               hidden="true" />
+      <splitter class="tree-splitter" />
+      <treecol id="visit_count"
+               label="&bmt.sortCmd_visit_count.label;"
+               hidden="true" />
+      <splitter class="tree-splitter" />
+      <treecol id="frecency"
+               label="&bmt.sortCmd_frecency.label;"
+               hidden="true" />
+      <splitter class="tree-splitter" />
+      <treecol id="id"
+               hidden="true"
+               hideheader="true"
+               ignoreincolumnpicker="true" />
+    </treecols>
+    <treechildren flex="1" />
+  </tree>
+
+  <splitter id="toolbarSplitter"
+            collapse="after"
+            resizeafter="flex"
+            persist="state">
+    <grippy />
+  </splitter>
+
+  <hbox id="toolbar" align="center">
+    <textbox id="search-box"
+             type="timed"
+             timeout="500"
+             emptytext="&bmSearchTextbox.emptytext;"
+             oncommand="BookmarkTags.bmSearch(this.value);"
+             flex="1" />
+    <toolbarbutton id="tagDisplayButton"
+            type="menu"
+            tooltiptext="&tagDisplayButton.tooltiptext;">
+      <menupopup onpopupshowing="BookmarkTags.prepareTagSelectorContextMenu(this);">
+        <menuitem command="bookmarktags:tagDisplayCmds:cloud"
+                  type="radio"
+                  autocheck="false"
+                  name="tagSelectorType" />
+        <menuitem command="bookmarktags:tagDisplayCmds:list"
+                  type="radio"
+                  autocheck="false"
+                  name="tagSelectorType" />
+        <menuseparator />
+        <menu label="&bmt.tagSortMenu.label;"
+              accesskey="&bmt.tagSortMenu.accesskey;">
+          <menupopup onpopupshowing="BookmarkTags.prepareTagSortMenu(this);">
+            <menuitem command="bookmarktags:tagDisplayCmds:sort:title"
+                      type="radio"
+                      autocheck="false"
+                      name="tagSort" />
+            <menuitem command="bookmarktags:tagDisplayCmds:sort:relatedSize"
+                      type="radio"
+                      autocheck="false"
+                      name="tagSort" />
+            <menuitem command="bookmarktags:tagDisplayCmds:sort:lastModified"
+                      type="radio"
+                      autocheck="false"
+                      name="tagSort" />
+            <menuitem command="bookmarktags:tagDisplayCmds:sort:dateAdded"
+                      type="radio"
+                      autocheck="false"
+                      name="tagSort" />
+            <menuseparator />
+            <menuitem command="bookmarktags:tagDisplayCmds:sortDir:ASC"
+                      label="&bmt.sortDirCmd_lexico_ascending.label;"
+                      type="radio"
+                      autocheck="false"
+                      name="title" />
+            <menuitem command="bookmarktags:tagDisplayCmds:sortDir:DESC"
+                      label="&bmt.sortDirCmd_lexico_descending.label;"
+                      type="radio"
+                      autocheck="false"
+                      name="title" />
+            <menuitem command="bookmarktags:tagDisplayCmds:sortDir:ASC"
+                      label="&bmt.sortDirCmd_time_ascending.label;"
+                      type="radio"
+                      autocheck="false"
+                      name="dateAdded lastModified" />
+            <menuitem command="bookmarktags:tagDisplayCmds:sortDir:DESC"
+                      label="&bmt.sortDirCmd_time_descending.label;"
+                      type="radio"
+                      autocheck="false"
+                      name="dateAdded lastModified" />
+            <menuitem command="bookmarktags:tagDisplayCmds:sortDir:ASC"
+                      label="&bmt.sortDirCmd_quantity_ascending.label;"
+                      type="radio"
+                      autocheck="false"
+                      name="relatedSize" />
+            <menuitem command="bookmarktags:tagDisplayCmds:sortDir:DESC"
+                      label="&bmt.sortDirCmd_quantity_descending.label;"
+                      type="radio"
+                      autocheck="false"
+                      name="relatedSize" />
+          </menupopup>
+        </menu>
+      </menupopup>
+    </toolbarbutton>
+    <toolbarbutton id="bmSortButton"
+            type="menu"
+            tooltiptext="&bmSortButton.tooltiptext;">
+      <menupopup onpopupshowing="BookmarkTags.prepareBMSortMenu(this);">
+        <menuitem command="bookmarktags:bmCmds:sort:title"
+                  type="radio"
+                  autocheck="false"
+                  name="bmSort" />
+        <menuitem command="bookmarktags:bmCmds:sort:visit_date"
+                  type="radio"
+                  autocheck="false"
+                  name="bmSort" />
+        <menuitem command="bookmarktags:bmCmds:sort:lastModified"
+                  type="radio"
+                  autocheck="false"
+                  name="bmSort" />
+        <menuitem command="bookmarktags:bmCmds:sort:dateAdded"
+                  type="radio"
+                  autocheck="false"
+                  name="bmSort" />
+        <menuitem command="bookmarktags:bmCmds:sort:url"
+                  type="radio"
+                  autocheck="false"
+                  name="bmSort" />
+        <menuitem command="bookmarktags:bmCmds:sort:visit_count"
+                  type="radio"
+                  autocheck="false"
+                  name="bmSort" />
+        <menuitem command="bookmarktags:bmCmds:sort:frecency"
+                  type="radio"
+                  autocheck="false"
+                  name="bmSort" />
+        <menuseparator />
+        <menuitem command="bookmarktags:bmCmds:sortDir:ASC"
+                  label="&bmt.sortDirCmd_lexico_ascending.label;"
+                  type="radio"
+                  autocheck="false"
+                  name="url title" />
+        <menuitem command="bookmarktags:bmCmds:sortDir:DESC"
+                  label="&bmt.sortDirCmd_lexico_descending.label;"
+                  type="radio"
+                  autocheck="false"
+                  name="url title" />
+        <menuitem command="bookmarktags:bmCmds:sortDir:ASC"
+                  label="&bmt.sortDirCmd_time_ascending.label;"
+                  type="radio"
+                  autocheck="false"
+                  name="dateAdded lastModified visit_date" />
+        <menuitem command="bookmarktags:bmCmds:sortDir:DESC"
+                  label="&bmt.sortDirCmd_time_descending.label;"
+                  type="radio"
+                  autocheck="false"
+                  name="dateAdded lastModified visit_date" />
+        <menuitem command="bookmarktags:bmCmds:sortDir:ASC"
+                  label="&bmt.sortDirCmd_quantity_ascending.label;"
+                  type="radio"
+                  autocheck="false"
+                  name="frecency visit_count" />
+        <menuitem command="bookmarktags:bmCmds:sortDir:DESC"
+                  label="&bmt.sortDirCmd_quantity_descending.label;"
+                  type="radio"
+                  autocheck="false"
+                  name="frecency visit_count" />
+      </menupopup>
+    </toolbarbutton>
+  </hbox>
+
+</page>

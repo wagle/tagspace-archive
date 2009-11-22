@@ -1,0 +1,9 @@
+<!ENTITY bmt.sidebarBroadcaster.label       "TagSifter">
+<!ENTITY bmt.sidebarBroadcaster.accesskey   "T">
+<!ENTITY bmt.sidebarBroadcaster.tooltiptext "Open TagSifter in the sidebar">
+<!ENTITY bmt.sidebarTitle                   "TagSifter">
+
+<!ENTITY bmt.bmMenuToolbarbutton.label      "TagSifter Menu">
+<!ENTITY bmt.bmMenuBookmarksPopup.label     "TagSifter">
+
+<!ENTITY bmt.migrateMenuitem.label          "TagSifter Migrator">

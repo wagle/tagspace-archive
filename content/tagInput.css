@@ -1,0 +1,4 @@
+bmt-taginput
+{
+    -moz-binding: url("chrome://bookmarktags/content/tagInput.xml#taginput");
+}
