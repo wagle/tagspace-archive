@@ -13,11 +13,13 @@ var BookmarkTags= function ()
         Cc["@mozilla.org/storage/service;1"].
         getService(Ci.mozIStorageService);
 
+    var dbConn;         // one connection to profile:places.sqlite
+    var dbConnIsShared; // Fx 3.1: see initDBConn
+
     function doDelete()
     {
         var sql;
         var placesDBFile;
-        var dbConn;
         var ids;
         var dbStmt;
 
@@ -28,12 +30,9 @@ var BookmarkTags= function ()
             "WHERE pf.id ISNULL AND cf.id > 1;"
         ].join("");
 
-        placesDBFile=
-            Cc["@mozilla.org/file/directory_service;1"].
-            getService(Ci.nsIProperties).
-            get("ProfD", Ci.nsIFile);
-        placesDBFile.append("places.sqlite");
-        dbConn= storageServ.openDatabase(placesDBFile);
+        initDBConn();
+
+        if (! dbConn) return;
 
         try
         {
@@ -68,7 +67,7 @@ var BookmarkTags= function ()
                 dbStmt.reset();
                 dbStmt.finalize();
             }
-            dbConn.close();
+            cleanupDBConn();
         }
 
         alert("Done.  TagSifter will not be updated until you restart Firefox.");
@@ -119,6 +118,47 @@ var BookmarkTags= function ()
     {
         document.getElementById("folderbox").hidden= true;
         document.getElementById("bmbox").hidden= false;
+    }
+
+    function initDBConn()
+    {
+        const storageServ=
+            Cc["@mozilla.org/storage/service;1"].
+            getService(Ci.mozIStorageService);
+
+        try
+        {
+            // Fx 3.1: https://bugzilla.mozilla.org/show_bug.cgi?id=452857
+            if (Ci.nsPIPlacesDatabase)
+            {
+                dbConnIsShared= true;
+                dbConn=
+                    Cc["@mozilla.org/browser/nav-history-service;1"].
+                    getService(Ci.nsPIPlacesDatabase).
+                    DBConnection;
+            }
+            else
+            {
+                dbConnIsShared= false;
+                let placesDBFile=
+                    Cc["@mozilla.org/file/directory_service;1"].
+                    getService(Ci.nsIProperties).
+                    get("ProfD", Ci.nsIFile);
+                placesDBFile.append("places.sqlite");
+                dbConn= storageServ.openDatabase(placesDBFile);
+            }
+        }
+        catch (exc)
+        {
+            dbConn= null;
+            BookmarkTags.Util.logErr("Could not open Places database: " + exc);
+        }
+    }
+
+    function cleanupDBConn()
+    {
+        if (dbConn && !dbConnIsShared) dbConn.close();
+        dbConn= null;
     }
 
     return {

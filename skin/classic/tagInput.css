@@ -1,5 +1,6 @@
 @import url("chrome://global/skin/");
 @import url("chrome://bookmarktags/content/tagInput.css");
+@import url("chrome://bookmarktags-platform/skin/tagInput.css");
 
 bmt-taginput .textbox-input-closebutton
 {

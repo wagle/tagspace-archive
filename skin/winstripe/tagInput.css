@@ -1,0 +1,80 @@
+.textbox-input-closebutton {
+  -moz-appearance:    none;
+  -moz-image-region:  rect(0px, 14px, 14px, 0px);
+  border:             medium none;
+  list-style-image:   url(chrome://global/skin/icons/close.png);
+  margin:             3px;
+  padding:            4px 2px;
+}
+
+.textbox-input-closebutton > .toolbarbutton-icon {
+  -moz-margin-end:    0 !important;
+  -moz-padding-end:   0 !important;
+  -moz-padding-start: 0 !important;
+}
+
+.textbox-input-closebutton:hover {
+  -moz-image-region: rect(0px, 28px, 14px, 14px);
+}
+
+.textbox-input-closebutton:hover:active {
+  -moz-image-region:  rect(0px, 42px, 14px, 28px);
+}
+
+bmt-taginput > textbox > .textbox-input-closebutton {
+  -moz-background-clip:           border;
+  -moz-background-inline-policy:  continuous;
+  -moz-background-origin:         padding;
+  -moz-border-radius-topleft:     2px;
+  background:                     -moz-dialog url(chrome://browser/skin/tabbrowser/tab-active-bkgnd.png) repeat-x scroll 0 0;
+  /*
+  border-left:                    1px solid threedshadow;
+  border-top:                     1px solid threedshadow;
+  */
+  margin:                         3px 3px;
+  padding:                        0;
+}
+
+bmt-taginput > textbox > .textbox-input-closebutton[chromedir="rtl"] {
+  -moz-border-radius-topleft:   0;
+  -moz-border-radius-topright:  2px;
+  /*
+  border-left:                  medium none;
+  border-right:                 1px solid threedshadow;
+  */
+}
+
+bmt-taginput .textbox-input-closebutton {
+  list-style-image:  url(chrome://global/skin/icons/closeSidebar.png);
+  margin-bottom:     0 !important;
+  padding:           0 !important;
+}
+
+bmt-taginput toolbarbutton.textbox-input-closebutton {
+  -moz-user-focus:  normal;
+}
+
+.textbox-input-closebutton {
+  -moz-appearance:   none;
+  -moz-image-region: rect(0px, 14px, 14px, 0px);
+  border:            medium none;
+  list-style-image:  url(chrome://global/skin/icons/close.png);
+  margin:            0;
+  padding:           4px 2px;
+}
+
+toolbarbutton {
+  -moz-appearance:  toolbarbutton;
+  -moz-box-align:  center;
+  -moz-box-pack:  center;
+  background-color:  transparent;
+  border:  1px solid transparent;
+  color:  -moz-dialogtext;
+  margin:  0;
+  padding:  3px;
+}
+/* toolbarbutton.css (line 47) */
+toolbarbutton {
+  -moz-binding:url(chrome://global/content/bindings/toolbarbutton.xml#toolbarbutton);
+}
+

@@ -1,0 +1,23 @@
+bmt-taginput .textbox-input-closebutton > .toolbarbutton-icon {
+  -moz-margin-end: 0px !important;
+  margin-top: 1px;
+  padding: 0;
+}
+
+bmt-taginput .textbox-input-closebutton {
+  list-style-image: url("chrome://global/skin/icons/closetab.png");
+  -moz-appearance: none;
+  border: none !important;
+  padding: 0;
+  margin: -1px 0 0;
+  background: none;
+  cursor: default;
+}
+
+bmt-taginput .textbox-input-closebutton:hover {
+  list-style-image: url("chrome://global/skin/icons/closetab-hover.png");
+}
+
+bmt-taginput .textbox-input-closebutton:hover:active {
+  list-style-image: url("chrome://global/skin/icons/closetab-active.png");
+}

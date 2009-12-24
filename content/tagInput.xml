@@ -51,7 +51,7 @@
                emptytext="&textbox.emptytext;"
                oninput="this.parentNode.onInput_();"
                onkeypress="this.parentNode.onKeypress_(event);">
-        <button class="textbox-input-closebutton"
+        <toolbarbutton class="textbox-input-closebutton"
                 oncommand="this.parentNode.parentNode.reset_();"
                 onfocus="this.parentNode.focus();" />
       </textbox>
