@@ -41,8 +41,18 @@
 <?xul-overlay href="chrome://bookmarktags/content/commandOverlay.xul" ?>
 
 <overlay id="BookmarkTags-browserOverlay"
-         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+  xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
+  <script type="application/x-javascript"
+          src="chrome://bookmarktags/content/TagSifter.js" />
+<!--  
+  <script type="application/x-javascript"
+          src="chrome://bookmarktags/content/vendor/jquery-1.4.0.min.js" />
+  <script type="application/x-javascript"
+          src="chrome://bookmarktags/content/vendor/jquery-1.4.0.js" />
+  <script type="application/x-javascript"
+    src="chrome://bookmarktags/content/vendor/jquery_noconflict.js" />
+  -->
   <script type="application/x-javascript"
           src="chrome://bookmarktags/content/browserOverlay.js" />
   <script type="application/x-javascript"
@@ -248,6 +258,7 @@
                  querytype="storage"
                  datasources="profile:places.sqlite"
                  ref="*"
+                 class="tagsifter_top_popup"
                  bmcontextmenu="bookmarktags:bmContextMenu"
                  tagcontextmenu="bookmarktags:tagContextMenu" />
     </toolbarbutton>
@@ -271,6 +282,7 @@
                  querytype="storage"
                  datasources="profile:places.sqlite"
                  ref="*"
+                 class="tagsifter_top_popup"
                  bmcontextmenu="bookmarktags:bmContextMenu"
                  tagcontextmenu="bookmarktags:tagContextMenu" />
     </menu>

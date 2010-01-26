@@ -1,0 +1,10 @@
+// var $J = TagSifter.jQuery.noConflict();
+var $J = this.jQuery.noConflict();
+dump(typeof $J);
+dump("\n");
+dump(this);
+dump("\n");
+dump(this.jQuery);
+this.tagsifter_jquery = this.jQuery;
+this.jQuery = null;
+dump(typeof $J);

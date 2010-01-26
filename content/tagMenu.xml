@@ -53,6 +53,8 @@
       </property>
 
       <constructor><![CDATA[
+        TagSifter.loadLibraries(TagSifter);
+        // dump(TagSifter.$J);
         var rebuildNeeded;
         var isTopPopup;
 
