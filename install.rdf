@@ -9,7 +9,7 @@
   <RDF:Description RDF:about="urn:mozilla:install-manifest"
                    em:id="{3b71bd20-ee7e-11d9-8cd6-0800200c9a66}"
                    em:name="TagSifter"
-                   em:version="4.1.6"
+                   em:version="4.2.0"
                    em:type="2"
                    em:description="Browse your bookmarks with sets of tags"
                    em:creator="chiisaitsu"

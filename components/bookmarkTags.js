@@ -22,7 +22,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-const CURRENT_VERSION= "4.1.6";
+const CURRENT_VERSION= "4.2.0";
 
 const CI= Components.interfaces;
 const CC= Components.classes;

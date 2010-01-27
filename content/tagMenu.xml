@@ -53,8 +53,12 @@
       </property>
 
       <constructor><![CDATA[
-        TagSifter.loadLibraries(TagSifter);
+        // TagSifter.loadLibraries(TagSifter);
         // dump(TagSifter.$J);
+
+        var $J = TagSifter.build$J(this.ownerDocument);
+        // dump($J);
+
         var rebuildNeeded;
         var isTopPopup;
 
