@@ -154,7 +154,7 @@
       </vbox>
 
       <vbox id="tagMenuPanel">
-        <description>&tagMenuDescription;</description>        
+        <description>&tagMenuDescription;</description>
         <separator />
         <grid>
           <columns>

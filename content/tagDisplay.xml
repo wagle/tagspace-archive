@@ -20,7 +20,7 @@
    - Portions created by the Initial Developer are Copyright (C) 2005, 2006,
    - 2007, 2008 the Initial Developer. All Rights Reserved.
    -
-   - Contributor(s):
+   - Contributor(s): hark <hark@grue.in>
    -
    - ***** END LICENSE BLOCK ***** -->
 
@@ -46,6 +46,7 @@
         <getter><![CDATA[
           try
           {
+              if (!document.commandDispatcher.focusedElement) return false;
               return (document.commandDispatcher.focusedElement.parentNode ===
                       this);
           }
@@ -188,9 +189,10 @@
                 addObserver("cloudsReflectTagSizes", prefsObserver, false);
 
             ontagselect= that.getAttribute("ontagselect");
+            var tagSelectFunc= new Function("event", ontagselect);
             if (ontagselect)
             {
-                ontagselectFunc= function (event) { eval(ontagselect); };
+                ontagselectFunc= function (event) { tagSelectFunc(event); };
                 that.addEventListener("tagselect", ontagselectFunc, true);
             }
 
@@ -361,7 +363,7 @@
             }
             else
             {
-                throw ["TagSifter: showrelated must be true for tag trees ",
+                throw ["TagSieve: showrelated must be true for tag trees ",
                        "currently, sorry"].join("");
             }
             that.treeBoxObject.view= that.view_;
@@ -371,9 +373,10 @@
             that.addEventListener("keypress", onKeypress, false);
 
             ontagselect= that.getAttribute("ontagselect");
+            var tagSelectFunc= new Function("event", ontagselect);
             if (ontagselect)
             {
-                ontagselectFunc= function (event) { eval(ontagselect); };
+                ontagselectFunc= function (event) { tagSelectFunc(event); };
                 that.addEventListener("tagselect", ontagselectFunc, true);
             }
 

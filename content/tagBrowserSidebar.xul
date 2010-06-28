@@ -20,7 +20,7 @@
    - Portions created by the Initial Developer are Copyright (C) 2005, 2006,
    - 2007, 2008 the Initial Developer. All Rights Reserved.
    -
-   - Contributor(s):
+   - Contributor(s): hark <hark@grue.in>
    -
    - ***** END LICENSE BLOCK ***** -->
 
@@ -376,7 +376,7 @@
 
   <hbox id="toolbar" align="center">
     <textbox id="search-box"
-             type="timed"
+             type="search"
              timeout="500"
              emptytext="&bmSearchTextbox.emptytext;"
              oncommand="BookmarkTags.bmSearch(this.value);"

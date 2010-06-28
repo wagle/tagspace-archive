@@ -18,7 +18,7 @@
  * Portions created by the Initial Developer are Copyright (C) 2005, 2006,
  * 2007, 2008 the Initial Developer. All Rights Reserved.
  *
- * Contributor(s):
+ * Contributor(s): hark <hark@grue.in>
  *
  * ***** END LICENSE BLOCK ***** */
 
@@ -559,31 +559,12 @@ BookmarkTags.Query= function ()
 
     function initDBConn()
     {
-        const storageServ=
-            Cc["@mozilla.org/storage/service;1"].
-            getService(Ci.mozIStorageService);
-
         try
         {
-            // Fx 3.1: https://bugzilla.mozilla.org/show_bug.cgi?id=452857
-            if (Ci.nsPIPlacesDatabase)
-            {
                 dbConnIsShared= true;
-                dbConn=
-                    Cc["@mozilla.org/browser/nav-history-service;1"].
-                    getService(Ci.nsPIPlacesDatabase).
-                    DBConnection;
-            }
-            else
-            {
-                dbConnIsShared= false;
-                let placesDBFile=
-                    Cc["@mozilla.org/file/directory_service;1"].
-                    getService(Ci.nsIProperties).
-                    get("ProfD", Ci.nsIFile);
-                placesDBFile.append("places.sqlite");
-                dbConn= storageServ.openDatabase(placesDBFile);
-            }
+                dbConn= Cc["@mozilla.org/browser/nav-history-service;1"].
+                        getService(Ci.nsPIPlacesDatabase).
+                        DBConnection;
         }
         catch (exc)
         {

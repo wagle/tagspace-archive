@@ -84,7 +84,7 @@ BookmarkTags.BookmarkCmds= function ()
         transferable.addDataFlavor(PlacesUtils.TYPE_UNICODE);
         PlacesUIUtils.clipboard.getData(
             transferable, Components.interfaces.nsIClipboard.kGlobalClipboard);
- 
+
         return canPasteHelper(transferable);
     }
 
@@ -417,7 +417,7 @@ BookmarkTags.BookmarkCmds= function ()
 
         [PlacesUtils.TYPE_X_MOZ_PLACE,
          PlacesUtils.TYPE_X_MOZ_PLACE_CONTAINER,
-         PlacesUtils.TYPE_X_MOZ_URL, 
+         PlacesUtils.TYPE_X_MOZ_URL,
          PlacesUtils.TYPE_UNICODE].
         forEach(function (flav) transferable.addDataFlavor(flav));
 
@@ -681,7 +681,7 @@ BookmarkTags.BookmarkCmds= function ()
             };
 
             organizerWin=
-                openDialog("chrome://browser/content/places/places.xul", 
+                openDialog("chrome://browser/content/places/places.xul",
                            "",
                            "chrome,toolbar=yes,dialog=no,resizable",
                            leftPaneRoot);
@@ -875,7 +875,7 @@ BookmarkTags.TagCmds= function ()
         "bookmarktags:tagCmds:setTagColor:x"
     ];
 
-    const CSS_BASENAME= "tagsifter.css";
+    const CSS_BASENAME= "tagsieve.css";
 
     const CI= Components.interfaces;
     const CC= Components.classes;

@@ -52,7 +52,7 @@ places.dtd
 
 <!ENTITY bmt.queryCmd_customize.label                 "Customize Default Action...">
 <!ENTITY bmt.queryCmd_customize.accesskey             "C">
-<!ENTITY bmt.queryCmd_help.label                      "TagSifter Help...">
+<!ENTITY bmt.queryCmd_help.label                      "TagSieve Help...">
 <!ENTITY bmt.queryCmd_help.accesskey                  "H">
 <!ENTITY bmt.queryCmd_removeAllTags.label             "Remove All from Query">
 <!ENTITY bmt.queryCmd_removeAllTags.accesskey         "A">
@@ -105,12 +105,12 @@ places.dtd
 <!ENTITY bmt.tagDisplayCmd_cloud.accesskey            "u">
 <!ENTITY bmt.tagDisplayCmd_customize.label            "Customize...">
 <!ENTITY bmt.tagDisplayCmd_customize.accesskey        "z">
-<!ENTITY bmt.tagDisplayCmd_help.label                 "TagSifter Help...">
+<!ENTITY bmt.tagDisplayCmd_help.label                 "TagSieve Help...">
 <!ENTITY bmt.tagDisplayCmd_help.accesskey             "H">
 <!ENTITY bmt.tagDisplayCmd_list.label                 "Tag List">
 <!ENTITY bmt.tagDisplayCmd_list.accesskey             "L">
 
-<!ENTITY bmt.tagInputCmd_help.label                   "TagSifter Help...">
+<!ENTITY bmt.tagInputCmd_help.label                   "TagSieve Help...">
 <!ENTITY bmt.tagInputCmd_help.accesskey               "H">
 <!ENTITY bmt.tagInputCmd_toggleAutocomplete.label     "Enable Autocomplete">
 <!ENTITY bmt.tagInputCmd_toggleAutocomplete.accesskey "u">

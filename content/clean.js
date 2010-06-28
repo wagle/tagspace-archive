@@ -28,12 +28,8 @@ var BookmarkTags= function ()
             "WHERE pf.id ISNULL AND cf.id > 1;"
         ].join("");
 
-        placesDBFile=
-            Cc["@mozilla.org/file/directory_service;1"].
-            getService(Ci.nsIProperties).
-            get("ProfD", Ci.nsIFile);
-        placesDBFile.append("places.sqlite");
-        dbConn= storageServ.openDatabase(placesDBFile);
+        dbConn = Cc["@mozilla.org/browser/nav-history-service;1"].
+                 getService(Components.interfaces.nsPIPlacesDatabase).DBConnection;
 
         try
         {
@@ -71,7 +67,7 @@ var BookmarkTags= function ()
             dbConn.close();
         }
 
-        alert("Done.  TagSifter will not be updated until you restart Firefox.");
+        alert("Done. TagSieve will not be updated until you restart Firefox.");
     }
 
     function onselect(tree, event)

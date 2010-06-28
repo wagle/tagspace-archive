@@ -18,7 +18,7 @@
  * Portions created by the Initial Developer are Copyright (C) 2005, 2006,
  * 2007, 2008 the Initial Developer. All Rights Reserved.
  *
- * Contributor(s):
+ * Contributor(s): hark <hark@grue.in>
  *
  * ***** END LICENSE BLOCK ***** */
 
@@ -29,7 +29,7 @@ var EXPORTED_SYMBOLS= ["BookmarkTagsUtil"];
 var BookmarkTagsUtil= function()
 {
     const HELP_URL= "chrome://bookmarktags/locale/help.html";
-    const HOME_URL= "http://cs.stanford.edu/people/adw/tagsifter/";
+    const HOME_URL= "http://www.grue.in/tagsieve/";
 
     const CC= Components.classes;
     const CI= Components.interfaces;
@@ -47,7 +47,7 @@ var BookmarkTagsUtil= function()
         CC["@mozilla.org/preferences-service;1"].
         getService(CI.nsIPrefService).
         getBranch("bookmarktags.");
-    const stringServ= 
+    const stringServ=
         CC["@mozilla.org/intl/stringbundle;1"].
         getService(CI.nsIStringBundleService);
     const tagServ=
@@ -143,16 +143,17 @@ var BookmarkTagsUtil= function()
                 propHash:   {}  // prop name => { childHash: { child ID => obj }
             };
         },
-        onItemAdded: function (itemId, folderId, index)
+        onBeforeItemRemoved: function (itemId, itemType) {},
+        onItemAdded: function (itemId, folderId, index, itemType)
         {
             this.check([folderId], itemId, ["added"]);
         },
-        onItemRemoved: function (itemId, folderId, index)
+        onItemRemoved: function (itemId, folderId, index, itemType)
         {
             this.check([folderId], itemId, ["removed"]);
         },
         onItemMoved: function (itemId, oldParentId, oldIndex, newParentId,
-                               newIndex)
+                               newIndex, itemType)
         {
             this.check([oldParentId, newParentId], itemId, ["moved"]);
         },
@@ -384,8 +385,14 @@ var BookmarkTagsUtil= function()
     function isTaggedItem(itemId)
     {
         var uri;
-
-        uri= bmServ.getBookmarkURI(itemId);
+        try
+        {
+            uri= bmServ.getBookmarkURI(itemId);
+        }
+        catch(exc)
+        {
+            return false;
+        }
         if (uri)
         {
             let length= {};
@@ -425,7 +432,7 @@ var BookmarkTagsUtil= function()
 
     function logMsg(str, isError)
     {
-        str= "TAGSIFTER " + str;
+        str= "TAGSIEVE " + str;
 
         if (isError) Components.utils.reportError(str);
         else

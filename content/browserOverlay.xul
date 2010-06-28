@@ -20,7 +20,7 @@
    - Portions created by the Initial Developer are Copyright (C) 2005, 2006,
    - 2007, 2008 the Initial Developer. All Rights Reserved.
    -
-   - Contributor(s):
+   - Contributor(s): hark <hark@grue.in>
    -
    - ***** END LICENSE BLOCK ***** -->
 
@@ -246,7 +246,7 @@
                    class="chromeclass-toolbar-additional">
       <menupopup type="bookmarktags:tagpopup"
                  querytype="storage"
-                 datasources="profile:places.sqlite"
+                 datasources=""
                  ref="*"
                  bmcontextmenu="bookmarktags:bmContextMenu"
                  tagcontextmenu="bookmarktags:tagContextMenu" />
@@ -269,7 +269,7 @@
           insertafter="bookmarksShowAll">
       <menupopup type="bookmarktags:tagpopup"
                  querytype="storage"
-                 datasources="profile:places.sqlite"
+                 datasources=""
                  ref="*"
                  bmcontextmenu="bookmarktags:bmContextMenu"
                  tagcontextmenu="bookmarktags:tagContextMenu" />

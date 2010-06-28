@@ -36,7 +36,7 @@ const BookmarkTags= function ()
     const lmServ=
         CC["@mozilla.org/browser/livemark-service;2"].
         getService(CI.nsILivemarkService);
-    const strings= 
+    const strings=
         Components.classes["@mozilla.org/intl/stringbundle;1"].
         getService(Components.interfaces.nsIStringBundleService).
         createBundle("chrome://bookmarktags/locale/migrate.properties");

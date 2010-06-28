@@ -20,7 +20,7 @@
    - Portions created by the Initial Developer are Copyright (C) 2005, 2006,
    - 2007, 2008 the Initial Developer. All Rights Reserved.
    -
-   - Contributor(s):
+   - Contributor(s): hark <hark@grue.in>
    -
    - ***** END LICENSE BLOCK ***** -->
 
@@ -45,15 +45,12 @@
       <textbox anonid="textbox"
                flex="1"
                xbl:inherits="context,contextmenu"
-               type="timed"
+               type="search"
                timeout="300"
                align="center"
                emptytext="&textbox.emptytext;"
                oninput="this.parentNode.onInput_();"
                onkeypress="this.parentNode.onKeypress_(event);">
-        <button class="textbox-input-closebutton"
-                oncommand="this.parentNode.parentNode.reset_();"
-                onfocus="this.parentNode.focus();" />
       </textbox>
     </xbl:content>
 

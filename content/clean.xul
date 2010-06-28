@@ -20,7 +20,7 @@
    - Portions created by the Initial Developer are Copyright (C) 2005, 2006,
    - 2007, 2008 the Initial Developer. All Rights Reserved.
    -
-   - Contributor(s):
+   - Contributor(s): hark <hark@grue.in>
    -
    - ***** END LICENSE BLOCK ***** -->
 
@@ -44,7 +44,7 @@
         one to see details.
       </description>
       <tree id="foldertree"
-            datasources="profile:places.sqlite"
+            datasources=""
             ref="*"
             querytype="storage"
             seltype="single"

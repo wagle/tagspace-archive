@@ -62,7 +62,8 @@
         var bmObserver;
         var tagObserver;
         var topPopupIsEmpty;
-
+        var dbConnection = Components.classes["@mozilla.org/browser/nav-history-service;1"].
+                           getService(Components.interfaces.nsPIPlacesDatabase).DBConnection;
         // Note on this.tagQueryElt_: originally kept tagQueryElt_ as variable
         // defined here.  But ran into problem when trying to use toolbar button
         // immediately after adding it to toolbar.  After buildTemplate(),
@@ -110,9 +111,12 @@
                 // bookmark menuitem
                 if (menuitem.hasAttribute("bmt-bmid"))
                 {
-                    BookmarkTags.BookmarkCmds.openWithEvent(
-                        BookmarkTags.BookmarkCmds.makeBMMenuObj(menuitem),
-                        event);
+                    if (event.button === 1)
+                    {
+                        BookmarkTags.BookmarkCmds.openWithEvent(
+                            BookmarkTags.BookmarkCmds.makeBMMenuObj(menuitem),
+                            event);
+                    }
                     closeMenus(event.target);
                 }
 
@@ -177,8 +181,11 @@
             // We need to remove it first; otherwise it hangs around.
             if (topPopupIsEmpty && isTopPopup) this.removeChild(that.lastChild);
 
-            if (this.builder) this.builder.rebuild();
-
+            if (this.builder)
+			{
+                this.builder.datasource = dbConnection;
+                this.builder.rebuild();
+			}
             buildExtras(strings);
         };
 
@@ -251,7 +258,7 @@
                 {
                     that.appendChild(document.createElement("menuseparator"));
 
-                    menuitem= document.createElement("menuitem");
+                    var menuitem= document.createElement("menuitem");
                     menuitem.setAttribute("label",
                                   strings.GetStringFromName("openInTabsLabel"));
                     menuitem.setAttribute("accesskey",
@@ -323,6 +330,7 @@
                 menuitem.setAttribute("bmt-bmid", "?id");
                 menuitem.setAttribute("bmt-bmname", "?title");
                 menuitem.setAttribute("bmt-bmurl", "?url");
+                menuitem.setAttribute("tooltiptext", "?url");
                 menuitem.setAttribute("class", "menuitem-iconic bookmark-item");
                 menuitem.setAttribute("image", "?favicon");
                 menuitem.setAttribute("statustext", "?statusText");
@@ -631,7 +639,7 @@
                            this.parentNode.getAttribute("tagcontextmenu"));
 
         popup.setAttribute("querytype", "storage");
-        popup.setAttribute("datasources", "profile:places.sqlite");
+        popup.setAttribute("datasources", "");
         popup.setAttribute("ref", "*");
         popup.setAttribute("tags", this.getAttribute("tags"));
         popup.setAttribute("statustext", this.getAttribute("statustext"));

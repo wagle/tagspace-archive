@@ -84,7 +84,7 @@ var BookmarkTagsColor= function ()
         var strs;
 
         strs= { r: null, g: null, b: null };
-        for (let k in strs) 
+        for (let k in strs)
         {
             strs[k]= Math.round(rgb[k] * 255).toString(16);
             if (strs[k].length === 1) strs[k]= "0" + strs[k];

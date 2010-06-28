@@ -1,27 +1,27 @@
-<!ENTITY wizard.title "TagSifter Migration Wizard">
+<!ENTITY wizard.title "TagSieve Migration Wizard">
 <!ENTITY wizard.width "500">
 <!ENTITY wizard.height "380">
 
-<!ENTITY introPage.label "TagSifter Migration Wizard">
+<!ENTITY introPage.label "TagSieve Migration Wizard">
 <!ENTITY introPage.description "Translate Your Bookmark Folders to Tags">
 <!ENTITY introPage.text1 "This wizard creates tags corresponding to your bookmark folders and then tags your bookmarks with the resulting tags.  Your bookmark folders will not be altered.">
 <!ENTITY introPage.text2 "A bookmark contained in a nesting of folders will be tagged by tags corresponding to all those folders.  For example, if your Ramen Noodles bookmark is contained in folders Eats/Cooking/Chinese, then that bookmark will be tagged Eats, Cooking, and Chinese.">
 <!ENTITY introPage.text3 "Although this wizard is intended to be used in migrating bookmarks from previous versions of Firefox to Firefox 3, especially for users of Bookmark Tags, it can be used by anyone to migrate any folders.">
 
-<!ENTITY rootFolderPage.label "TagSifter Migration Wizard">
+<!ENTITY rootFolderPage.label "TagSieve Migration Wizard">
 <!ENTITY rootFolderPage.description "Root Folder Selection">
 <!ENTITY rootFolderPage.text1 "Select a folder at which to begin.  Tags will be created for all folders under it, and bookmarks under it will be tagged with the resulting tags.  If you used a previous version of Bookmark Tags, select your root tag folder.">
 <!ENTITY rootFolderPage.text2 "">
 <!ENTITY rootFolderPage.includeRoot.label "Create a tag for the selected folder also">
 <!ENTITY rootFolderPage.includeRoot.accesskey "C">
 
-<!ENTITY warningPage.label "TagSifter Migration Wizard">
+<!ENTITY warningPage.label "TagSieve Migration Wizard">
 <!ENTITY warningPage.description "Warning">
-<!ENTITY warningPage.text1 "Listen, you are about to create tags for each unique folder name under the root folder you just selected.  Maybe that's a lot of tags.  You've been warned, so if you don't like the results, don't go writing in your blog that TagSifter took a dump on your bookmarks.  OK?  OK.">
+<!ENTITY warningPage.text1 "Listen, you are about to create tags for each unique folder name under the root folder you just selected.  Maybe that's a lot of tags.  You've been warned, so if you don't like the results, don't go writing in your blog that TagSieve took a dump on your bookmarks.  OK?  OK.">
 <!ENTITY warningPage.text2 "If you have reservations, why not go back and get your feet wet with a small number of folders?  You can come back later if you like it.">
 <!ENTITY warningPage.text3 "Migration will begin when you continue the wizard.">
 
-<!ENTITY conversionPage.label "TagSifter Migration Wizard">
+<!ENTITY conversionPage.label "TagSieve Migration Wizard">
 <!ENTITY conversionPage.description "Migrating">
 <!ENTITY conversionPage.working "If you have many hundreds of bookmarks this may take some time.  Please wait...">
 <!ENTITY conversionPage.completeNotif "Migration complete.  You may exit the wizard or go back to migrate more folders.">

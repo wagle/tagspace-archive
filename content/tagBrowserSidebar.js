@@ -18,7 +18,7 @@
  * Portions created by the Initial Developer are Copyright (C) 2005, 2006,
  * 2007, 2008 the Initial Developer. All Rights Reserved.
  *
- * Contributor(s):
+ * Contributor(s): hark <hark@grue.in>
  *
  * ***** END LICENSE BLOCK ***** */
 
@@ -637,7 +637,7 @@ var BookmarkTags= function ()
 
     function onSidebarFocused()
     {
-        document.getElementById("tagInput").focus();
+        document.getElementById("tagInput").inner.focus();
     }
 
     function onTagSelect(event)

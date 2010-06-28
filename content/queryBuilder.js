@@ -18,7 +18,7 @@
  * Portions created by the Initial Developer are Copyright (C) 2005, 2006,
  * 2007, 2008 the Initial Developer. All Rights Reserved.
  *
- * Contributor(s):
+ * Contributor(s): hark <hark@grue.in>
  *
  * ***** END LICENSE BLOCK ***** */
 
@@ -87,21 +87,21 @@ BookmarkTags.QueryBuilder= function ()
     // used to keep tag input completions up to date.
     const tagObserver=
     {
-        onItemAdded: function (itemId, folderId, index)
+        onItemAdded: function (itemId, folderId, index, itemType)
         {
             if (folderId === BookmarkTags.Util.bmServ.tagsFolder)
             {
                 registerTag(itemId);
             }
         },
-        onItemRemoved: function (itemId, folderId, index)
+        onItemRemoved: function (itemId, folderId, index, itemType)
         {
             if (folderId === BookmarkTags.Util.bmServ.tagsFolder)
             {
                 unregisterTag(itemId);
             }
         },
-        onItemChanged: function (itemId, property, isAnnoProperty, value)
+        onItemChanged: function (itemId, property, isAnnoProperty, value, lastModified, itemType)
         {
             if (property === "title" && BookmarkTags.Util.isTag(itemId))
             {
@@ -109,11 +109,12 @@ BookmarkTags.QueryBuilder= function ()
                 registerTag(itemId, value);
             }
         },
+        onBeforeItemRemoved: function (itemId, itemType) {},
         onBeginUpdateBatch: function () {},
         onEndUpdateBatch: function () {},
         onItemVisited: function (bookmarkId, visitID, time) {},
         onItemMoved: function (itemId, oldParentId, oldIndex, newParentId,
-                               newIndex) {}
+                               newIndex, itemType) {}
     };
 
     // Called when the last builder in the window is cleaned up.
@@ -429,11 +430,14 @@ BookmarkTags.QueryBuilder= function ()
             let maybeTagInput= null;
             try
             {
-                // The tag input's textbox's HTML input is actually the element
-                // that's focused.  Try to get our tag input.
-                maybeTagInput=
-                    document.commandDispatcher.focusedElement.parentNode.
-                    parentNode.parentNode;
+                if (document.commandDispatcher.focusedElement)
+                {
+                    // The tag input's textbox's HTML input is actually the element
+                    // that's focused.  Try to get our tag input.
+                    maybeTagInput=
+                        document.commandDispatcher.focusedElement.parentNode.
+                        parentNode.parentNode;
+                }
             }
             catch (exc) {}
 

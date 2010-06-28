@@ -1,4 +1,4 @@
-<!ENTITY window.title                          "TagSifter">
+<!ENTITY window.title                          "TagSieve">
 <!ENTITY window.width                          "40em">
 
 <!ENTITY applyButton.label                     "Apply">
@@ -40,7 +40,7 @@
 <!ENTITY tagMenuPrefpane.label                 "Tag Menu">
 <!ENTITY tagMenuPrefpane.accesskey             "T">
 
-<!ENTITY tagMenuDescription                    "You can access the tag menu from its toolbar icon and, on non-Mac systems, from the Bookmarks menu.  You'll have to add that icon yourself by customizing your toolbar (from toolbar menus View &gt; Toolbars &gt; Customize...).  TagSifter is a courteous extension and does not by default clutter your toolbar.">
+<!ENTITY tagMenuDescription                    "You can access the tag menu from its toolbar icon and, on non-Mac systems, from the Bookmarks menu.  You'll have to add that icon yourself by customizing your toolbar (from toolbar menus View &gt; Toolbars &gt; Customize...).  TagSieve is a courteous extension and does not by default clutter your toolbar.">
 
 <!ENTITY tagMenu.tagSort.label                 "Sort Tags:">
 <!ENTITY tagMenu.bookmarkSort.label            "Sort Bookmarks:">
@@ -55,8 +55,8 @@
 <!ENTITY helpPrefpane.label                    "Help">
 <!ENTITY helpPrefpane.accesskey                "H">
 
-<!ENTITY helpDescription                       "Click the button below to open TagSifter's help.  Other, up-to-date information may be found at TagSifter's homepage.">
+<!ENTITY helpDescription                       "Click the button below to open TagSieve's help.  Other, up-to-date information may be found at TagSieve's homepage.">
 <!ENTITY helpButton.label                      "Open Help">
 <!ENTITY helpButton.accesskey                  "O">
-<!ENTITY homeButton.label                      "Open TagSifter's Homepage">
+<!ENTITY homeButton.label                      "Open TagSieve's Homepage">
 <!ENTITY homeButton.accesskey                  "p">
