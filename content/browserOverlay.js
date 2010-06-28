@@ -232,11 +232,11 @@ var BookmarkTags= function ()
         toolbox= document.getElementById("navigator-toolbox");
 
         // The tag menu in the bookmarks popup does not work well on Macs.
-        if (BookmarkTags.Util.getOS() === "Darwin")
-        {
-            document.getElementById("BookmarkTags-tagMenuBookmarksPopup").
-                hidden= true;
-        }
+        //if (BookmarkTags.Util.getOS() === "Darwin")
+        //{
+        //    document.getElementById("BookmarkTags-tagMenuBookmarksPopup").
+        //        hidden= true;
+        //}
 
         updateSidebarKey();
         loadCuteMenusFix();
