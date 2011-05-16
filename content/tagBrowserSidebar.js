@@ -32,9 +32,6 @@ var BookmarkTags= function ()
     var macCSSLoaded;
 
     // for edit commands
-    const transactServ=
-        Components.classes["@mozilla.org/browser/placesTransactionsService;1"].
-        getService(Components.interfaces.nsIPlacesTransactionsService);
 
     const bmController=
     {
@@ -379,13 +376,13 @@ var BookmarkTags= function ()
             case "cmd_redo":
                 BookmarkTags.Util.runBMBatch(function ()
                 {
-                    transactServ.redoTransaction();
+                     PlacesUtils.transactionManager.redoTransaction();
                 });
                 break;
             case "cmd_undo":
                 BookmarkTags.Util.runBMBatch(function ()
                 {
-                    transactServ.undoTransaction();
+                    PlacesUtils.transactionManager.undoTransaction();
                 });
                 break;
             }
@@ -407,10 +404,10 @@ var BookmarkTags= function ()
                         tagController.isCommandEnabled(this.tagTable_[cmd]));
                 break;
             case "cmd_redo":
-                return transactServ.numberOfRedoItems > 0;
+                return PlacesUtils.transactionManager.numberOfRedoItems > 0;
                 break;
             case "cmd_undo":
-                return transactServ.numberOfUndoItems > 0;
+                return PlacesUtils.transactionManager.numberOfUndoItems > 0;
                 break;
             }
             return false;

@@ -1,0 +1,10 @@
+<!ENTITY bmt.sidebarBroadcaster.label       "TagSieve">
+<!ENTITY bmt.sidebarBroadcaster.accesskey   "A">
+<!ENTITY bmt.sidebarBroadcaster.tooltiptext "TagSieve in der Sidebar öffnen">
+<!ENTITY bmt.sidebarTitle                   "TagSieve">
+
+<!ENTITY bmt.bmMenuToolbarbutton.label      "TagSieve-Menü">
+<!ENTITY bmt.bmMenuBookmarksPopup.label     "TagSieve">
+<!ENTITY bmt.bmMenuToolbarbutton.accesskey  "M">
+
+<!ENTITY bmt.migrateMenuitem.label          "TagSieve-Migrationsassistent">

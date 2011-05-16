@@ -409,6 +409,8 @@ BookmarkTags.TreeView= function ()
             case "lastModified":
             case "dateAdded":
             case "visit_date":
+                Ci= Components.interfaces;
+                Cc= Components.classes;
                 return PlacesTreeView.prototype._convertPRTimeToString(val);
                 break;
             }

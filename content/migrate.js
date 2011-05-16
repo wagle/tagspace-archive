@@ -116,7 +116,8 @@ const BookmarkTags= function ()
             opts.excludeReadOnlyFolders= true;
             result= histServ.executeQuery(query, opts);
             treeViewer= new PlacesTreeView(false);
-            result.viewer= treeViewer;
+            Ci = Components.interfaces; //possible bug in treeView.js (to investigate)
+            result.addObserver(treeViewer.QueryInterface(CI.nsINavHistoryResultObserver), true);
             tree.view= treeViewer.QueryInterface(CI.nsITreeView);
             if (rootFolderId) tree.selectItems([rootFolderId]);
             document.documentElement.canAdvance= !!tree.selectedNode;

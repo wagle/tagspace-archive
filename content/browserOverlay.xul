@@ -243,6 +243,8 @@
     <toolbarbutton id="BookmarkTags-bmMenuToolbarbutton"
                    type="menu"
                    label="&bmt.bmMenuToolbarbutton.label;"
+                   accesskey="&bmt.bmMenuToolbarbutton.accesskey;"
+                   oncommand="document.getElementById('BookmarkTags-bmMenuToolbarbutton').open = true;"
                    class="chromeclass-toolbar-additional">
       <menupopup type="bookmarktags:tagpopup"
                  querytype="storage"
@@ -260,6 +262,14 @@
          persist="modifiers key command"
          modifiers=""
          key="" />
+    <key id="BookmarkTags-focusTagBrowserSidebarInputKey"
+         modifiers="control shift"
+         key="I"
+	 oncommand="document.getElementById('sidebar').contentDocument.getElementById('tagInput').inner.focus();" />
+    <key id="BookmarkTags-focusTagBrowserSidebarBookmarkKey"
+         modifiers="control"
+         key="M"
+	 oncommand="document.getElementById('sidebar').contentDocument.getElementById('bmtree').focus();" />
   </keyset>
 
   <!-- bookmarks menu hook for our tag menu -->

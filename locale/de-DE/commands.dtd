@@ -1,0 +1,119 @@
+<!ENTITY % edit SYSTEM "chrome://global/locale/editMenuOverlay.dtd">
+%edit;
+<!ENTITY % places SYSTEM "chrome://browser/locale/places/places.dtd">
+%places;
+
+<!--
+editMenuOverlay.dtd
+  copyCmd.accesskey:              c
+  cutCmd.accesskey:               t
+  deleteCmd.accesskey:            d
+  pasteCmd.accesskey:             p
+
+places.dtd
+  cmd.open.accesskey:             O
+  cmd.open_all_in_tabs.accesskey: O
+  cmd.open_window.accesskey:      N
+  cmd.open_tab.accesskey:         w
+  cmd.properties.accesskey:       i
+-->
+
+<!ENTITY bmt.bmCmd_copy.label                         "&copyCmd.label;">
+<!ENTITY bmt.bmCmd_copy.accesskey                     "&copyCmd.accesskey;">
+<!ENTITY bmt.bmCmd_cutDelete.label                    "Ausschneiden und löschen">
+<!ENTITY bmt.bmCmd_cutDelete.accesskey                "t">
+<!ENTITY bmt.bmCmd_cutUntagAll.label                  "Ausschneiden und alle Schlagwörter entfernen">
+<!ENTITY bmt.bmCmd_cutUntagAll.accesskey              "u">
+<!ENTITY bmt.bmCmd_cutUntagTags.label                 "Ausschneiden und ausgewählte Schlagwörter entfernen">
+<!ENTITY bmt.bmCmd_cutUntagTags.accesskey             "R">
+<!ENTITY bmt.bmCmd_delete.label                       "&deleteCmd.label;">
+<!ENTITY bmt.bmCmd_delete.accesskey                   "&deleteCmd.accesskey;">
+<!ENTITY bmt.bmCmd_open.label                         "&cmd.open.label;">
+<!ENTITY bmt.bmCmd_open.accesskey                     "&cmd.open.accesskey;">
+<!ENTITY bmt.bmCmd_openInNewWindow.label              "&cmd.open_window.label;">
+<!ENTITY bmt.bmCmd_openInNewWindow.accesskey          "&cmd.open_window.accesskey;">
+<!ENTITY bmt.bmCmd_openInNewTab.label                 "&cmd.open_tab.label;">
+<!ENTITY bmt.bmCmd_openInNewTab.accesskey             "&cmd.open_tab.accesskey;">
+<!ENTITY bmt.bmCmd_openInTabs.label                   "&cmd.open_all_in_tabs.label;">
+<!ENTITY bmt.bmCmd_openInTabs.accesskey               "e">
+<!ENTITY bmt.bmCmd_paste.label                        "&pasteCmd.label;">
+<!ENTITY bmt.bmCmd_paste.accesskey                    "&pasteCmd.accesskey;">
+<!ENTITY bmt.bmCmd_properties.label                   "&cmd.properties.label;">
+<!ENTITY bmt.bmCmd_properties.accesskey               "&cmd.properties.accesskey;">
+<!ENTITY bmt.bmCmd_showInOrganizer.label              "In der Bibliothek anzeigen">
+<!ENTITY bmt.bmCmd_showInOrganizer.accesskey          "L">
+<!ENTITY bmt.bmCmd_untagAll.label                     "Alle Schlagwörter entfernen">
+<!ENTITY bmt.bmCmd_untagAll.accesskey                 "A">
+<!ENTITY bmt.bmCmd_untagTags.label                    "Ausgewählte Schlagwörter entfernen">
+<!ENTITY bmt.bmCmd_untagTags.accesskey                "s">
+
+<!ENTITY bmt.bmSortMenu.label                         "Lesezeichen sortieren">
+<!ENTITY bmt.bmSortMenu.accesskey                     "B">
+
+<!ENTITY bmt.queryCmd_customize.label                 "Standardaktion ändern...">
+<!ENTITY bmt.queryCmd_customize.accesskey             "C">
+<!ENTITY bmt.queryCmd_help.label                      "TagSieve-Hilfe...">
+<!ENTITY bmt.queryCmd_help.accesskey                  "H">
+<!ENTITY bmt.queryCmd_removeAllTags.label             "Alle Schlagwörter aus der Suchanfrage entfernen">
+<!ENTITY bmt.queryCmd_removeAllTags.accesskey         "A">
+<!ENTITY bmt.queryCmd_removeOtherTags.label           "Andere Schlagwörter aus der Suchanfrage entfernen">
+<!ENTITY bmt.queryCmd_removeOtherTags.accesskey       "O">
+<!ENTITY bmt.queryCmd_removeSucceedingTags.label      "Nachfolgende Schlagwörter aus der Suchanfrage entfernen">
+<!ENTITY bmt.queryCmd_removeSucceedingTags.accesskey  "S">
+<!ENTITY bmt.queryCmd_removeTag.label                 "Aus der Suchanfrage entfernen">
+<!ENTITY bmt.queryCmd_removeTag.accesskey             "R">
+<!ENTITY bmt.queryCmd_toggleFindAsYouType.label       "Suche bereits beim Eintippen starten">
+<!ENTITY bmt.queryCmd_toggleFindAsYouType.accesskey   "F">
+
+<!-- The sortCmd's are also used as tree column names. -->
+<!ENTITY bmt.sortCmd_dateAdded.label                  "&col.dateadded.label;">
+<!ENTITY bmt.sortCmd_frecency.label                   "Frecency (Häufigkeit und Neuheit)">
+<!ENTITY bmt.sortCmd_lastModified.label               "&col.lastmodified.label;">
+<!ENTITY bmt.sortCmd_relatedSize.label                "Verwendungshäufigkeit">
+<!ENTITY bmt.sortCmd_title.label                      "&col.name.label;">
+<!ENTITY bmt.sortCmd_url.label                        "&col.url.label;">
+<!ENTITY bmt.sortCmd_visit_count.label                "&col.visitcount.label;">
+<!ENTITY bmt.sortCmd_visit_date.label                 "&col.lastvisit.label;">
+
+<!ENTITY bmt.sortDirCmd_lexico_ascending.label        "Alphabetisch - aufsteigend">
+<!ENTITY bmt.sortDirCmd_lexico_descending.label       "Alphabetisch - absteigend">
+<!ENTITY bmt.sortDirCmd_quantity_ascending.label      "Meistverwendet - aufsteigend"> 
+<!ENTITY bmt.sortDirCmd_quantity_descending.label     "Meistverwendet - absteigend"> 
+<!ENTITY bmt.sortDirCmd_time_ascending.label          "Hinzugefügt - aufsteigend">
+<!ENTITY bmt.sortDirCmd_time_descending.label         "Hinzugefügt - absteigend">
+
+<!ENTITY bmt.tagCmd_clearTagColor.label               "Entfernen">
+<!ENTITY bmt.tagCmd_clearTagColor.accesskey           "C">
+<!ENTITY bmt.tagCmd_copy.label                        "&copyCmd.label;">
+<!ENTITY bmt.tagCmd_copy.accesskey                    "&copyCmd.accesskey;">
+<!ENTITY bmt.tagCmd_cut.label                         "&cutCmd.label;">
+<!ENTITY bmt.tagCmd_cut.accesskey                     "&cutCmd.accesskey;">
+<!ENTITY bmt.tagCmd_delete.label                      "&deleteCmd.label;">
+<!ENTITY bmt.tagCmd_delete.accesskey                  "&deleteCmd.accesskey;">
+<!ENTITY bmt.tagCmd_openInTabs.label                  "Lesezeichen in Tabs öffnen">
+<!ENTITY bmt.tagCmd_openInTabs.accesskey              "e">
+<!ENTITY bmt.tagCmd_paste.label                       "&pasteCmd.label;">
+<!ENTITY bmt.tagCmd_paste.accesskey                   "&pasteCmd.accesskey;">
+<!ENTITY bmt.tagCmd_properties.label                  "&cmd.properties.label;">
+<!ENTITY bmt.tagCmd_properties.accesskey              "&cmd.properties.accesskey;">
+<!ENTITY bmt.tagCmd_select.label                      "Auswählen">
+<!ENTITY bmt.tagCmd_select.accesskey                  "S">
+<!ENTITY bmt.tagCmd_setTagColor.label                 "Farbe">
+<!ENTITY bmt.tagCmd_setTagColor.accesskey             "o">
+
+<!ENTITY bmt.tagDisplayCmd_cloud.label                "Schlagwortwolke">
+<!ENTITY bmt.tagDisplayCmd_cloud.accesskey            "u">
+<!ENTITY bmt.tagDisplayCmd_customize.label            "Anpassen...">
+<!ENTITY bmt.tagDisplayCmd_customize.accesskey        "z">
+<!ENTITY bmt.tagDisplayCmd_help.label                 "TagSieve-Hilfe...">
+<!ENTITY bmt.tagDisplayCmd_help.accesskey             "H">
+<!ENTITY bmt.tagDisplayCmd_list.label                 "Schlagwortliste">
+<!ENTITY bmt.tagDisplayCmd_list.accesskey             "L">
+
+<!ENTITY bmt.tagInputCmd_help.label                   "TagSieve-Hilfe...">
+<!ENTITY bmt.tagInputCmd_help.accesskey               "H">
+<!ENTITY bmt.tagInputCmd_toggleAutocomplete.label     "Autovervollständigen aktivieren">
+<!ENTITY bmt.tagInputCmd_toggleAutocomplete.accesskey "u">
+
+<!ENTITY bmt.tagSortMenu.label                        "Schlagwörter sortieren">
+<!ENTITY bmt.tagSortMenu.accesskey                    "r">

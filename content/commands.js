@@ -27,7 +27,6 @@
 var EXPORTED_SYMBOLS= ["BookmarkTags"];
 if (typeof(BookmarkTags) === "undefined") var BookmarkTags= {};
 
-
 // see content/browser/places/controller.js
 BookmarkTags.BookmarkCmds= function ()
 {
@@ -50,10 +49,11 @@ BookmarkTags.BookmarkCmds= function ()
         "bookmarktags:bmCmds:untagAll",
         "bookmarktags:bmCmds:untagTags"
     ];
-
-    const transactServ=
-        Components.classes["@mozilla.org/browser/placesTransactionsService;1"].
-        getService(Components.interfaces.nsIPlacesTransactionsService);
+    Components.utils.import("resource://gre/modules/PlacesUtils.jsm");
+    Components.utils.import("resource://gre/modules/PlacesUIUtils.jsm");
+    Components.utils.import('resource://gre/modules/Services.jsm');
+    var clipid = Components.interfaces.nsIClipboard;  
+    var clipboard   = Components.classes["@mozilla.org/widget/clipboard;1"].getService(clipid);
 
     // Adapted from PlacesController.prototype._isClipboardDataPasteable in
     // firefox/source/browser/components/places/content/controller.js
@@ -66,7 +66,7 @@ BookmarkTags.BookmarkCmds= function ()
         // also be immediately acceptable except we don't allow pasting of
         // livemarks, since the tree view doesn't handle them yet.
         flavors= [PlacesUtils.TYPE_X_MOZ_PLACE_CONTAINER];
-        if (PlacesUIUtils.clipboard.hasDataMatchingFlavors(
+        if (clipboard.hasDataMatchingFlavors(
                 flavors,
                 flavors.length,
                 Components.interfaces.nsIClipboard.kGlobalClipboard))
@@ -82,7 +82,7 @@ BookmarkTags.BookmarkCmds= function ()
         transferable.addDataFlavor(PlacesUtils.TYPE_X_MOZ_PLACE);
         transferable.addDataFlavor(PlacesUtils.TYPE_X_MOZ_URL);
         transferable.addDataFlavor(PlacesUtils.TYPE_UNICODE);
-        PlacesUIUtils.clipboard.getData(
+        clipboard.getData(
             transferable, Components.interfaces.nsIClipboard.kGlobalClipboard);
 
         return canPasteHelper(transferable);
@@ -203,7 +203,7 @@ BookmarkTags.BookmarkCmds= function ()
 
         if (mozPlace || unicode || html || mozURL)
         {
-            PlacesUIUtils.clipboard.setData(transferable, null,
+            clipboard.setData(transferable, null,
                 Components.interfaces.nsIClipboard.kGlobalClipboard);
         }
     }
@@ -233,7 +233,7 @@ BookmarkTags.BookmarkCmds= function ()
         transactions= [];
         bmObjs.forEach(function (bmObj)
         {
-            transactions.push(transactServ.removeItem(bmObj.id));
+            transactions.push(new PlacesRemoveItemTransaction(bmObj.id));
         });
         doTransactions(transactions, "bookmarktags:bmCmds:delete");
     }
@@ -244,10 +244,10 @@ BookmarkTags.BookmarkCmds= function ()
     {
         if (transactions.length > 0)
         {
-            transactions= transactServ.aggregateTransactions(cmd, transactions);
+            transactions= new PlacesAggregatedTransaction(cmd, transactions);
             BookmarkTags.Util.runBMBatch(function ()
             {
-                transactServ.doTransaction(transactions);
+                PlacesUtils.transactionManager.doTransaction(transactions);
             });
         }
     }
@@ -458,7 +458,7 @@ BookmarkTags.BookmarkCmds= function ()
             {
                 return { uri: bmObj.url, isBookmark: true };
             });
-            PlacesUIUtils._openTabset(bmObjs, event);
+            PlacesUIUtils._openTabset(bmObjs, event, Services.wm.getMostRecentWindow("navigator:browser"));
         }
     }
 
@@ -477,7 +477,7 @@ BookmarkTags.BookmarkCmds= function ()
         var tagNames;
 
         transferable= makePasteTransferable();
-        PlacesUIUtils.clipboard.getData(
+        clipboard.getData(
             transferable, Components.interfaces.nsIClipboard.kGlobalClipboard);
 
         transactions= [];
@@ -520,7 +520,7 @@ BookmarkTags.BookmarkCmds= function ()
                     BookmarkTags.Util.tagServ.getTagsForURI(uri, {}, {});
                 let newTags=
                     tagNames.filter(function (t) existingTags.indexOf(t) < 0);
-                transactions.push(transactServ.tagURI(uri, newTags));
+                transactions.push(new PlacesTagURITransaction(uri, newTags));
                 // item.id will be defined for regular Places nodes, item.itemId
                 // for nsINavHistoryResultNodes, which are returned from
                 // processNavQueryNodeHelper
@@ -729,7 +729,7 @@ BookmarkTags.BookmarkCmds= function ()
         bmObjs.forEach(function (bmObj)
         {
             let uri= BookmarkTags.Util.bmServ.getBookmarkURI(bmObj.id);
-            if (uri) transactions.push(transactServ.untagURI(uri, null));
+            if (uri) transactions.push(new PlacesUntagURITransaction(uri, null));
         });
         doTransactions(transactions, "bookmarktags:bmCmds:untagAll");
     }
@@ -754,7 +754,7 @@ BookmarkTags.BookmarkCmds= function ()
                 let uri= BookmarkTags.Util.bmServ.getBookmarkURI(bmObj.id);
                 if (uri)
                 {
-                    transactions.push(transactServ.untagURI(uri, tagNames));
+                    transactions.push(new PlacesUntagURITransaction(uri, tagNames));
                 }
             });
             doTransactions(transactions, "bookmarktags:bmCmds:untagTags");
@@ -912,16 +912,12 @@ BookmarkTags.TagCmds= function ()
     {
         var transactions;
 
-        const transactServ=
-            CC["@mozilla.org/browser/placesTransactionsService;1"].
-            getService(CI.nsIPlacesTransactionsService);
-
         if (okToDelete(tagIds))
         {
             transactions= [];
             tagIds.forEach(function (tid)
             {
-                transactions.push(transactServ.removeItem(tid));
+                transactions.push(new PlacesRemoveItemTransaction(tid));
             });
             BookmarkTags.BookmarkCmds.doTransactions(
                 transactions, "bookmarktags:tagCmds:delete");

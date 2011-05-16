@@ -1,0 +1,62 @@
+<!ENTITY window.title                          "TagSieve">
+<!ENTITY window.width                          "54em">
+
+<!ENTITY applyButton.label                     "Übernehmen">
+<!ENTITY defaultsButton.label                  "Standardeinstellungen">
+
+<!ENTITY sidebarPrefpane.label                 "Sidebar">
+<!ENTITY sidebarPrefpane.accesskey             "S">
+
+<!ENTITY tagInputGroupbox.caption              "Eingabe von Schlagwörtern">
+<!ENTITY disableTagInputAutocomplete.label     "Autovervollständigen deaktivieren">
+<!ENTITY disableTagInputAutocomplete.accesskey "a">
+<!ENTITY disableFindAsYouType.label            "Suche bereits beim Eintippen deaktivieren">
+<!ENTITY disableFindAsYouType.accesskey        "f">
+<!ENTITY restrictQueryInputCompletions.label   "Autovervollständigen auf verknüpfte Schlagwörter beschränken">
+<!ENTITY restrictQueryInputCompletions.accesskey "e">
+
+<!ENTITY queryCloudGroupbox.caption            "Suchwolke">
+<!ENTITY queryCloudTagClickAction.label        "Bei Klick auf ein Schlagwort in der Suchwolke:">
+<!ENTITY queryCloudTagClickAction.accesskey    "q">
+<!ENTITY queryCloudTagClickAction.pop          "Nachfolgende Schlagwörter aus der Suchanfrage entfernen (Standard)">
+<!ENTITY queryCloudTagClickAction.remove       "Nur dieses Schlagwort aus der Suchanfrage entfernen">
+<!ENTITY queryCloudTagClickAction.removeOthers "Andere Schlagwörter aus der Suchanfrage entfernen">
+<!ENTITY hideQueryCloud.label                  "Suchwolke ausblenden">
+<!ENTITY hideQueryCloud.accesskey              "i">
+
+<!ENTITY tagDisplayGroupbox.caption            "Schlagwortauswahl">
+<!ENTITY tagDisplay.label                      "Schlagwörter anzeigen als:">
+<!ENTITY tagDisplay.accesskey                  "d">
+<!ENTITY tagDisplay.cloud                      "Wolke">
+<!ENTITY tagDisplay.list                       "Liste (Standard)">
+<!ENTITY cloudsReflectTagSizes.label           "Wolke zeigt Schlagwörter je nach Verwendunghäufigkeit unterschiedlich groß an">
+<!ENTITY cloudsReflectTagSizes.accesskey       "r">
+
+<!ENTITY sidebarKeyGroupbox.caption            "Tastenkombination">
+<!ENTITY sidebarKey.textbox.emptytext          "Keine Tastenkombination zugewiesen">
+<!ENTITY sidebarKey.clear.label                "Entfernen">
+<!ENTITY sidebarKey.clear.accesskey            "C">
+
+<!ENTITY tagMenuPrefpane.label                 "Schlagwortmenü">
+<!ENTITY tagMenuPrefpane.accesskey             "T">
+
+<!ENTITY tagMenuDescription                    "Sie können auf das Schlagwortmenü über die entsprechende Schaltfläche in der Symbolleiste oder, auf Nicht-Mac-Systemen, aus dem Lesezeichenmenü heraus zugreifen.  Um die Schaltfläche anzuzeigen, müssen Sie die Symbolleiste anpassen (über das Menü Ansicht &gt; Symbolleisten &gt; Anpassen...).  TagSieve ist ein zurückhaltendes Add-on und wird nicht von sich aus Ihre Symbolleiste durcheinander bringen.">
+
+<!ENTITY tagMenu.tagSort.label                 "Schlagwörter sortieren:">
+<!ENTITY tagMenu.bookmarkSort.label            "Lesezeichen sortieren:">
+
+<!ENTITY migratorPrefpane.label                "Migrationsassistent">
+<!ENTITY migratorPrefpane.accesskey            "M">
+
+<!ENTITY migratorDescription                   "Benutzen Sie den Migrationsassistenten, um aus Ihren Lesezeichenordnern Schlagwörter zu erstellen und den in den Ordnern enthaltenden Lesezeichen automatisch die entsprechenden Schlagwörter zuzuweisen.  Klicken Sie hier, um zu beginnen.">
+<!ENTITY migratorButton.label                  "Migrationsassistenten starten">
+<!ENTITY migratorButton.accesskey              "W">
+
+<!ENTITY helpPrefpane.label                    "Hilfe">
+<!ENTITY helpPrefpane.accesskey                "H">
+
+<!ENTITY helpDescription                       "Klicken Sie auf die Schaltfläche links, um die Hilfe von TagSieve zu öffnen.  Klicken Sie auf die Schaltfläche rechts, um zur Internetseite von TagSieve zu gelangen, auf der Sie die neuesten Informationen zum Add-on finden.">
+<!ENTITY helpButton.label                      "Hilfe öffnen">
+<!ENTITY helpButton.accesskey                  "O">
+<!ENTITY homeButton.label                      "Zur TagSieve-Internetseite">
+<!ENTITY homeButton.accesskey                  "p">

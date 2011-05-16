@@ -1,21 +1,3 @@
 @import url("chrome://global/skin/");
 @import url("chrome://bookmarktags/content/tagInput.css");
 
-bmt-taginput .textbox-search-clear
-{
-    padding: 2px;
-    border: none;
-    background-image: none !important;
-    background-color: transparent !important;
-    cursor: pointer;
-    list-style-image: url("chrome://global/skin/icons/close.png");
-    -moz-image-region: rect(0px 14px 14px 0px);
-}
-bmt-taginput .textbox-search-clear:hover
-{
-    -moz-image-region: rect(0px, 28px, 14px, 14px);
-}
-bmt-taginput .textbox-search-clear:hover:active
-{
-    -moz-image-region: rect(0px, 42px, 14px, 28px);
-}

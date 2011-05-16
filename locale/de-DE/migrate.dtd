@@ -1,0 +1,27 @@
+<!ENTITY wizard.title "TagSieve-Migrationsassistent">
+<!ENTITY wizard.width "500">
+<!ENTITY wizard.height "380">
+
+<!ENTITY introPage.label "TagSieve-Migrationsassistent">
+<!ENTITY introPage.description "Erstellt aus den Namen Ihrer Lesezeichenordner Schlagwörter">
+<!ENTITY introPage.text1 "Dieser Assistent erstellt aus den Namen Ihrer Lesezeichenordner Schlagwörter und weist diese Schlagwörter dann den entsprechenden Lesezeichen zu.  Es werden keine Änderungen an Ihren Lesezeichenordnern vorgenommen.">
+<!ENTITY introPage.text2 "Ein Lesezeichen, das in einer verschachtelten Ordnerstruktur abgelegt ist, bekommt alle Ordnernamen als Schlagwörter zugewiesen.  Wenn zum Beispiel Ihr Lesezeichen &quot;Ramen-Nudeln&quot; im Ordner Essen/Kochen/Chinesisch abgelegt ist, bekommt dieses Lesezeichen die Schlagwörter &quot;Essen&quot;, &quot;Kochen&quot; und &quot;Chinesisch&quot; zugewiesen.">
+<!ENTITY introPage.text3 "Obwohl dieser Assistent dafür vorgesehen ist, speziell Benutzern des Add-ons &quot;Bookmark Tags&quot; den Import von Lesezeichen aus früheren Firefox-Versionen in Firefox 3 zu ermöglichen, kann er von jedem für alle möglichen Lesezeichenordner verwendet werden.">
+
+<!ENTITY rootFolderPage.label "TagSieve-Migrationsassistent">
+<!ENTITY rootFolderPage.description "Auswahl des Ausgangsverzeichnisses">
+<!ENTITY rootFolderPage.text1 "Wählen Sie den Ordner aus, mit dem begonnen werden soll.  Schlagwörter werden für alle untergeordneten Ordner erstellt und allen in den untergeordneten Ordnern befindlichen Lesezeichen werden die entsprechenden Schlagwörter zugewiesen.  Wenn Sie das Add-on &quot;Bookmark Tags&quot; benutzt haben, wählen Sie das entsprechende Ausgangsverzeichnis aus.">
+<!ENTITY rootFolderPage.text2 "">
+<!ENTITY rootFolderPage.includeRoot.label "Schlagwort auch für den ausgewählten Ordner erstellen">
+<!ENTITY rootFolderPage.includeRoot.accesskey "C">
+
+<!ENTITY warningPage.label "TagSieve-Migrationsassistent">
+<!ENTITY warningPage.description "Warnung">
+<!ENTITY warningPage.text1 "Sie möchten Schlagwörter aus den Namen eines jeden einzelnen Ordners erstellen, der sich innerhalb des ausgewählten Ausgangsverzeichnisses befindet.  Das könnten sehr viele Schlagwörter sein.  Sie wurden gewarnt - sollten Sie also mit dem Ergebnis nicht zufrieden sein, schreiben Sie bitte nicht in Ihr Blog, dass TagSieve Ihre Lesezeichen verwüstet hat.  OK?  OK.">
+<!ENTITY warningPage.text2 "Wenn Sie noch Bedenken haben, gehen Sie zurück und wählen eine kleine Anzahl von Ordnern.  Sie können hierhin später zurückkehren, wenn Sie möchten.">
+<!ENTITY warningPage.text3 "Der Migrationsvorgang wird beginnen, wenn Sie fortfahren.">
+
+<!ENTITY conversionPage.label "TagSieve-Migrationsassistent">
+<!ENTITY conversionPage.description "Migrationsvorgang">
+<!ENTITY conversionPage.working "Wenn Sie viele hunderte Lesezeichen haben, kann dieser Vorgang einige Zeit dauern.  Bitte warten Sie...">
+<!ENTITY conversionPage.completeNotif "Der Migrationsvorgang ist abgeschlossen.  Sie können den Assistenten nun beenden oder zurückgehen, um ihn für weitere Ordner zu verwenden.">

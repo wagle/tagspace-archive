@@ -226,7 +226,6 @@ var BookmarkTags= function ()
     {
         if (loaded) return;
         loaded= true;
-	    handleFirstTime();
         sbKeyElt= document.getElementById(sbKeyEltId);
         sbBroadcaster= document.getElementById(sbBroadcasterId);
         toolbox= document.getElementById("navigator-toolbox");
@@ -251,43 +250,6 @@ var BookmarkTags= function ()
 
         window.controllers.appendController(bmController);
         window.controllers.appendController(tagController);
-    }
-
-	function handleFirstTime()
-    {
-	    var prefs = Components.classes["@mozilla.org/preferences-service;1"]
-                    .getService(Components.interfaces.nsIPrefService);
-	    prefs = prefs.getBranch("bookmarktags.");
-
-	    var ver = -1, firstrun = true;
-        var extensionManager = Components.classes["@mozilla.org/extensions/manager;1"]
-                                .getService(Components.interfaces.nsIExtensionManager);
-        var current = extensionManager.getItemForID("tagsieve@grue.in").version;
-        try
-        {
-		    ver = prefs.getCharPref("currentVersion");
-		    firstrun = prefs.getBoolPref("firstrun");
-        }
-        catch(e){}
-	    finally
-        {
-            if (firstrun)
-            {
-                prefs.setBoolPref("firstrun", false);
-                prefs.setCharPref("currentVersion", current);
-                window.setTimeout(function()
-                                  {
-                                    gBrowser.selectedTab = gBrowser.addTab("chrome://bookmarktags/locale/hello.html");
-                                  }, 1500);
-            }
-            // !firstrun ensures that this section does not get loaded if its a first run
-            if (ver != current && !firstrun)
-            {
-                prefs.setCharPref("currentVersion", current);
-                // for upgrade add code here
-            }
-        }
-
     }
 
     // The CSS rules of Cute Menus and other extensions and themes that add

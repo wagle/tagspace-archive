@@ -1,5 +1,7 @@
 content	bookmarktags 			content/        contentaccessible=yes
 locale	bookmarktags	en-US		locale/en-US/
+locale	bookmarktags	de-DE		locale/de-DE/
+
 skin	bookmarktags 	classic/1.0	skin/classic/
 
 skin bookmarktags-platform winstripe/1.0 skin/winstripe/ os=WINNT
