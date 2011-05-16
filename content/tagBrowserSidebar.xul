@@ -55,7 +55,7 @@
   <script type="application/x-javascript"
           src="chrome://browser/content/utilityOverlay.js" />
   <script type="application/javascript"><![CDATA[
-	  Components.utils.import("resource://gre/modules/PlacesUIUtils.jsm");
+      Components.utils.import("resource:///modules/PlacesUIUtils.jsm");
 	  Components.utils.import("resource://gre/modules/PlacesUtils.jsm");
 	  ]]></script>
   <script type="application/x-javascript"

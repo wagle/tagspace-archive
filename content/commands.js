@@ -50,7 +50,7 @@ BookmarkTags.BookmarkCmds= function ()
         "bookmarktags:bmCmds:untagTags"
     ];
     Components.utils.import("resource://gre/modules/PlacesUtils.jsm");
-    Components.utils.import("resource://gre/modules/PlacesUIUtils.jsm");
+    Components.utils.import("resource:///modules/PlacesUIUtils.jsm");
     Components.utils.import('resource://gre/modules/Services.jsm');
     var clipid = Components.interfaces.nsIClipboard;  
     var clipboard   = Components.classes["@mozilla.org/widget/clipboard;1"].getService(clipid);
