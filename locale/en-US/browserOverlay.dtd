@@ -1,5 +1,5 @@
 <!ENTITY bmt.sidebarBroadcaster.label       "TagSieve">
-<!ENTITY bmt.sidebarBroadcaster.accesskey   "A">
+<!ENTITY bmt.sidebarBroadcaster.accesskey   "Q">
 <!ENTITY bmt.sidebarBroadcaster.tooltiptext "Open TagSieve in the sidebar">
 <!ENTITY bmt.sidebarTitle                   "TagSieve">
 
