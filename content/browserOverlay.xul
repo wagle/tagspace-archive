@@ -264,7 +264,7 @@
          key="" />
     <key id="BookmarkTags-focusTagBrowserSidebarInputKey"
          modifiers="control shift"
-         key="I"
+         key="L"
 	 oncommand="document.getElementById('sidebar').contentDocument.getElementById('tagInput').inner.focus();" />
     <key id="BookmarkTags-focusTagBrowserSidebarBookmarkKey"
          modifiers="control"

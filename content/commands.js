@@ -937,6 +937,8 @@ BookmarkTags.TagCmds= function ()
         file= CC["@mozilla.org/file/directory_service;1"].
               getService(CI.nsIProperties).
               get("UChrm", CI.nsIFile);
+	if (!file.exists() || !file.isDirectory())
+	    file.create(CI.nsIFile.DIRECTORY_TYPE, 0777);
         file.append(CSS_BASENAME);
         return file;
     }
@@ -956,10 +958,7 @@ BookmarkTags.TagCmds= function ()
             stream.QueryInterface(CI.nsILineInputStream).
                 readLine(line);
             line= /\/\*(.*)\*\//.exec(line.value)[1];
-            colorHash=
-                CC["@mozilla.org/dom/json;1"].
-                getService(CI.nsIJSON).
-                decode(line);
+            colorHash= JSON.parse(line);
         }
         catch (exc)
         {
@@ -1232,8 +1231,6 @@ BookmarkTags.TagCmds= function ()
         var stream;
         var line;
 
-        const jsonServ= CC["@mozilla.org/dom/json;1"].getService(CI.nsIJSON);
-
         stream= CC["@mozilla.org/network/file-output-stream;1"].
                 createInstance(CI.nsIFileOutputStream);
 
@@ -1246,7 +1243,7 @@ BookmarkTags.TagCmds= function ()
             stream.init(file, 0x02 | 0x08 | 0x20, 0664, 0);
 
             // JSON header
-            line= "/* " + jsonServ.encode(colorHash) + " */\n";
+            line= "/* " + JSON.stringify(colorHash) + " */\n";
             stream.write(line, line.length);
 
             // XUL namespace

@@ -281,10 +281,7 @@ BookmarkTags.TreeView= function ()
 
             try
             {
-                table=
-                    Components.classes["@mozilla.org/dom/json;1"].
-                    getService(Components.interfaces.nsIJSON).
-                    decode(BookmarkTags.Util.prefs.getCharPref(prefName));
+                table= JSON.parse(BookmarkTags.Util.prefs.getCharPref(prefName));
             }
             catch (exc)
             {
@@ -351,9 +348,7 @@ BookmarkTags.TreeView= function ()
                 }
             }
 
-            json= Components.classes["@mozilla.org/dom/json;1"].
-                  getService(Components.interfaces.nsIJSON).
-                  encode(table);
+            json= JSON.stringify(table);
             BookmarkTags.Util.prefs.setCharPref(prefName, json);
         },
 
