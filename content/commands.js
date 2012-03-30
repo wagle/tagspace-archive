@@ -630,7 +630,11 @@ BookmarkTags.BookmarkCmds= function ()
     function properties(bmObj)
     {
         // see content/browser/places/controller.js
-        PlacesUIUtils.showItemProperties(bmObj.id, "bookmark");
+        PlacesUIUtils.showBookmarkDialog({ action: "edit"
+                                         , type: "bookmark"
+                                         , itemId: bmObj.id
+                                         });
+
     }
 
     // See SidebarUtils.handleTreeClick at
@@ -927,7 +931,10 @@ BookmarkTags.TagCmds= function ()
     function properties(tagId)
     {
         // see content/browser/places/controller.js
-        PlacesUIUtils.showItemProperties(tagId, "folder");
+        PlacesUIUtils.showBookmarkDialog({ action: "edit"
+                                         , type: "folder"
+                                         , itemId: tagId
+                                         });
     }
 
     function getCSSFile()
