@@ -330,21 +330,6 @@
             if (!val && !textbox.value) return;
 
             textbox.value= val;
-
-            // optimization
-            if (!val) return;
-
-            // Hack: The textbox won't automatically scroll to the caret if the
-            // caret's past the visible area.  Moving around in the textbox will
-            // though, so generate a fake keypress.
-            // FOR THIS TO WORK, TAG INPUT MUST HAVE FOCUS BEFOREHAND.
-            e= document.createEvent("KeyEvents");
-            //e.initKeyEvent("keypress", true, false, null,
-            e.initKeyEvent("keypress", false, false, null,
-                           false, false, false, false,
-                           Components.interfaces.nsIDOMKeyEvent.DOM_VK_RIGHT, 0);
-            e.bogus= true;
-            textbox.inputField.dispatchEvent(e);
         }
 
         // Checks the autocomplete menuitem as appropriate, if there's an
