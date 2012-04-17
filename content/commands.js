@@ -629,12 +629,13 @@ BookmarkTags.BookmarkCmds= function ()
 
     function properties(bmObj)
     {
-        // see content/browser/places/controller.js
-        PlacesUIUtils.showBookmarkDialog({ action: "edit"
-                                         , type: "bookmark"
-                                         , itemId: bmObj.id
-                                         });
-
+        var info=
+        {
+            action: "edit",
+            type: "bookmark",
+            itemId: bmObj.id
+        };
+        PlacesUIUtils.showBookmarkDialog(info);
     }
 
     // See SidebarUtils.handleTreeClick at
@@ -930,11 +931,13 @@ BookmarkTags.TagCmds= function ()
 
     function properties(tagId)
     {
-        // see content/browser/places/controller.js
-        PlacesUIUtils.showBookmarkDialog({ action: "edit"
-                                         , type: "folder"
-                                         , itemId: tagId
-                                         });
+        var info=
+        {
+            action: "edit",
+            type: "folder",
+            itemId: tagId
+        };
+        PlacesUIUtils.showBookmarkDialog(info);
     }
 
     function getCSSFile()
