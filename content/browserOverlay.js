@@ -233,8 +233,9 @@ var BookmarkTags= function ()
         // The tag menu in the bookmarks popup does not work well on Macs.
         //if (BookmarkTags.Util.getOS() === "Darwin")
         //{
-        //    document.getElementById("BookmarkTags-tagMenuBookmarksPopup").
-        //        hidden= true;
+        // hide for all
+           document.getElementById("BookmarkTags-tagMenuBookmarksPopup").
+               hidden= true;
         //}
 
         updateSidebarKey();

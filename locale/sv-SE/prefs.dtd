@@ -1,0 +1,62 @@
+<!ENTITY window.title                          "TagSieve">
+<!ENTITY window.width                          "40em">
+
+<!ENTITY applyButton.label                     "Verkställ">
+<!ENTITY defaultsButton.label                  "Standard">
+
+<!ENTITY sidebarPrefpane.label                 "Sidopanel">
+<!ENTITY sidebarPrefpane.accesskey             "S">
+
+<!ENTITY tagInputGroupbox.caption              "Etikettinmatning">
+<!ENTITY disableTagInputAutocomplete.label     "Inaktivera Komplettera automatiskt">
+<!ENTITY disableTagInputAutocomplete.accesskey "a">
+<!ENTITY disableFindAsYouType.label            "Inaktivera Sök medan du skriver">
+<!ENTITY disableFindAsYouType.accesskey        "n">
+<!ENTITY restrictQueryInputCompletions.label   "Begränsa automatiska kompletteringar till relaterade etiketter">
+<!ENTITY restrictQueryInputCompletions.accesskey "B">
+
+<!ENTITY queryCloudGroupbox.caption            "Frågemoln">
+<!ENTITY queryCloudTagClickAction.label        "Vid klick på en etikett i frågemolnet:">
+<!ENTITY queryCloudTagClickAction.accesskey    "å">
+<!ENTITY queryCloudTagClickAction.pop          "Ta bort efterföljande etiketter från frågan (standard)">
+<!ENTITY queryCloudTagClickAction.remove       "Ta endast bort den etiketten från frågan">
+<!ENTITY queryCloudTagClickAction.removeOthers "Ta bort alla övriga etiketter från frågan">
+<!ENTITY hideQueryCloud.label                  "Dölj frågemolnet">
+<!ENTITY hideQueryCloud.accesskey              "j">
+
+<!ENTITY tagDisplayGroupbox.caption            "Etikettväljare">
+<!ENTITY tagDisplay.label                      "Visa etiketter som:">
+<!ENTITY tagDisplay.accesskey                  "V">
+<!ENTITY tagDisplay.cloud                      "ett moln">
+<!ENTITY tagDisplay.list                       "en lista (standard)">
+<!ENTITY cloudsReflectTagSizes.label           "Molnet skall spegla etiketters storlek">
+<!ENTITY cloudsReflectTagSizes.accesskey       "o">
+
+<!ENTITY sidebarKeyGroupbox.caption            "Kortkommando">
+<!ENTITY sidebarKey.textbox.emptytext          "Inget kortkommando har tilldelats">
+<!ENTITY sidebarKey.clear.label                "Rensa">
+<!ENTITY sidebarKey.clear.accesskey            "R">
+
+<!ENTITY tagMenuPrefpane.label                 "Etikettmeny">
+<!ENTITY tagMenuPrefpane.accesskey             "t">
+
+<!ENTITY tagMenuDescription                    "Du kan öppna etikettmenyn via dess verktygsfältsknapp och, på icke-Mac-datorer, via bokmärkesmenyn.  Du behöver lägga till knappen på egen hand (gå till Visa-menyn &gt; Verktygsfält &gt; Anpassa…).  TagSieve är ett väluppfostrat tillägg och belamrar inte ditt verktygsfält i onödan.">
+
+<!ENTITY tagMenu.tagSort.label                 "Sortera etiketter:">
+<!ENTITY tagMenu.bookmarkSort.label            "Sortera bokmärken:">
+
+<!ENTITY migratorPrefpane.label                "Migrera mappar">
+<!ENTITY migratorPrefpane.accesskey            "M">
+
+<!ENTITY migratorDescription                   "Använd migreringsguiden för att konvertera dina bokmärkesmappar till etiketter och automatiskt märka bokmärkena i dessa med etiketterna som skapats.  Etiketter etiketterar etiketter, med andra ord.  Klicka på knappen för att starta.">
+<!ENTITY migratorButton.label                  "Starta migreringsguiden">
+<!ENTITY migratorButton.accesskey              "g">
+
+<!ENTITY helpPrefpane.label                    "Hjälp">
+<!ENTITY helpPrefpane.accesskey                "H">
+
+<!ENTITY helpDescription                       "Klicka på knappen nedan för att öppna TagSieves hjälpsida.  Övrig, alltid aktuell information hittar du på TagSieves webbplats.">
+<!ENTITY helpButton.label                      "Öppna hjälpsidan">
+<!ENTITY helpButton.accesskey                  "Ö">
+<!ENTITY homeButton.label                      "Öppna TagSieves webbplats">
+<!ENTITY homeButton.accesskey                  "w">

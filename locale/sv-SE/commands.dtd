@@ -1,0 +1,119 @@
+<!ENTITY % edit SYSTEM "chrome://global/locale/editMenuOverlay.dtd">
+%edit;
+<!ENTITY % places SYSTEM "chrome://browser/locale/places/places.dtd">
+%places;
+
+<!--
+editMenuOverlay.dtd
+  copyCmd.accesskey:              c
+  cutCmd.accesskey:               t
+  deleteCmd.accesskey:            d
+  pasteCmd.accesskey:             p
+
+places.dtd
+  cmd.open.accesskey:             O
+  cmd.open_all_in_tabs.accesskey: O
+  cmd.open_window.accesskey:      N
+  cmd.open_tab.accesskey:         w
+  cmd.properties.accesskey:       i
+-->
+
+<!ENTITY bmt.bmCmd_copy.label                         "&copyCmd.label;">
+<!ENTITY bmt.bmCmd_copy.accesskey                     "&copyCmd.accesskey;">
+<!ENTITY bmt.bmCmd_cutDelete.label                    "Klipp ut och ta bort">
+<!ENTITY bmt.bmCmd_cutDelete.accesskey                "t">
+<!ENTITY bmt.bmCmd_cutUntagAll.label                  "Klipp ut och ta bort alla etiketter">
+<!ENTITY bmt.bmCmd_cutUntagAll.accesskey              "u">
+<!ENTITY bmt.bmCmd_cutUntagTags.label                 "Klipp ut och ta bort markerade etiketter">
+<!ENTITY bmt.bmCmd_cutUntagTags.accesskey             "p">
+<!ENTITY bmt.bmCmd_delete.label                       "&deleteCmd.label;">
+<!ENTITY bmt.bmCmd_delete.accesskey                   "&deleteCmd.accesskey;">
+<!ENTITY bmt.bmCmd_open.label                         "&cmd.open.label;">
+<!ENTITY bmt.bmCmd_open.accesskey                     "&cmd.open.accesskey;">
+<!ENTITY bmt.bmCmd_openInNewWindow.label              "&cmd.open_window.label;">
+<!ENTITY bmt.bmCmd_openInNewWindow.accesskey          "&cmd.open_window.accesskey;">
+<!ENTITY bmt.bmCmd_openInNewTab.label                 "&cmd.open_tab.label;">
+<!ENTITY bmt.bmCmd_openInNewTab.accesskey             "&cmd.open_tab.accesskey;">
+<!ENTITY bmt.bmCmd_openInTabs.label                   "&cmd.open_all_in_tabs.label;">
+<!ENTITY bmt.bmCmd_openInTabs.accesskey               "Ö">
+<!ENTITY bmt.bmCmd_paste.label                        "&pasteCmd.label;">
+<!ENTITY bmt.bmCmd_paste.accesskey                    "&pasteCmd.accesskey;">
+<!ENTITY bmt.bmCmd_properties.label                   "&cmd.properties.label;">
+<!ENTITY bmt.bmCmd_properties.accesskey               "&cmd.properties.accesskey;">
+<!ENTITY bmt.bmCmd_showInOrganizer.label              "Visa i Biblioteket">
+<!ENTITY bmt.bmCmd_showInOrganizer.accesskey          "L">
+<!ENTITY bmt.bmCmd_untagAll.label                     "Ta bort alla etiketter">
+<!ENTITY bmt.bmCmd_untagAll.accesskey                 "a">
+<!ENTITY bmt.bmCmd_untagTags.label                    "Ta bort markerade etiketter">
+<!ENTITY bmt.bmCmd_untagTags.accesskey                "m">
+
+<!ENTITY bmt.bmSortMenu.label                         "Sortera bokmärken">
+<!ENTITY bmt.bmSortMenu.accesskey                     "b">
+
+<!ENTITY bmt.queryCmd_customize.label                 "Anpassa standardåtgärd…">
+<!ENTITY bmt.queryCmd_customize.accesskey             "å">
+<!ENTITY bmt.queryCmd_help.label                      "Hjälp om TagSieve…">
+<!ENTITY bmt.queryCmd_help.accesskey                  "H">
+<!ENTITY bmt.queryCmd_removeAllTags.label             "Ta bort alla från fråga">
+<!ENTITY bmt.queryCmd_removeAllTags.accesskey         "A">
+<!ENTITY bmt.queryCmd_removeOtherTags.label           "Ta bort övriga från fråga">
+<!ENTITY bmt.queryCmd_removeOtherTags.accesskey       "v">
+<!ENTITY bmt.queryCmd_removeSucceedingTags.label      "Ta bort efterföljande från fråga">
+<!ENTITY bmt.queryCmd_removeSucceedingTags.accesskey  "e">
+<!ENTITY bmt.queryCmd_removeTag.label                 "Ta bort från fråga">
+<!ENTITY bmt.queryCmd_removeTag.accesskey             "f">
+<!ENTITY bmt.queryCmd_toggleFindAsYouType.label       "Aktivera Sök medan du skriver">
+<!ENTITY bmt.queryCmd_toggleFindAsYouType.accesskey   "d">
+
+<!-- The sortCmd's are also used as tree column names. -->
+<!ENTITY bmt.sortCmd_dateAdded.label                  "&col.dateadded.label;">
+<!ENTITY bmt.sortCmd_frecency.label                   "Förekomst">
+<!ENTITY bmt.sortCmd_lastModified.label               "&col.lastmodified.label;">
+<!ENTITY bmt.sortCmd_relatedSize.label                "Storlek">
+<!ENTITY bmt.sortCmd_title.label                      "&col.name.label;">
+<!ENTITY bmt.sortCmd_url.label                        "&col.url.label;">
+<!ENTITY bmt.sortCmd_visit_count.label                "&col.visitcount.label;">
+<!ENTITY bmt.sortCmd_visit_date.label                 "&col.lastvisit.label;">
+
+<!ENTITY bmt.sortDirCmd_lexico_ascending.label        "A till Ö">
+<!ENTITY bmt.sortDirCmd_lexico_descending.label       "Ö till A">
+<!ENTITY bmt.sortDirCmd_quantity_ascending.label      "Minst till flest antal">
+<!ENTITY bmt.sortDirCmd_quantity_descending.label     "Flest till minst antal">
+<!ENTITY bmt.sortDirCmd_time_ascending.label          "Äldst till nyast">
+<!ENTITY bmt.sortDirCmd_time_descending.label         "Nyast till äldst">
+
+<!ENTITY bmt.tagCmd_clearTagColor.label               "Rensa">
+<!ENTITY bmt.tagCmd_clearTagColor.accesskey           "R">
+<!ENTITY bmt.tagCmd_copy.label                        "&copyCmd.label;">
+<!ENTITY bmt.tagCmd_copy.accesskey                    "&copyCmd.accesskey;">
+<!ENTITY bmt.tagCmd_cut.label                         "&cutCmd.label;">
+<!ENTITY bmt.tagCmd_cut.accesskey                     "&cutCmd.accesskey;">
+<!ENTITY bmt.tagCmd_delete.label                      "&deleteCmd.label;">
+<!ENTITY bmt.tagCmd_delete.accesskey                  "&deleteCmd.accesskey;">
+<!ENTITY bmt.tagCmd_openInTabs.label                  "Öppna bokmärken i flikar">
+<!ENTITY bmt.tagCmd_openInTabs.accesskey              "Ö">
+<!ENTITY bmt.tagCmd_paste.label                       "&pasteCmd.label;">
+<!ENTITY bmt.tagCmd_paste.accesskey                   "&pasteCmd.accesskey;">
+<!ENTITY bmt.tagCmd_properties.label                  "&cmd.properties.label;">
+<!ENTITY bmt.tagCmd_properties.accesskey              "&cmd.properties.accesskey;">
+<!ENTITY bmt.tagCmd_select.label                      "Lägg till i fråga">
+<!ENTITY bmt.tagCmd_select.accesskey                  "ä">
+<!ENTITY bmt.tagCmd_setTagColor.label                 "Färg">
+<!ENTITY bmt.tagCmd_setTagColor.accesskey             "F">
+
+<!ENTITY bmt.tagDisplayCmd_cloud.label                "Etikettmoln">
+<!ENTITY bmt.tagDisplayCmd_cloud.accesskey            "m">
+<!ENTITY bmt.tagDisplayCmd_customize.label            "Inställningar…">
+<!ENTITY bmt.tagDisplayCmd_customize.accesskey        "I">
+<!ENTITY bmt.tagDisplayCmd_help.label                 "Hjälp om TagSieve…">
+<!ENTITY bmt.tagDisplayCmd_help.accesskey             "H">
+<!ENTITY bmt.tagDisplayCmd_list.label                 "Etikettlista">
+<!ENTITY bmt.tagDisplayCmd_list.accesskey             "l">
+
+<!ENTITY bmt.tagInputCmd_help.label                   "Hjälp om TagSieve…">
+<!ENTITY bmt.tagInputCmd_help.accesskey               "H">
+<!ENTITY bmt.tagInputCmd_toggleAutocomplete.label     "Aktivera Komplettera automatiskt">
+<!ENTITY bmt.tagInputCmd_toggleAutocomplete.accesskey "u">
+
+<!ENTITY bmt.tagSortMenu.label                        "Sortera etiketter">
+<!ENTITY bmt.tagSortMenu.accesskey                    "o">
