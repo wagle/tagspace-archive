@@ -1,6 +1,7 @@
 content	bookmarktags 			content/        contentaccessible=yes
 locale	bookmarktags	en-US		locale/en-US/
 locale	bookmarktags	de-DE		locale/de-DE/
+locale	bookmarktags	sv-SE		locale/sv-SE/
 
 skin	bookmarktags 	classic/1.0	skin/classic/
 

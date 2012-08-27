@@ -4,7 +4,7 @@
     <Description about="urn:mozilla:install-manifest">
         <em:id>tagsieve@grue.in</em:id>
         <em:name>TagSieve</em:name>
-        <em:version>4.3.1</em:version>
+        <em:version>4.3.2</em:version>
         <em:description>Browse your bookmarks with sets of tags</em:description>
         <em:creator>hark</em:creator>
         <em:homepageURL>http://www.grue.in/tagsieve</em:homepageURL>
@@ -26,6 +26,16 @@
                 <em:description>Durchsuchen Sie Ihre Lesezeichen mit Hilfe von Schlagwörtern</em:description>
                 <em:creator>hark</em:creator>
                 <em:translator>Martin Kasperek</em:translator> 
+                <em:homepageURL>http://www.grue.in/tagsieve</em:homepageURL>
+          </Description>
+        </em:localized>
+        <em:localized>
+          <Description>
+                <em:locale>sv-SE</em:locale>
+                <em:name>TagSieve</em:name>
+                <em:description>Bläddra bland dina bokmärken m.h.a. uppsättningar av etiketter.</em:description>
+                <em:creator>hark</em:creator>
+                <em:translator>Mikael Hiort af Ornäs</em:translator> 
                 <em:homepageURL>http://www.grue.in/tagsieve</em:homepageURL>
           </Description>
         </em:localized>

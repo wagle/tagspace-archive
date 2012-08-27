@@ -1,0 +1,573 @@
+<!DOCTYPE html
+          PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="sv" lang="sv">
+  <head>
+    <title>Hj&auml;lp om TagSieve</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <style type="text/css">
+    <!--
+      body {
+        background: #fff;
+        color: #333;
+        font-family: sans-serif;
+        width: 35em;
+        margin-left: 10%;
+        line-height: 1.4;
+        }
+      a:hover {
+        background: #ddf;
+        }
+      h1 {
+        font-size: 2em;
+        font-weight: bold;
+        }
+      h2 {
+        font-size: 1.6em;
+        font-weight: bold;
+        }
+      h3 {
+        font-size: 1.3em;
+        font-weight: bold;
+        margin-top: 1.5em;
+        }
+      div {
+        margin-bottom: 3em;
+        }
+      table {
+        width: 100%;
+        }
+      table tr {
+        vertical-align: top;
+        }
+      table tr > * {
+        padding: 0.5em;
+        }
+      table th {
+        font-weight: bold;
+        text-align: center;
+        }
+      table td {
+        background-color: #eef;
+        }
+      ul > li {
+        list-style-type: square;
+        }
+      ul > li > ul > li {
+        list-style-type: disc;
+        }
+      .key {
+        font-family: monospace;
+        background: #dfc;
+        }
+      .operator {
+        font-family: monospace;
+        font-weight: bold;
+        }
+      .tagname {
+        font-style: italic;
+        }
+      p.expr {
+        text-align: center;
+        background-color: #eef;
+        }
+      .expr {
+        font-family: monospace;
+        }
+    -->
+    </style>
+  </head>
+
+  <body>
+  <div id="outer">
+      <img src="data:image/png;base64,
+      iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAAAB3RJTUUH2AQbBC8JLOhqqQAAABd0RVh0
+      U29mdHdhcmUAR0xEUE5HIHZlciAzLjRxhaThAAAACHRwTkdHTEQzAAAAAEqAKR8AAAAEZ0FNQQAAsY8L
+      /GEFAAAABmJLR0QA/wD/AP+gvaeTAAAABnRSTlMA/wCAAP9o9TQQAAAAjklEQVR4nO2WOw6AMAxDfXEk
+      Zu7ErdhbGECoJKkTiY9QKk+t46cmHYoyFk3zBFJGiHq2lS0DKYMhH7jSbYawG0g3GO2Wli70nWOATOcv
+      2pjRLfACGj+YvnsB5xIwUw0Ajip1XLEhX6tYa0wJSAD2FTb8HnD7DBLwPsB4HqStfwMQ68MtSsBDANc3
+      3as1vAIhZuj10LOa/QAAAABJRU5ErkJggg==" alt="icon" />
+    <div id="title">
+      <h1>Hj&auml;lp om TagSieve</h1>
+      <h2>Bl&auml;ddra bland dina bokm&auml;rken m.h.a. upps&auml;ttningar av etiketter</h2>
+      <h3>Version 4.3.2</h3>
+    </div>
+
+    <div id="intro">
+      <p>
+        Firefox l&aring;ter dig s&auml;tta etiketter p&aring; dina bokm&auml;rken, men ger dig inget bra s&auml;tt
+        att kunna bl&auml;ddra bland dina bokm&auml;rken efter deras etiketter.  TagSieve f&ouml;rs&ouml;ker l&ouml;sa det.
+      </p>
+      <p>
+        Klicka p&aring; n&aring;gra etiketter i <a href="#use-sidebar-simple">sidopanelen</a>
+        eller i <a href="#use-menu">menyn</a> f&ouml;r att se bokm&auml;rkena och andra, relaterade,
+        etiketter.  Anv&auml;nd de relaterade etiketterna f&ouml;r att snabbt filtrera din s&ouml;kning.
+      </p>
+      <p>
+        Eller, om du kan hantera s&aring; mycket makt, anv&auml;nd en full
+        upps&auml;ttning av <a href="#use-sidebar-advanced">m&auml;ngdoperatorer</a> i valfria
+        uttryck f&ouml;r att s&ouml;ka bland dina bokm&auml;rken efter deras etiketter.
+      </p>
+      <p>
+        <em>Bes&ouml;k g&auml;rna TagSieves
+        <a href="http://www.grue.in/tagsieve">webbplats</a>
+        f&ouml;r aktuell information, felbeskrivningar samt f&ouml;r att skicka in buggrapporter
+	och &ouml;nskem&aring;l om nya funktioner.</em>
+      </p>
+    </div>
+
+    <div id="contents">
+      <h2>Inneh&aring;llsf&ouml;rteckning</h2>
+      <ul>
+        <li>
+          <a href="#use">Anv&auml;ndning</a>
+          <ul>
+            <li><a href="#use-sidebar-simple">Sidopanel, enkel anv&auml;ndning</a></li>
+            <li>
+              <a href="#use-sidebar-advanced">Sidopanel, avancerad anv&auml;ndning</a>
+              <ul>
+                <li><a href="#use-sidebar-advanced-keys">
+                  Avancerade kortkommandon
+                </a></li>
+              </ul>
+            </li>
+            <li><a href="#use-menu">Meny</a></li>
+            <li><a href="#use-migrator">Gruppm&auml;rkning av bokm&auml;rken</a></li>
+          </ul>
+        </li>
+        <li><a href="#operating">Varning: Att g&ouml;ra saker och ting med etiketter och bokm&auml;rken</a></li>
+        <li><a href="#options">Inst&auml;llningar</a></li>
+        <li><a href="#more">Mer information</a></li>
+      </ul>
+    </div>
+
+    <div id="use">
+      <a name="use"></a>
+      <h2>Anv&auml;ndning</h2>
+      <p>
+        Du har tv&aring; alternativ, en sidopanel och en meny.  Vilken du &auml;n v&auml;ljer &auml;r bl&auml;ddringen enkel:
+        Markera en eller flera etiketter, s&aring; visar TagSieve dig alla relaterade
+        bokm&auml;rken.  Du kommer &auml;ven att se andra etiketter som delar dessa bokm&auml;rken
+        och m.h.a. dem kan du enkelt begr&auml;nsa din s&ouml;kning.
+      </p>
+
+      <a name="use-sidebar-simple"></a>
+      <h3>Sidopanel, enkel anv&auml;ndning</h3>
+      <p>
+        &Ouml;ppna sidopanelen via sidopanelsmenyn (Visa-menyn &gt;
+        Sidof&auml;lt) eller dess vertygsf&auml;ltsknapp.  (L&auml;gg till vertygsf&auml;ltsknappen i ditt
+        verktygsf&auml;lt via Visa-menyn &gt; Verktygsf&auml;lt &gt; Anpassa…. TagSieve &auml;r
+        ett v&auml;luppfostrat till&auml;gg och belamrar inte ditt verktygsf&auml;lt
+        i on&ouml;dan.)  Du kan &auml;ven ange ett eget
+        <a href="#options">kortkommando</a> f&ouml;r att &ouml;ppna sidopanelen.
+      </p>
+      <p>
+        Klicka p&aring; etiketter i listan f&ouml;r att l&auml;gga till dem i s&ouml;kfr&aring;gan.  Sidopanelen
+        kommer endast att visa de bokm&auml;rken som &auml;r relaterade &mdash; d.v.s. de
+        bokm&auml;rken som &auml;r m&auml;rkta med alla etiketter som ing&aring;r i fr&aring;gan.  Listan &ouml;ver
+        etiketter kommer att uppdateras med de etiketter som delar bokm&auml;rken med
+        etiketterna i fr&aring;gan.
+      </p>
+      <p>
+        Ta bort etiketter fr&aring;n fr&aring;gan genom att klicka p&aring; deras namn i fr&aring;gemolnet
+        &mdash; fr&aring;gemolnet &auml;r grupperingen av etiketter under textrutan.
+        Som standard kommer ett klick p&aring; en etikett att ta bort alla efterf&ouml;ljande etiketter.  H&ouml;gerklicka
+        f&ouml;r att &ouml;ppna en snabbmeny som ger dig fler alternativ.  F&ouml;r att ta bort alla etiketter,
+        klicka p&aring; &aring;terst&auml;llningsknappen p&aring; h&ouml;ger sida om textrutan.
+      </p>
+
+      <a name="use-sidebar-advanced"></a>
+      <h3>Sidopanel, avancerad anv&auml;ndning</h3>
+      <p>
+        &quot;Etikett&quot; &auml;r egentligen bara en omskrivning f&ouml;r &quot;en upps&auml;ttning bokm&auml;rken.&quot;
+        TagSieve l&aring;ter dig kombinera dina etiketter p&aring; ett fritt och intressant s&auml;tt
+        m.h.a. m&auml;ngdoperatorer.  Till exempel kommer uttrycket
+      </p>
+      <p class="expr">
+        flottyrmunkar - (kakor + mazariner) ?muffins
+      </p>
+      <p>
+        att visa dig alla bokm&auml;rken (och relaterade etiketter) som &auml;r m&auml;rkta
+        med <span class="tagname">flottyrmunkar</span>, men inte med
+        <span class="tagname">kakor</span> eller
+        <span class="tagname">mazariner</span>, samt vars namn eller URL:er inneh&aring;ller
+        ordet &quot;muffins&quot;.
+      </p>
+      <p>
+        L&auml;tt som en pl&auml;tt.
+      </p>
+      <p>
+        F&ouml;ljande operatorer finns att tillg&aring;:
+      </p>
+      <table>
+        <tr>
+          <th>Operator</th>
+          <th>Betydelse</th>
+          <th>Exempel</th>
+          <th>Exemplets tolkning</th>
+        </tr>
+        <tr>
+          <td><span class="operator">,</span></td>
+          <td>snitt (&quot;och&quot;)</td>
+          <td><span class="expr">mumin,&nbsp;mymlan</span></td>
+          <td>
+            bokm&auml;rken m&auml;rkta med b&aring;de <span class="tagname">mumin</span> och
+            <span class="tagname">mymlan</span>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="operator">&amp;</span></td>
+          <td>snitt</td>
+          <td><span class="expr">krakel&nbsp;&amp;&nbsp;vitamin</span></td>
+        </tr>
+        <tr>
+          <td><span class="operator">+</span></td>
+          <td>union (&quot;eller&quot;)</td>
+          <td><span class="expr">sventon&nbsp;+&nbsp;temlor</span></td>
+          <td>
+            bokm&auml;rken m&auml;rkta med antingen <span class="tagname">sventon</span> eller
+            <span class="tagname">temlor</span>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="operator">|</span></td>
+          <td>union</td>
+          <td><span class="expr">max&nbsp;|&nbsp;bl&ouml;ja</span></td>
+        </tr>
+        <tr>
+          <td><span class="operator">-</span></td>
+          <td>differens<br/>(&quot;men inte&quot;)</td>
+          <td><span class="expr">bill&nbsp;-&nbsp;bull</span></td>
+          <td>
+            bokm&auml;rken m&auml;rkta med <span class="tagname">bill</span>, men inte
+            med <span class="tagname">bull</span>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="operator">!</span></td>
+          <td>komplement (&quot;inte&quot;)</td>
+          <td><span class="expr">!pellefant</span></td>
+          <td>bokm&auml;rken som inte &auml;r m&auml;rkta med <span class="tagname">pellefant</span></td>
+        </tr>
+        <tr>
+          <td><span class="operator">~</span></td>
+          <td>komplement</td>
+          <td><span class="expr">~gummitarzan</span></td>
+        </tr>
+        <tr>
+          <td>
+            <span class="operator">(</span>&nbsp;och&nbsp;<span class="operator">)</span>
+          </td>
+          <td>prioritet</td>
+          <td><span class="expr">!(emil&nbsp;&amp;&nbsp;ida)</span></td>
+          <td>
+            bokm&auml;rken som varken &auml;r m&auml;rkta med
+            <span class="tagname">emil</span> eller
+            <span class="tagname">ida</span>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="operator">?</span></td>
+          <td>bokm&auml;rkess&ouml;kning (namn och URL:er)</td>
+          <td><span class="expr">?mors lilla olle</span></td>
+          <td>
+            bokm&auml;rken vars namn eller URL:er inneh&aring;ller den icke skiftl&auml;gesk&auml;nsliga str&auml;ngen
+            &quot;mors lilla olle&quot;
+          </td>
+        </tr>
+      </table>
+      <p>
+        Observera att sidopanelens enkela anv&auml;ndningsl&auml;ge (beskrivet ovan) utf&ouml;r snittfr&aring;gor p&aring; alla etiketter.
+      </p>
+      <p>
+        N&aring;gra detaljer:
+      </p>
+      <ul>
+        <li>
+          TagSieve visar dig endast de bokm&auml;rken som redan har &aring;tminstone en
+          etikett.  <span class="expr">!dunderklumpen</span> returnerar egentligen inte
+          alla bokm&auml;rken som inte &auml;r m&auml;rkta med <span class="tagname">dunderklumpen</span>,
+          men d&auml;remot alla <strong>m&auml;rkta</strong> bokm&auml;rken som inte &auml;r m&auml;rkta med
+          <span class="tagname">dunderklumpen</span>.
+        </li>
+        <li>
+          Om ett etikettnamn eller en bokm&auml;rkess&ouml;kning inneh&aring;ller en av
+          operatorerna ovan, prefigera operatorn med undantagstecknet
+          <span class="operator">\</span> (omv&auml;nt snedstreck).  Om du, t.ex.,
+          har en etikett med namnet <span class="tagname">pippin-den-lille</span>,
+          skriv den som <span class="expr">pippin\-den\-lille</span>.  Annars  tror
+          TagSieve att du menade uttrycket
+          <span class="expr">pippin - den - lille</span>. Det omv&auml;nda snedstrecket talar
+		  om f&ouml;r TagSieve att det efterf&ouml;ljande tecknet skall tolkas som ett vanligt
+		  skrivtecken och inte som ett operatortecken, i det h&auml;r fallet
+		  <span class="operator">-</span> (minustecken).
+        </li>
+        <li>
+          De bin&auml;ra operatorerna (snitt, union och differens) har alla
+          samma prioritet &mdash; vilken &auml;r l&auml;gre &auml;n prioriteten p&aring; de enst&auml;lliga
+          operatorerna (komplement och bokm&auml;rkess&ouml;kning) &mdash; och utv&auml;rderas fr&aring;n
+          v&auml;nster till h&ouml;ger.
+        </li>
+        <li>
+          F&ouml;r att g&ouml;ra det lite l&auml;ttare f&ouml;r dig, antar TagSieve att en snittfr&aring;ga
+          skall utf&ouml;ras under vissa f&ouml;ruts&auml;ttningar:
+
+          <table id="impliedIntersectionTable">
+            <tr>
+              <td colspan="3">
+                Ett <span class="operator">)</span> f&ouml;ljt av ett etikettnamn
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span class="expr">(ultuna, agronom) vete</span>
+              </td>
+              <td>
+                &#8658;
+              </td>
+              <td>
+                <span class="expr">(ultuna, agronom) <strong>&amp;</strong>
+                vete</span>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="3">
+                Ett <span class="operator">)</span> f&ouml;ljt av ett
+                <span class="operator">(</span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span class="expr">(&auml;rtor, sallat) (majs)</span>
+              </td>
+              <td>
+                &#8658;
+              </td>
+              <td>
+                <span class="expr">(&auml;rtor, sallat) <strong>&amp;</strong>
+                (majs)</span>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="3">
+                Ett <span class="operator">)</span> f&ouml;ljt av en enst&auml;llig operator
+                (komplement eller bokm&auml;rkess&ouml;kning)
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span class="expr">(surdeg + mj&ouml;l) !vetekli</span>
+              </td>
+              <td>
+                &#8658;
+              </td>
+              <td>
+                <span class="expr">(surdeg + mj&ouml;l) <strong>&amp;</strong>
+                !vetekli</span>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="3">
+                En etikettnamns- eller bokm&auml;rkess&ouml;kning f&ouml;ljd av ett
+                <span class="operator">(</span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span class="expr">skinka (senap | rotmos)</span>
+              </td>
+              <td>
+                &#8658;
+              </td>
+              <td>
+                <span class="expr">skinka <strong>&amp;</strong> (senap |
+                rotmos)</span>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="3">
+                En etikettnamns- eller bokm&auml;rkess&ouml;kning f&ouml;ljd av en enst&auml;llig operator
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span class="expr">?potatis !b&ouml;nor</span>
+              </td>
+              <td>
+                &#8658;
+              </td>
+              <td>
+                <span class="expr">
+                  ?potatis <strong>&amp;</strong> !b&ouml;nor
+                </span>
+              </td>
+            </tr>
+          </table>
+        </li>
+      </ul>
+
+      <a name="use-sidebar-advanced-keys"></a>
+      <h4>Avancerade kortkommandon</h4>
+      <p>
+        <a href="#options">Som standard</a> kommer textrutan att komplettera etiketter
+        automatiskt medan du skriver. Om den hittar etiketten du s&ouml;ker, tryck ned
+        <span class="key">Tabulator</span>- eller <span class="key">Retur</span>-tangenten
+        f&ouml;r att hoppa till slutet av namnet, d&auml;r du kan b&ouml;rja skriva in n&auml;sta etikett.
+        En annan standard &auml;r att etikettkompletteringar h&auml;mtas fr&aring;n listan &ouml;ver relaterade etiketter.
+        Om du ofta anv&auml;nder sidopanelens avancerade funktioner, kanske du vill att kompletteringar
+        skall h&auml;mtas fr&aring;n alla etiketter. Du kan justera det genom att v&auml;lja det relevanta
+        alternativet i <a href="#options">inst&auml;llningarna</a>.
+      </p>
+
+      <a name="use-menu"></a>
+      <h3>Meny</h3>
+      <p>
+        Menyns funktionalitet liknar sidopanelens enkela anv&auml;ndningsl&auml;ge.  Medan du
+        navigerar i menyerna begr&auml;nsar du samtidigt visade bokm&auml;rken till de som &auml;r
+        m&auml;rkta med alla de etiketter som du v&auml;ljer.  F&ouml;r varje ny meny visas du
+        endast etiketter relaterade till de som du dittills har valt.
+      </p>
+      <p>
+        &Ouml;ppna menyn via dess vertygsf&auml;ltsknapp.  (L&auml;gg till vertygsf&auml;ltsknappen
+        i ditt verktygsf&auml;lt via Visa-menyn &gt; Verktygsf&auml;lt &gt; Anpassa….
+        TagSieve &auml;r ett v&auml;luppfostrat till&auml;gg och belamrar inte ditt verktygsf&auml;lt
+        i on&ouml;dan.)  P&aring; alla system utom Mac OS X, kan menyn
+        dessutom &ouml;ppnas via Firefox bokm&auml;rkesmeny.
+      </p>
+
+      <a name="use-migrator"></a>
+      <h3>Gruppm&auml;rkning av bokm&auml;rken</h3>
+      <p>
+        TagSieve kommer med ett enkelt verktyg som kan hj&auml;lpa dig att konvertera
+        dina bokm&auml;rken fr&aring;n &auml;ldre versioner av Firefox till etikettm&auml;rkta bokm&auml;rken i
+        Firefox 3 och senare.  Men det kan ocks&aring; anv&auml;ndas f&ouml;r gruppm&auml;rkning av vilka som
+		helst av dina bokm&auml;rken, &auml;ven om du anv&auml;nder de senaste Firefoxversionerna.
+      </p>
+      <p>
+        Det h&auml;r g&ouml;rs genom att m&auml;rka bokm&auml;rken med etiketter, vilka f&aring;r namn av
+        de mappar och undermappar som dessa bokm&auml;rken ligger under.  Om, exempelvis,
+        ditt ramen-bokm&auml;rke (ramen = japansk nudelsoppa) ligger i mapparna Mat/Matlagning/Japan,
+        s&aring; kommer det bokm&auml;rket att m&auml;rkas med etiketterna <span class="tagname">Mat</span>,
+        <span class="tagname">Matlagning</span> och
+        <span class="tagname">Japan</span>.  Du kan v&auml;lja en rotmapp varifr&aring;n
+        du startar m&auml;rkningen.
+      </p>
+      <p>
+        Starta verktyget genom att antingen
+      </p>
+      <ul>
+        <li>
+          v&auml;lja &quot;TagSieves migreringsguide&quot; i Verktyg-menyn
+          (Verktyg &gt; TagSieves migreringsguide) eller
+        </li>
+        <li>
+          v&auml;lja fliken &quot;Migrera mappar&quot; i TagSieves
+          <a href="#options">inst&auml;llningar</a>.
+        </li>
+      </ul>
+    </div>
+
+    <div id="operating">
+      <a name="operating"></a>
+      <h2>Varning: Att g&ouml;ra saker och ting med etiketter och bokm&auml;rken</h2>
+      <p>
+        TagSieve l&aring;ter dig klippa ut, kopiera, klistra in, ta bort och p&aring; andra s&auml;tt redigera
+        enskilda etiketter och bokm&auml;rken.  H&ouml;gerklicka p&aring; en etikett eller ett bokm&auml;rke i
+        sidopanelen eller menyn f&ouml;r att &ouml;ppna en snabbmeny.  Du kan &auml;ven dra objekt
+        till listan &ouml;ver bokm&auml;rken i sidopanelen f&ouml;r att m&auml;rka dem och sedan iv&auml;g f&ouml;r kopiering
+        eller f&ouml;r att flytta dem n&aring;gon annanstans.
+      </p>
+      <p>
+        Det l&aring;ter bra.  Men h&auml;r &auml;r en viktig finess:
+      </p>
+      <blockquote>
+        <p>
+          <strong>
+            1. Firefox l&aring;ter dig b&aring;de m&auml;rka ett bokm&auml;rke och spara det i en
+            mapphierarki.  Alla bokm&auml;rken i Firefox finns faktiskt med i
+            den hierarkiska strukturen, &auml;ven om den endast skulle innefatta
+            specialmappen &quot;Osorterade bokm&auml;rken&quot;.
+          </strong>
+        </p>
+      </blockquote>
+      <p>
+        S&aring; vad inneb&auml;r det att ta bort ett bokm&auml;rke?  Tar du bort det fr&aring;n
+        mapphierarkin?  Tar du bort dess etiketter?  Eller b&aring;de och?  Vilka etiketter
+        tas i s&aring;dana fall bort?  Vad h&auml;nder n&auml;r du klipper ut eller flyttar ett bokm&auml;rke?
+      </p>
+      <p>
+        Medan du funderar p&aring; det, kom ih&aring;g det h&auml;r:
+      </p>
+      <blockquote>
+        <p>
+          <strong>
+            2. Vissa TagSieve-kommandon, t.ex. klippa ut, kopiera, klistra in och
+            avm&auml;rka bokm&auml;rken, &auml;r k&auml;nsliga f&ouml;r de etiketter du har angivit i
+            fr&aring;gan.  Och gl&ouml;m inte att etiketter bara &auml;r upps&auml;ttningar av bokm&auml;rken.
+          </strong>
+        </p>
+      </blockquote>
+      <p>
+        P&aring; den f&ouml;rsta punkten l&auml;mnar TagSieve &ouml;ver fr&aring;gan till dig.  Du m&aring;ste precisera vad
+        det &auml;r du vill skall h&auml;nda.  N&auml;r du v&auml;ljer att ta bort ett bokm&auml;rke, tar du b&aring;de bort det
+        fr&aring;n mapphierarkin och avm&auml;rker det &mdash; det raderas m.a.o. helt och h&aring;llet.
+        Men du kan &auml;ven, som ett separat alternativ, v&auml;lja att ta bort alla etiketter
+        fr&aring;n ett bokm&auml;rke eller endast ta bort de etiketter som du har valt m.h.a. fr&aring;gan.
+      </p>
+      <p>
+        Den andra punkten inneb&auml;r att n&auml;r du, exempelvis, kopierar en etikett, s&aring;
+        kopierar du egentligen alla de bokm&auml;rken som skulle ha dykt upp i
+        bokm&auml;rkeslistan om du hade markerat etiketten och lagt till den i fr&aring;gan.
+        P&aring; liknande s&auml;tt kommer, n&auml;r du &ouml;ppnar samtliga bokm&auml;rken f&ouml;r en viss etikett (genom att
+        v&auml;lja kommandot i snabbmenyn eller via mittenklick, <span class="key">Skift+klick</span> eller
+        <span class="key">Ctrl+klick</span> p&aring; etiketten), de bokm&auml;rken som &ouml;ppnas att vara de som
+        skulle ha visats i bokm&auml;rkeslistan om du hade markerat etiketten och lagt till den i fr&aring;gan.
+      </p>
+      <p>
+        Som om det inte &auml;r f&ouml;rvirrande nog, s&aring; g&auml;ller den andra punkten inte borttagning
+        och utklippning etiketter.  F&ouml;r att ta bort eller klippa ut en etikett, f&aring;r du inte ha
+        n&aring;gra etiketter markerade och fr&aring;gan m&aring;ste vara tom.  Borttagning av en etikett tar inte bort
+        dess bokm&auml;rken, utan endast sj&auml;lva etiketten.
+      </p>
+    </div>
+
+    <div id="options">
+      <a name="options"></a>
+      <h2>Inst&auml;llningar</h2>
+      <p>TagSieve har n&aring;gra inst&auml;llningar som du kan justera:</p>
+      <ul>
+        <li>G&ouml;r s&aring; att sidopanelen visar etiketter i ett moln ist&auml;llet f&ouml;r i en lista</li>
+        <li>Ange ett eget kortkommando f&ouml;r sidopanelen</li>
+        <li>Inaktivera &quot;Komplettera automatiskt&quot; och &quot;S&ouml;k medan du skriver&quot; i sidopanelen</li>
+        <li>
+          Best&auml;m vad som skall h&auml;nda n&auml;r du klickar p&aring; en etikett i sidopanelens fr&aring;gemoln
+        </li>
+        <li>D&ouml;lj fr&aring;gemolnet</li>
+      </ul>
+      <p>
+        Du kan &ouml;ppna TagSieves inst&auml;llningsf&ouml;nster p&aring; samma s&auml;tt som f&ouml;r andra
+        till&auml;gg (d.v.s. via Verktyg-menyn &gt; Till&auml;gg, leta sedan reda p&aring;
+        TagSieve under fliken &quot;Hantera till&auml;gg&quot; och klicka p&aring; Inst&auml;llningar-knappen).
+      </p>
+      <p>
+        Du kan &auml;ven f&auml;rga enskilda etiketter i sidopanelen genom att h&ouml;gerklicka p&aring;
+        dem och v&auml;lja l&auml;mpligt alternativ i snabbmenyn.
+      </p>
+    </div>
+
+    <div id="more">
+      <a name="more"></a>
+      <h2>Mer information</h2>
+      <p>
+        G&aring; till TagSieves
+        <a href="http://www.grue.in/tagsieve">hem och h&auml;rd p&aring; webben</a>
+        f&ouml;r aktuell information, felbeskrivningar och skicka in buggrapporter/&ouml;nskem&aring;l om nya funktioner.
+      </p>
+    </div>
+
+  </div>
+
+  </body>
+</html>

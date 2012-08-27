@@ -53,7 +53,7 @@ BookmarkTags.BookmarkCmds= function ()
     Components.utils.import("resource:///modules/PlacesUIUtils.jsm");
     Components.utils.import('resource://gre/modules/Services.jsm');
     var clipid = Components.interfaces.nsIClipboard;  
-    var clipboard   = Components.classes["@mozilla.org/widget/clipboard;1"].getService(clipid);
+    var clipboard = Components.classes["@mozilla.org/widget/clipboard;1"].getService(clipid);
 
     // Adapted from PlacesController.prototype._isClipboardDataPasteable in
     // firefox/source/browser/components/places/content/controller.js
@@ -426,7 +426,8 @@ BookmarkTags.BookmarkCmds= function ()
 
     function open_(bmObj, where)
     {
-        PlacesUIUtils.openNodeIn(fakeNavHistoryResultNode(bmObj), where);
+        var window = Services.wm.getMostRecentWindow("navigator:browser");
+        PlacesUIUtils._openNodeIn(fakeNavHistoryResultNode(bmObj), where, window);
     }
 
     function open(bmObj)
@@ -464,7 +465,8 @@ BookmarkTags.BookmarkCmds= function ()
 
     function openWithEvent(bmObj, event)
     {
-        PlacesUIUtils.openNodeWithEvent(fakeNavHistoryResultNode(bmObj), event);
+        var window = Services.wm.getMostRecentWindow("navigator:browser");
+        PlacesUIUtils._openNodeIn(fakeNavHistoryResultNode(bmObj), window.whereToOpenLink(event), window);
     }
 
     // Adapted from PlacesController.prototype.paste in

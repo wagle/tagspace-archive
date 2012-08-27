@@ -1,0 +1,27 @@
+<!ENTITY wizard.title "Migreringsguiden för TagSieve">
+<!ENTITY wizard.width "500">
+<!ENTITY wizard.height "380">
+
+<!ENTITY introPage.label "Migreringsguiden för TagSieve">
+<!ENTITY introPage.description "Konvertera dina bokmärkesmappar till etiketter">
+<!ENTITY introPage.text1 "Denna guide skapar etiketter som motsvarar dina bokmärkesmappar och märker sedan dina bokmärken med etiketterna som skapats.  Dina bokmärkesmappar kommer inte att ändras.">
+<!ENTITY introPage.text2 "Ett bokmärke längst ut i en serie av mappar och undermappar kommer att märkas med etiketter som motsvarar alla dessa mappar.  Om, exempelvis, ditt ramen-bokmärke (ramen = japansk nudelsoppa) ligger i mapparna Mat/Matlagning/Japan, så kommer det bokmärket att märkas med etiketterna Mat, Matlagning och Japan.">
+<!ENTITY introPage.text3 "Även om denna guide är avsedd att användas för migrering av bokmärken från tidigare versioner av Firefox till Firefox 3 och senare och i synnerhet för användare av Bookmark Tags, så kan den användas av vemsomhelst för att migrera vilka mappar som helst.">
+
+<!ENTITY rootFolderPage.label "Migreringsguiden för TagSieve">
+<!ENTITY rootFolderPage.description "Val av rotmapp">
+<!ENTITY rootFolderPage.text1 "Välj en mapp att starta i.  Etiketter kommer att skapas för alla dess underordnade mappar och bokmärkena i dessa kommer att märkas med etiketterna som skapats.  Om du använde en tidigare version av Bookmark Tags, välj din etikettrotmapp.">
+<!ENTITY rootFolderPage.text2 "">
+<!ENTITY rootFolderPage.includeRoot.label "Skapa även en etikett för den valda rotmappen">
+<!ENTITY rootFolderPage.includeRoot.accesskey "S">
+
+<!ENTITY warningPage.label "Migreringsguiden för TagSieve">
+<!ENTITY warningPage.description "Varning">
+<!ENTITY warningPage.text1 "Observera. Du är på väg att skapa etiketter för varje unikt mappnamn under den rotmapp du just har valt.  Det kan röra sig om väldigt många etiketter.  Nu har du blivit varnad, så om du inte gillar resultatet, skriv då inte i din blogg att TagSieve överbelastade dina bokmärken.  OK?  OK.">
+<!ENTITY warningPage.text2 "Om du känner dig osäker, gå då tillbaka i guiden och testa lite försiktigt med ett mindre antal mappar?  Du kan även komma tillbaka senare om du så önskar.">
+<!ENTITY warningPage.text3 "Migreringen startar i och med att du går vidare i guiden.">
+
+<!ENTITY conversionPage.label "Migreringsguiden för TagSieve">
+<!ENTITY conversionPage.description "Migrerar">
+<!ENTITY conversionPage.working "Om du har flera hundra bokmärken kan detta ta en stund.  Var god vänta…">
+<!ENTITY conversionPage.completeNotif "Migreringen har slutförts.  Du kan nu avsluta guiden eller gå tillbaka för att migrera fler mappar.">
