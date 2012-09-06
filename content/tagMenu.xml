@@ -127,7 +127,7 @@
                     let popup= menuitem.firstChild;
                     popup.showPopup();
                     let objs=
-                        BookmarkTags.BookmarkCmds.collectBMMenuObjs(popup);
+                        BookmarkTags.BookmarkCmds.collectBMMenuObjs(popup); 
                     closeMenus(event.target);
                     BookmarkTags.BookmarkCmds.openInTabsWithEvent(objs, event);
                 }
@@ -494,15 +494,15 @@
         // call, rebuilds the template contents if needed.
         function onPopupShowing(event)
         {
-            if (event.target === that)
-            {
+            //if (event.target === that)
+            //{
                 buildTemplate();
                 if (isRebuildNeeded())
                 {
                     rebuildNeeded= false;
                     that.rebuild_();
                 }
-            }
+            //}
         }
 
         function sqlEmpty()
