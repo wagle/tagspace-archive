@@ -637,7 +637,8 @@ BookmarkTags.BookmarkCmds= function ()
             type: "bookmark",
             itemId: bmObj.id
         };
-        PlacesUIUtils.showBookmarkDialog(info);
+        var window = Services.wm.getMostRecentWindow("navigator:browser");
+        PlacesUIUtils.showBookmarkDialog(info, window);
     }
 
     // See SidebarUtils.handleTreeClick at
