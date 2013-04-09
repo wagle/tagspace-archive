@@ -1196,7 +1196,7 @@ BookmarkTags.Query= function ()
                           "WHEN '' THEN moz_places.url ",
                           "ELSE bms.title ",
                           "END) ",
-                    "END) AS title, ",
+                    "END) AS titlex, ",
                    "(CASE moz_places.favicon_id ISNULL ",
                     "WHEN 1 THEN '' ",
                     "ELSE (SELECT '", FAVICON_ANNO_PREFIX,
@@ -1224,7 +1224,7 @@ BookmarkTags.Query= function ()
                       BookmarkTags.Util.bmServ.tagsFolder, " ",
             "GROUP BY bms.id ",
             "ORDER BY ", query.bmSort, " COLLATE NOCASE ", query.bmSortDir,
-                     ", title COLLATE NOCASE ASC"
+                     ", titlex COLLATE NOCASE ASC"
         ].join("");
     }
 
