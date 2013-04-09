@@ -1223,7 +1223,7 @@ BookmarkTags.Query= function ()
                   "folders.parent != ",
                       BookmarkTags.Util.bmServ.tagsFolder, " ",
             "GROUP BY bms.id ",
-            "ORDER BY ", query.bmSort, " COLLATE NOCASE ", query.bmSortDir,
+            "ORDER BY ", query.bmSort, "x COLLATE NOCASE ", query.bmSortDir,
                      ", titlex COLLATE NOCASE ASC"
         ].join("");
     }
