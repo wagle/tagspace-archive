@@ -1219,7 +1219,7 @@ BookmarkTags.Query= function ()
                           "WHEN '' THEN moz_places.url ",
                           "ELSE bms.title ",
                           "END) ",
-                    "END) AS titlex, ",
+                    "END) AS titlex ",
             "FROM (", sql, ") AS t, ",
                  "moz_places, ",
                  "moz_bookmarks AS folders, ",
