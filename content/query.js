@@ -1263,9 +1263,9 @@ BookmarkTags.Query= function ()
             "FROM (", sql, ") AS t, moz_bookmarks AS tags ",
             "WHERE t.tagid = tags.id ",
             "GROUP BY id ",
-            "ORDER BY ", query.relTagSort,
+            "ORDER BY ", "'" + query.relTagSort + "'",
                           " COLLATE NOCASE ", query.relTagSortDir, ", ",
-                     "title COLLATE NOCASE ASC"
+                     "'title' COLLATE NOCASE ASC"
         ].join("");
     }
 

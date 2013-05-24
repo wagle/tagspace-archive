@@ -56,6 +56,36 @@ BookmarkTags.TreeView= function ()
         return null;
     }
 
+	function convertPRTimeToString(aTime)
+	{
+	    const MS_PER_MINUTE = 60000;
+		const MS_PER_DAY = 86400000;
+		let timeMs = aTime / 1000; // PRTime is in microseconds
+
+		// Date is calculated starting from midnight, so the modulo with a day are
+		// milliseconds from today's midnight.
+		// getTimezoneOffset corrects that based on local time, notice midnight
+		// can have a different offset during DST-change days.
+		let dateObj = new Date();
+		let now = dateObj.getTime() - dateObj.getTimezoneOffset() * MS_PER_MINUTE;
+		let midnight = now - (now % MS_PER_DAY);
+		midnight += new Date(midnight).getTimezoneOffset() * MS_PER_MINUTE;
+
+		let dateFormat = timeMs >= midnight ?
+						  Ci.nsIScriptableDateFormat.dateFormatNone :
+						  Ci.nsIScriptableDateFormat.dateFormatShort;
+
+		let timeObj = new Date(timeMs);
+		let dateService = Cc["@mozilla.org/intl/scriptabledateformat;1"].
+                           getService(Ci.nsIScriptableDateFormat);
+		return (dateService.FormatDateTime("", dateFormat,
+		  Ci.nsIScriptableDateFormat.timeFormatNoSeconds,
+		  timeObj.getFullYear(), timeObj.getMonth() + 1,
+		  timeObj.getDate(), timeObj.getHours(),
+		  timeObj.getMinutes(), timeObj.getSeconds()));		
+	}
+	
+	
     // queryChanged is true if we observed a query change before this is called.
     function rebuild(view, queryChanged)
     {
@@ -406,7 +436,7 @@ BookmarkTags.TreeView= function ()
             case "visit_date":
                 Ci= Components.interfaces;
                 Cc= Components.classes;
-                return PlacesTreeView.prototype._convertPRTimeToString(val);
+                return convertPRTimeToString(val);
                 break;
             }
             return this.objArr_[row][col.id];
