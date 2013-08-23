@@ -1219,7 +1219,7 @@ BookmarkTags.Query= function ()
                           "WHEN '' THEN moz_places.url ",
                           "ELSE bms.title ",
                           "END) ",
-                    "END) AS titlex ",
+                    "END) AS title ",
             "FROM (", sql, ") AS t, ",
                  "moz_places, ",
                  "moz_bookmarks AS folders, ",
@@ -1231,7 +1231,7 @@ BookmarkTags.Query= function ()
                       BookmarkTags.Util.bmServ.tagsFolder, " ",
             "GROUP BY bms.id ",
             "ORDER BY ", query.bmSort, "x COLLATE NOCASE ", query.bmSortDir,
-                     ", titlex COLLATE NOCASE ASC"
+                     ", title COLLATE NOCASE ASC"
         ].join("");
     }
 
@@ -1265,7 +1265,7 @@ BookmarkTags.Query= function ()
             "GROUP BY id ",
             "ORDER BY ", "'" + query.relTagSort + "'",
                           " COLLATE NOCASE ", query.relTagSortDir, ", ",
-                     "'title' COLLATE NOCASE ASC"
+                     "title COLLATE NOCASE ASC"
         ].join("");
     }
 
