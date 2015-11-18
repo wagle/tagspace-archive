@@ -2,12 +2,12 @@
 <RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:em="http://www.mozilla.org/2004/em-rdf#">
     <Description about="urn:mozilla:install-manifest">
-        <em:id>tagsieve@grue.in</em:id>
-        <em:name>TagSieve</em:name>
-        <em:version>4.3.4</em:version>
+        <em:id>old-tagspace@wagle.io</em:id>
+        <em:name>OldTagSpace</em:name>
+        <em:version>4.3.4-w00</em:version>
         <em:description>Browse your bookmarks with sets of tags</em:description>
         <em:creator>hark</em:creator>
-        <em:homepageURL>http://www.grue.in/tagsieve</em:homepageURL>
+        <em:homepageURL>http://wagle.io/tagspace</em:homepageURL>
         <em:optionsURL>chrome://bookmarktags/content/prefs.xul</em:optionsURL>
         <em:type>2</em:type>
 
@@ -15,7 +15,7 @@
            <Description>
                 <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
                 <em:minVersion>4.0</em:minVersion>
-                <em:maxVersion>24.0</em:maxVersion>
+                <em:maxVersion>44.0</em:maxVersion>
            </Description>
         </em:targetApplication>
         
