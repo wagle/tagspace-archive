@@ -73,7 +73,7 @@ places.dtd
 <!ENTITY bmt.sortCmd_title.label                      "&col.name.label;">
 <!ENTITY bmt.sortCmd_url.label                        "&col.url.label;">
 <!ENTITY bmt.sortCmd_visit_count.label                "&col.visitcount.label;">
-<!ENTITY bmt.sortCmd_visit_date.label                 "&col.lastvisit.label;">
+<!ENTITY bmt.sortCmd_visit_date.label                 "&col.mostrecentvisit.label;">
 
 <!ENTITY bmt.sortDirCmd_lexico_ascending.label        "Alphabetisch - aufsteigend">
 <!ENTITY bmt.sortDirCmd_lexico_descending.label       "Alphabetisch - absteigend">

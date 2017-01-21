@@ -226,7 +226,7 @@
                  sidebartitle="&bmt.sidebarTitle;"
                  key="BookmarkTags-viewTagBrowserSidebarKey"
                  persist="key"
-                 oncommand="toggleSidebar('BookmarkTags-viewTagBrowserSidebar');" />
+                 oncommand="SidebarUI.toggle('BookmarkTags-viewTagBrowserSidebar');" />
   </broadcasterset>
 
   <!-- view menu sidebar hook -->

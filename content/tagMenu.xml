@@ -529,7 +529,7 @@
                            BookmarkTags.Util.bmServ.tagsFolder, " AND ",
                       "t.id = bms.parent ",
                 "GROUP BY t.id ",
-                "ORDER BY ", prefix, ", ", "'", sort[0], "'", " COLLATE NOCASE ", sort[1]
+                "ORDER BY ", prefix, ", ", sort[0], " COLLATE NOCASE ", sort[1]
             ].join("");
         }
 
@@ -573,7 +573,7 @@
                                  ") AND ",
                       "bms.parent = t.id ",
                 "GROUP BY t.id ",
-                "ORDER BY ", prefix, ", ", "'", sort[0], "'", " COLLATE NOCASE ", sort[1]
+                "ORDER BY ", prefix, ", ", sort[0], " COLLATE NOCASE ", sort[1]
             ].join("");
         }
 

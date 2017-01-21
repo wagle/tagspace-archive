@@ -26,7 +26,7 @@ const BookmarkTags= function ()
 {
     const CC= Components.classes;
     const CI= Components.interfaces;
-
+    const Ci= Components.interfaces;
     const bmServ=
         CC["@mozilla.org/browser/nav-bookmarks-service;1"].
         getService(CI.nsINavBookmarksService);
