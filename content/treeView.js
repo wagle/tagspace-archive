@@ -24,6 +24,8 @@
 
 BookmarkTags.TreeView= function ()
 {
+    const Ci = Components.interfaces;
+    const Cc = Components.classes;
     const atomServ=
         Components.classes["@mozilla.org/atom-service;1"].
         getService(Components.interfaces.nsIAtomService);
@@ -434,8 +436,6 @@ BookmarkTags.TreeView= function ()
             case "lastModified":
             case "dateAdded":
             case "visit_date":
-                Ci= Components.interfaces;
-                Cc= Components.classes;
                 return convertPRTimeToString(val);
                 break;
             }
@@ -565,13 +565,13 @@ BookmarkTags.TreeView= function ()
     {
         this.query_.addBMObserver(this);
     };
-
+/*
     Bookmark.prototype.getCellProperties= function (row, col, properties)
     {
         if (col.id === "title") properties.AppendElement(titleAtom);
         properties.AppendElement(leafAtom);
     };
-
+*/
     Bookmark.prototype.getTitleColLabel_= function (strings)
     {
         if (this.query_.isEmpty())
@@ -650,7 +650,7 @@ BookmarkTags.TreeView= function ()
     {
         this.query_.addRelTagObserver(this);
     };
-
+/*
     RelTag.prototype.getCellProperties= function (row, col, properties)
     {
         if (col.id === "title")
@@ -676,7 +676,7 @@ BookmarkTags.TreeView= function ()
         properties.AppendElement(atomServ.getAtom(
             ["bmt_tagid_", this.objArr_[index].id].join("")));
     };
-
+*/
     RelTag.prototype.getTitleColLabel_= function (strings)
     {
         if (this.query_.isEmpty())

@@ -1223,8 +1223,8 @@ BookmarkTags.Query= function ()
                   "folders.parent != ",
                       BookmarkTags.Util.bmServ.tagsFolder, " ",
             "GROUP BY bms.id ",
-            "ORDER BY ", "'" + query.bmSort + "'", " COLLATE NOCASE ", query.bmSortDir,
-                     ", 'title' COLLATE NOCASE ASC"
+            "ORDER BY ", query.bmSort, " COLLATE NOCASE ", query.bmSortDir,
+                     ", title COLLATE NOCASE ASC"
         ].join("");
     }
 
@@ -1256,9 +1256,9 @@ BookmarkTags.Query= function ()
             "FROM (", sql, ") AS t, moz_bookmarks AS tags ",
             "WHERE t.tagid = tags.id ",
             "GROUP BY id ",
-            "ORDER BY ", "'" + query.relTagSort + "'",
+            "ORDER BY ", query.relTagSort,
                           " COLLATE NOCASE ", query.relTagSortDir, ", ",
-                     "'title' COLLATE NOCASE ASC"
+                     "title COLLATE NOCASE ASC"
         ].join("");
     }
 

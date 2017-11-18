@@ -64,9 +64,6 @@
       <tab id="tagMenuTab"
            label="&tagMenuPrefpane.label;"
            accesskey="&tagMenuPrefpane.accesskey;" />
-      <tab id="migratorTab"
-           label="&migratorPrefpane.label;"
-           accesskey="&migratorPrefpane.accesskey;" />
       <tab id="helpTab"
            label="&helpPrefpane.label;"
            accesskey="&helpPrefpane.accesskey;" />
@@ -247,16 +244,6 @@
             </row>
           </rows>
         </grid>
-      </vbox>
-
-      <vbox id="migratorPanel">
-        <description id="migratorDesc">&migratorDescription;</description>
-        <separator />
-        <vbox align="end">
-          <button label="&migratorButton.label;"
-                  accesskey="&migratorButton.accesskey;"
-                  oncommand="BookmarkTags.launchMigrator();" />
-        </vbox>
       </vbox>
 
       <vbox id="helpPanel">

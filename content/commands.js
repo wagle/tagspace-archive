@@ -197,7 +197,7 @@ BookmarkTags.BookmarkCmds= function ()
                 dataExists= true;
                 transferable.addDataFlavor(a[1]);
                 transferable.setTransferData(
-                    a[1], PlacesUIUtils._wrapString(a[0]), a[0].length * 2);
+                    a[1], PlacesUtils.toISupportsString(a[0]), a[0].length * 2);
             }
         });
 
@@ -426,8 +426,8 @@ BookmarkTags.BookmarkCmds= function ()
 
     function open_(bmObj, where)
     {
-        var window = Services.wm.getMostRecentWindow("navigator:browser");
-        PlacesUIUtils._openNodeIn(fakeNavHistoryResultNode(bmObj), where, window);
+        var wndow = Services.wm.getMostRecentWindow("navigator:browser");
+        PlacesUIUtils._openNodeIn(fakeNavHistoryResultNode(bmObj), where, wndow);
     }
 
     function open(bmObj)
@@ -465,8 +465,8 @@ BookmarkTags.BookmarkCmds= function ()
 
     function openWithEvent(bmObj, event)
     {
-        var window = Services.wm.getMostRecentWindow("navigator:browser");
-        PlacesUIUtils._openNodeIn(fakeNavHistoryResultNode(bmObj), window.whereToOpenLink(event), window);
+        var wndow = Services.wm.getMostRecentWindow("navigator:browser");
+        PlacesUIUtils._openNodeIn(fakeNavHistoryResultNode(bmObj), window.whereToOpenLink(event), wndow);
     }
 
     // Adapted from PlacesController.prototype.paste in
@@ -631,14 +631,15 @@ BookmarkTags.BookmarkCmds= function ()
 
     function properties(bmObj)
     {
+        let node = fakeNavHistoryResultNode(bmObj);
         var info=
         {
             action: "edit",
             type: "bookmark",
-            itemId: bmObj.id
+            node: node
         };
-        var window = Services.wm.getMostRecentWindow("navigator:browser");
-        PlacesUIUtils.showBookmarkDialog(info, window);
+        var wndow = Services.wm.getMostRecentWindow("navigator:browser");
+        PlacesUIUtils.showBookmarkDialog(info, wndow);
     }
 
     // See SidebarUtils.handleTreeClick at
@@ -934,13 +935,23 @@ BookmarkTags.TagCmds= function ()
 
     function properties(tagId)
     {
+        var options = PlacesUtils.history.getNewQueryOptions();
+        options.excludeItems= true;
+        options.excludeQueries= true;
+        options.excludeReadOnlyFolders= true;
+        var query = PlacesUtils.history.getNewQuery();
+        query.setFolders([tagId], 1);
+        var result = PlacesUtils.history.executeQuery(query, options);
+        var node = result.root;
         var info=
         {
             action: "edit",
             type: "folder",
-            itemId: tagId
+            node: node,
+            hiddenRows: ['description', 'folderPicker']
         };
-        PlacesUIUtils.showBookmarkDialog(info);
+        var wndow = Services.wm.getMostRecentWindow("navigator:browser");
+        PlacesUIUtils.showBookmarkDialog(info, wndow);
     }
 
     function getCSSFile()
