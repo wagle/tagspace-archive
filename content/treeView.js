@@ -568,8 +568,8 @@ BookmarkTags.TreeView= function ()
 
     Bookmark.prototype.getCellProperties= function (row, col, properties)
     {
-        if (col.id === "title") properties.AppendElement(titleAtom);
-        properties.AppendElement(leafAtom);
+        // if (col.id === "title") properties.AppendElement(titleAtom);
+        // properties.AppendElement(leafAtom);
     };
 
     Bookmark.prototype.getTitleColLabel_= function (strings)
@@ -653,28 +653,28 @@ BookmarkTags.TreeView= function ()
 
     RelTag.prototype.getCellProperties= function (row, col, properties)
     {
-        if (col.id === "title")
-        {
-            properties.AppendElement(titleAtom);
-            properties.AppendElement(contAtom);
-            properties.AppendElement(tagContAtom);
-            properties.AppendElement(queryAtom);
-        }
-        properties.AppendElement(atomServ.getAtom(
-            ["bmt_tagname_", this.objArr_[row].title].join("")));
-        properties.AppendElement(atomServ.getAtom(
-            ["bmt_tagid_", this.objArr_[row].id].join("")));
+        // if (col.id === "title")
+        // {
+        //     properties.AppendElement(titleAtom);
+        //     properties.AppendElement(contAtom);
+        //     properties.AppendElement(tagContAtom);
+        //     properties.AppendElement(queryAtom);
+        // }
+        // properties.AppendElement(atomServ.getAtom(
+        //     ["bmt_tagname_", this.objArr_[row].title].join("")));
+        // properties.AppendElement(atomServ.getAtom(
+        //     ["bmt_tagid_", this.objArr_[row].id].join("")));
     };
 
     RelTag.prototype.getRowProperties= function (index, properties)
     {
-        properties.AppendElement(contAtom);
-        properties.AppendElement(tagContAtom);
-        properties.AppendElement(queryAtom);
-        properties.AppendElement(atomServ.getAtom(
-            ["bmt_tagname_", this.objArr_[index].title].join("")));
-        properties.AppendElement(atomServ.getAtom(
-            ["bmt_tagid_", this.objArr_[index].id].join("")));
+        // properties.AppendElement(contAtom);
+        // properties.AppendElement(tagContAtom);
+        // properties.AppendElement(queryAtom);
+        // properties.AppendElement(atomServ.getAtom(
+        //     ["bmt_tagname_", this.objArr_[index].title].join("")));
+        // properties.AppendElement(atomServ.getAtom(
+        //     ["bmt_tagid_", this.objArr_[index].id].join("")));
     };
 
     RelTag.prototype.getTitleColLabel_= function (strings)
