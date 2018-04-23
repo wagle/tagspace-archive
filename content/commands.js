@@ -453,7 +453,7 @@ BookmarkTags.BookmarkCmds= function ()
     // event may be null.
     function openInTabsWithEvent(bmObjs, event)
     {
-        if (PlacesUIUtils._confirmOpenInTabs(bmObjs.length))
+        if (PlacesUIUtils.confirmOpenInTabs(bmObjs.length))
         {
             bmObjs= bmObjs.map(function (bmObj)
             {
